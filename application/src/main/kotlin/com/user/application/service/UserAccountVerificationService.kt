@@ -1,7 +1,7 @@
 package com.user.application.service
 
-import com.user.application.port.UserAccountVerificationProcessorPort
-import com.user.application.port.UserAccountVerificationSenderPort
+import com.user.application.port.out.UserAccountVerificationProcessorPort
+import com.user.application.port.out.UserAccountVerificationSenderPort
 import com.user.application.request.UserAccountVerificationProcessRequest
 import com.user.application.request.UserAccountVerificationStartRequest
 import com.user.application.response.UserAccountVerificationProcessResponse

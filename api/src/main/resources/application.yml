@@ -1,0 +1,12 @@
+social:
+  client:
+    google:
+      client-id: 833986886547-u9hddjs9c7vtv6q9u9op9q2abnbqkmhf.apps.googleusercontent.com
+      redirect-uri: http://localhost:8080/user/creation/social/google
+      resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
+      auth-uri: https://accounts.google.com/o/oauth2/auth
+      token-uri: https://oauth2.googleapis.com/token
+
+logging:
+  level:
+    root: info
