@@ -1,6 +1,6 @@
 package com.user.adapter.verification
 
-import com.user.application.port.UserAccountVerificationProcessorPort
+import com.user.application.port.out.UserAccountVerificationProcessorPort
 import com.user.application.request.UserAccountVerificationProcessRequest
 import com.user.application.response.UserAccountVerificationProcessResponse
 import org.springframework.stereotype.Component

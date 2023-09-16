@@ -1,4 +1,4 @@
-package com.user.application.port
+package com.user.application.port.out
 
 import com.user.application.request.UserAccountVerificationStartRequest
 import com.user.application.response.UserAccountVerificationStartResponse
