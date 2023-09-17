@@ -1,4 +1,4 @@
-package com.user.domain.usecase.request
+package com.user.domain.user.request
 
 data class UserCreationRequest(
     val nickName: String,

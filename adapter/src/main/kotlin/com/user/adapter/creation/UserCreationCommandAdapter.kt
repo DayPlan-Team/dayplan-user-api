@@ -1,7 +1,7 @@
 package com.user.adapter.creation
 
 import com.user.application.port.out.UserCreationCommandPort
-import com.user.domain.model.user.User
+import com.user.domain.user.model.User
 import org.springframework.stereotype.Component
 
 @Component

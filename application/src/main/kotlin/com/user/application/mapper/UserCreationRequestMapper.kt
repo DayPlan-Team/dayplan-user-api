@@ -1,7 +1,7 @@
 package com.user.application.mapper
 
 import com.user.application.request.VerifiedUserCreationRequest
-import com.user.domain.usecase.request.UserCreationRequest
+import com.user.domain.user.request.UserCreationRequest
 
 object UserCreationRequestMapper {
 

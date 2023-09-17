@@ -18,6 +18,15 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    //jwt
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+    runtimeOnly("com.mysql:mysql-connector-j")
+    implementation("mysql:mysql-connector-java:8.0.32")
 
     implementation(project(":util"))
     implementation(project(":domain"))

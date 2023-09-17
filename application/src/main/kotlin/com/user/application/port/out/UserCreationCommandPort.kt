@@ -1,6 +1,6 @@
 package com.user.application.port.out
 
-import com.user.domain.model.user.User
+import com.user.domain.user.model.User
 import org.springframework.stereotype.Service
 
 @Service

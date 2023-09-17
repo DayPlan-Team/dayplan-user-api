@@ -23,6 +23,9 @@ class UserAccountGoogleSourceAdapter(
     @Value("\${social.client.google.client-id}")
     private lateinit var clientId: String
 
+    @Value("\${social.client.google.client-secret}")
+    private lateinit var clientSecretKey: String
+
     @Value("\${social.client.google.redirect-uri}")
     private lateinit var redirectUri: String
 
@@ -37,7 +40,7 @@ class UserAccountGoogleSourceAdapter(
         val param = mapOf(
             CODE to code,
             CLIENT_ID to clientId,
-            CLIENT_SECRET to googleClientSecret,
+            CLIENT_SECRET to clientSecretKey,
             REDIRECT_URI to redirectUri,
             GRANT_TYPE to AUTHORIZATION_CODE,
         )
@@ -92,7 +95,6 @@ class UserAccountGoogleSourceAdapter(
     )
 
     companion object : Logger() {
-        private val googleClientSecret = System.getenv("GoogleClientSecret").toString()
 
         private const val CODE = "code"
         private const val CLIENT_ID = "client_id"
