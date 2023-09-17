@@ -2,6 +2,7 @@ package com.user.util
 
 import com.user.util.exception.SystemException
 import com.user.util.exceptioncode.SystemExceptionCode
+import org.springframework.beans.factory.annotation.Value
 import java.security.SecureRandom
 import java.util.*
 import javax.crypto.Cipher
@@ -20,12 +21,16 @@ object EncryptionUtil {
 
     private val ivBytes: ByteArray
     private val secretKeySpec: SecretKeySpec
-    private val encryptionSecretKey = System.getenv("EncryptionSecretKey") ?: throw SystemException(SystemExceptionCode.ENCRYPTION_SECRET_KEY_NOT_INPUT)
+
+    @Value("\${encryption.secret-key}")
+    private lateinit var encryptionSecretKey : String
+
+    @Value("\${encryption.salt}")
+    private lateinit var salt: String
 
     init {
-        val salt = System.getenv("Salt").toByteArray()
         val factory = SecretKeyFactory.getInstance(PBKDF2)
-        val spec = PBEKeySpec(encryptionSecretKey.toCharArray(), salt, ITERATION_CREATION, KEY_LENGTH)
+        val spec = PBEKeySpec(encryptionSecretKey.toCharArray(), salt.toByteArray(), ITERATION_CREATION, KEY_LENGTH)
         val secretKey = factory.generateSecret(spec)
         secretKeySpec = SecretKeySpec(secretKey.encoded, AES)
 
