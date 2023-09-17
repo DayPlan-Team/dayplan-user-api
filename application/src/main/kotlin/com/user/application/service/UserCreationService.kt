@@ -4,7 +4,8 @@ import com.user.application.port.out.UserAccountSocialSourcePort
 import com.user.application.port.out.UserAccountVerificationSenderPort
 import com.user.application.port.out.UserCreationCommandPort
 import com.user.application.request.UserAccountSocialCreationRequest
-import com.user.domain.usecase.UserCreationUseCase
+import com.user.domain.authentication.port.AuthenticationTicketPort
+import com.user.domain.user.usecase.UserCreationUseCase
 import com.user.util.Logger
 import org.springframework.stereotype.Service
 
@@ -21,7 +22,6 @@ class UserCreationService(
         val userSourceResponse = userAccountSocialSourcePort.getSocialUserSource(request.code, request.socialType)
 
         log.info("email = ${userSourceResponse.email}, isVerified = ${userSourceResponse.isVerified}")
-
     }
 
     companion object : Logger()
