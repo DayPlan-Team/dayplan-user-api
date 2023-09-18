@@ -11,4 +11,6 @@ enum class UserExceptionCode(
     USER_CREATION_INVALID_EMAIL("400", "USR0003", "잘못된 이메일이에요."),
     USER_SOCIAL_INVALID_TYPE("400", "USR0004", "로그인 방식이 잘못되었어요."),
     USER_ACCOUNT_ALREADY_EXISTS("400", "USR0004", "이미 가입한 계정이에요"),
+
+    MANDATORY_TERMS_IS_NOT_AGREED("400", "USR0005", "필수 약관은 모두 동의해야해욘"),
 }
