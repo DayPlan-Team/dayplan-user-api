@@ -1,8 +1,8 @@
 package com.user.api.public
 
-import com.user.api.public.mapper.UserProfileRequestMapper
-import com.user.api.public.request.UserProfileApiRequest
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.UserProfileUpdateService
+import com.user.domain.user.request.UserProfileRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -22,8 +22,18 @@ class UserProfileController(
         @RequestHeader("UserId") userId: Long,
         @RequestBody userProfileApiRequest: UserProfileApiRequest,
     ): ResponseEntity<HttpStatus> {
-        val userProfileRequest = UserProfileRequestMapper.mapper(userProfileApiRequest)
+        val userProfileRequest = userProfileApiRequest.toUserProfileRequest()
         userProfileUpdateService.upsertUserProfile(userId, userProfileRequest)
         return ResponseEntity.ok(HttpStatus.OK)
+    }
+
+    data class UserProfileApiRequest(
+        @JsonProperty("nick_name") val nickName: String,
+    ) {
+        fun toUserProfileRequest(): UserProfileRequest {
+            return UserProfileRequest(
+                nickName = nickName,
+            )
+        }
     }
 }
