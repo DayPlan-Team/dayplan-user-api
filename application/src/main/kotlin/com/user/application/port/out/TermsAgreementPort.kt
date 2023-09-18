@@ -1,11 +1,13 @@
 package com.user.application.port.out
 
 import com.user.domain.terms.TermsAgreement
-import com.user.domain.terms.request.TermsAgreementRequest
+import com.user.application.request.TermsAgreementRequest
+import org.springframework.stereotype.Component
 
+@Component
 interface TermsAgreementPort {
 
     fun findTermsAgreementsByUserId(userId: Long): List<TermsAgreement>
 
-    fun upsertTermsAgreement(termsAgreementRequest: TermsAgreementRequest)
+    fun upsertTermsAgreement(userId: Long, termsAgreementRequests: List<TermsAgreementRequest>)
 }

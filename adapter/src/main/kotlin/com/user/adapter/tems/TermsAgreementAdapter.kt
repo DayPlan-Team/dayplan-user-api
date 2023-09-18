@@ -1,15 +1,43 @@
 package com.user.adapter.tems
 
+import com.user.adapter.tems.entity.TermsAgreementEntity
+import com.user.adapter.tems.persistence.TermsAgreementEntityRepository
 import com.user.application.port.out.TermsAgreementPort
 import com.user.domain.terms.TermsAgreement
-import com.user.domain.terms.request.TermsAgreementRequest
+import com.user.application.request.TermsAgreementRequest
+import org.springframework.stereotype.Component
 
-class TermsAgreementAdapter : TermsAgreementPort {
+@Component
+class TermsAgreementAdapter(
+    private val termsAgreementEntityRepository: TermsAgreementEntityRepository,
+) : TermsAgreementPort {
     override fun findTermsAgreementsByUserId(userId: Long): List<TermsAgreement> {
-        TODO("Not yet implemented")
+        return termsAgreementEntityRepository.findAllByUserId(userId).map { it.toTermsAgreement() }
     }
 
-    override fun upsertTermsAgreement(termsAgreementRequest: TermsAgreementRequest) {
-        TODO("Not yet implemented")
+    override fun upsertTermsAgreement(userId: Long, termsAgreementRequests: List<TermsAgreementRequest>) {
+        val userTermsAgreementsMap = termsAgreementEntityRepository
+            .findAllByUserId(userId)
+            .associateBy { it.termsId }
+
+        val termsAgreementEntities = termsAgreementRequests
+            .map { termsAgreementRequest ->
+                userTermsAgreementsMap[termsAgreementRequest.termsId]?.let {
+                    TermsAgreementEntity(
+                        id = termsAgreementRequest.termsId,
+                        termsId = termsAgreementRequest.termsId,
+                        userId = userId,
+                        isAgreed = termsAgreementRequest.isAgreed,
+                    )
+                } ?: TermsAgreementEntity(
+                    termsId = termsAgreementRequest.termsId,
+                    userId = userId,
+                    isAgreed = termsAgreementRequest.isAgreed,
+                )
+            }
+
+        termsAgreementEntityRepository.saveAll(termsAgreementEntities)
     }
+
+
 }
