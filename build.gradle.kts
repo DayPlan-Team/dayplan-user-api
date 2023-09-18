@@ -27,7 +27,7 @@ tasks.bootJar {
 
 allprojects {
 
-    group = "com.dating"
+    group = "com.dayplanuser"
     version = "0.0.1-SNAPSHOT"
 
     tasks.withType<KotlinCompile> {

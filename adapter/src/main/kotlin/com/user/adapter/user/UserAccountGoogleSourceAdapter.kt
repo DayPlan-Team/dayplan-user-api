@@ -1,4 +1,4 @@
-package com.user.adapter.creation
+package com.user.adapter.user
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.port.out.UserAccountSocialSourcePort
