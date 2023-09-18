@@ -1,4 +1,4 @@
-package com.user.api.user.request
+package com.user.api.public.request
 
 import com.user.domain.share.AccountVerificationMeans
 import com.user.util.EmailUtil

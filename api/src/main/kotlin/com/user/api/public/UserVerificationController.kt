@@ -1,7 +1,7 @@
-package com.user.api.user
+package com.user.api.public
 
-import com.user.api.user.mapper.UserAccountVerificationStartApiRequestMapper
-import com.user.api.user.request.UserAccountVerificationStartApiRequest
+import com.user.api.public.mapper.UserAccountVerificationStartApiRequestMapper
+import com.user.api.public.request.UserAccountVerificationStartApiRequest
 import com.user.application.service.UserAccountVerificationService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
