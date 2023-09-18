@@ -1,8 +1,10 @@
-package com.user.api.user.mapper
+package com.user.api.public.mapper
 
 import com.user.application.request.UserAccountSocialCreationRequest
 import com.user.util.social.SocialType
+import org.springframework.stereotype.Component
 
+@Component
 object UserAccountSocialCreationMapper {
 
     fun mapper(code: String, registrationId: String): UserAccountSocialCreationRequest {
