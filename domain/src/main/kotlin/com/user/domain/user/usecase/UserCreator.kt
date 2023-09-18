@@ -5,7 +5,7 @@ import com.user.domain.user.request.UserCreationRequest
 
 class UserCreator : UserCreationUseCase {
 
-    override fun createUser(userCreationRequest: UserCreationRequest): User {
+    override fun createUser(email: String): User {
         TODO()
     }
 }
