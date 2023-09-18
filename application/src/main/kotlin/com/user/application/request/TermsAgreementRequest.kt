@@ -1,7 +1,6 @@
-package com.user.domain.terms.request
+package com.user.application.request
 
 data class TermsAgreementRequest(
     val termsId: Long,
-    val userId: Long,
     val isAgreed: Boolean,
 )
