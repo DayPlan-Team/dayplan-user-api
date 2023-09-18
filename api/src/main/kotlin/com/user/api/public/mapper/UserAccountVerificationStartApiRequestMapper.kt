@@ -1,8 +1,10 @@
-package com.user.api.user.mapper
+package com.user.api.public.mapper
 
-import com.user.api.user.request.UserAccountVerificationStartApiRequest
+import com.user.api.public.request.UserAccountVerificationStartApiRequest
 import com.user.application.request.UserAccountVerificationStartRequest
+import org.springframework.stereotype.Component
 
+@Component
 object UserAccountVerificationStartApiRequestMapper {
 
     fun map(request: UserAccountVerificationStartApiRequest): UserAccountVerificationStartRequest {
