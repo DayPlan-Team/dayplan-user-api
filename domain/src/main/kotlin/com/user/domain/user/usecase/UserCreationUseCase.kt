@@ -1,9 +1,10 @@
 package com.user.domain.user.usecase
 
-import com.user.domain.user.model.User
-import org.springframework.stereotype.Service
+import com.user.domain.user.User
+import com.user.domain.user.request.UserCreationRequest
+import org.springframework.stereotype.Component
 
-@Service
+@Component
 interface UserCreationUseCase {
-    fun createUser(email: String): User
+    fun createUser(userCreationRequest: UserCreationRequest): User
 }

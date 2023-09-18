@@ -6,6 +6,8 @@ import com.user.application.port.out.UserQueryPort
 import com.user.application.request.UserAccountSocialCreationRequest
 import com.user.domain.authentication.AuthenticationTicket
 import com.user.domain.authentication.port.AuthenticationTicketPort
+import com.user.domain.share.UserAccountStatus
+import com.user.domain.user.request.UserCreationRequest
 import com.user.domain.user.usecase.UserCreationUseCase
 import com.user.util.Logger
 import org.springframework.stereotype.Service
@@ -24,10 +26,16 @@ class UserRegistrationService(
         val findUser = userQueryPort.findUserByEmailOrNull(userSourceResponse.email)
 
         if (findUser != null) {
-            return authenticationTicketPort.createAuthenticationTicket(findUser.id)
+            return authenticationTicketPort.createAuthenticationTicket(findUser.userId)
         }
 
-        val user = userCreationUseCase.createUser(userSourceResponse.email)
+        val user = userCreationUseCase.createUser(
+            UserCreationRequest(
+                email = userSourceResponse.email,
+                isVerified = userSourceResponse.isVerified,
+                accountStatus = UserAccountStatus.NORMAL,
+            )
+        )
         val userId = userCreationCommandPort.save(user)
 
         return authenticationTicketPort.createAuthenticationTicket(userId)
