@@ -20,7 +20,7 @@ data class TermsAgreementEntity(
     val termsId: Long,
 
     @Column
-    val isAgreed: Boolean,
+    val agreement: Boolean,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ data class TermsAgreementEntity(
         return TermsAgreement(
             userId = userId,
             termsId = termsId,
-            isAgreed = isAgreed,
+            agreement = agreement,
         )
     }
 }

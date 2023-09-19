@@ -48,7 +48,7 @@ class TermsController(
 
         termsAgreementUpsertService.upsertTermsAgreement(
             user.userId,
-            termsAgreementApiBoxingRequest.data.map { it.toTermsAgreementRequest() },
+            termsAgreementApiBoxingRequest.termsAgreements.map { it.toTermsAgreementRequest() },
         )
 
         return ResponseEntity.ok().build()
@@ -59,17 +59,17 @@ class TermsController(
     )
 
     data class TermsAgreementApiBoxingRequest(
-        @JsonProperty("data") val data: List<TermsAgreementApiRequest>
+        @JsonProperty("termsAgreements") val termsAgreements: List<TermsAgreementApiRequest>
     )
 
     data class TermsAgreementApiRequest(
-        @JsonProperty("terms_id") val termsId: Long,
-        @JsonProperty("is_agreed") val isAgreed: Boolean,
+        @JsonProperty("termsId") val termsId: Long,
+        @JsonProperty("agreement") val agreement: Boolean,
     ) {
         fun toTermsAgreementRequest(): TermsAgreementRequest {
             return TermsAgreementRequest(
                 termsId = termsId,
-                isAgreed = isAgreed,
+                agreement = agreement,
             )
         }
     }
