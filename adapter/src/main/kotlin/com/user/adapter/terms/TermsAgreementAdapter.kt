@@ -27,12 +27,12 @@ class TermsAgreementAdapter(
                         id = termsAgreementRequest.termsId,
                         termsId = termsAgreementRequest.termsId,
                         userId = userId,
-                        isAgreed = termsAgreementRequest.isAgreed,
+                        agreement = termsAgreementRequest.agreement,
                     )
                 } ?: TermsAgreementEntity(
                     termsId = termsAgreementRequest.termsId,
                     userId = userId,
-                    isAgreed = termsAgreementRequest.isAgreed,
+                    agreement = termsAgreementRequest.agreement,
                 )
             }
 
