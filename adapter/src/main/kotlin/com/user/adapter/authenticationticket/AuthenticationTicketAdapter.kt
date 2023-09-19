@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component
 import java.security.Key
 
 @Component
-class AuthenticationTicketAdapter : InitializingBean, AuthenticationTicketPort {
+class AuthenticationTicketAdapter(
+    private val jwtTokenBuilder: JwtTokenBuilder,
+) : InitializingBean, AuthenticationTicketPort {
 
     @Value("\${jwt.secret-key}")
     private lateinit var secretKey: String
@@ -28,8 +30,8 @@ class AuthenticationTicketAdapter : InitializingBean, AuthenticationTicketPort {
     }
 
     override fun createAuthenticationTicket(userId: Long): AuthenticationTicket {
-        val accessToken = JwtTokenBuilder.buildJwtToken(userId.toString(), accessExpirationTime)
-        val refreshToken = JwtTokenBuilder.buildJwtToken(userId.toString(), refreshExpirationTime)
+        val accessToken = jwtTokenBuilder.buildJwtToken(userId.toString(), accessExpirationTime)
+        val refreshToken = jwtTokenBuilder.buildJwtToken(userId.toString(), refreshExpirationTime)
 
         return AuthenticationTicket(
             accessToken = accessToken,
@@ -38,7 +40,7 @@ class AuthenticationTicketAdapter : InitializingBean, AuthenticationTicketPort {
     }
 
     override fun reissueAuthenticationTicket(userId: Long): String {
-        return JwtTokenBuilder.buildJwtToken(userId.toString(), accessExpirationTime)
+        return jwtTokenBuilder.buildJwtToken(userId.toString(), accessExpirationTime)
     }
 
     override fun deleteAuthenticationTicket(userId: Long) {

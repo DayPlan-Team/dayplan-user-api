@@ -6,10 +6,12 @@ import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.*
 
-object JwtTokenBuilder : InitializingBean {
+@Component
+class JwtTokenBuilder : InitializingBean {
 
     @Value("\${jwt.secret-key}")
     private lateinit var secretKey: String
@@ -26,7 +28,7 @@ object JwtTokenBuilder : InitializingBean {
             .setSubject(subject)
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + tokenTime))
-            .signWith(key, SignatureAlgorithm.ES512)
+            .signWith(key, SignatureAlgorithm.HS512)
             .compact()
     }
 

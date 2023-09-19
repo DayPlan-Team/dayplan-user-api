@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@RequestMapping("/user/registration")
 @RestController
+@RequestMapping("/user/registration")
 class UserRegistrationController(
     private val userRegistrationService: UserRegistrationService,
 ) {
@@ -23,6 +23,9 @@ class UserRegistrationController(
 
         val request = UserAccountSocialCreationMapper.mapper(code, registrationId)
         val authenticationTicket = userRegistrationService.createUserIfNotExistsAndCreateAuthenticationTicket(request)
+
+        log.info("accessToken = ${authenticationTicket.accessToken}")
+        log.info("refreshToken = ${authenticationTicket.refreshToken}")
 
         return ResponseEntity.ok(
             AuthenticationTicketResponse(
