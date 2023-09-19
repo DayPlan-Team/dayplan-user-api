@@ -1,4 +1,4 @@
-package com.user.adapter.tems.entity
+package com.user.adapter.terms.entity
 
 import com.user.adapter.share.BaseEntity
 import com.user.domain.terms.Terms

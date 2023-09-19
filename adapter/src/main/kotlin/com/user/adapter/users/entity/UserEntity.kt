@@ -1,4 +1,4 @@
-package com.user.adapter.user.entity
+package com.user.adapter.users.entity
 
 import com.user.adapter.share.BaseEntity
 import com.user.domain.share.UserAccountStatus
@@ -13,7 +13,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 data class UserEntity(
 
     @Column
@@ -33,4 +33,26 @@ data class UserEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     val id: Long = 0L,
-) : BaseEntity()
+) : BaseEntity() {
+    fun toUser(): User {
+        return User(
+            email = email,
+            userAccountStatus = userAccountStatus,
+            isVerified = isVerified,
+            nickName = nickName,
+            userId = id,
+        )
+    }
+
+    companion object {
+        fun from(user: User): UserEntity {
+            return UserEntity(
+                email = user.email,
+                userAccountStatus = user.userAccountStatus,
+                isVerified = user.isVerified,
+                nickName = user.nickName,
+                id = user.userId,
+            )
+        }
+    }
+}

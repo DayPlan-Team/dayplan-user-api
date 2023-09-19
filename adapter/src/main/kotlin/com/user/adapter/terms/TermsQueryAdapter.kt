@@ -1,12 +1,13 @@
-package com.user.adapter.tems
+package com.user.adapter.terms
 
-import com.user.adapter.tems.entity.TermsEntity
-import com.user.adapter.tems.persistence.TermsEntityRepository
+import com.user.adapter.terms.persistence.TermsEntityRepository
 import com.user.application.port.out.TermsQueryPort
 import com.user.domain.terms.Terms
 import com.user.util.exception.SystemException
 import com.user.util.exceptioncode.SystemExceptionCode
+import org.springframework.stereotype.Component
 
+@Component
 class TermsQueryAdapter(
     private val termsEntityRepository: TermsEntityRepository,
 ) : TermsQueryPort {

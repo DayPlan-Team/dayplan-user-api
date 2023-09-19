@@ -1,7 +1,7 @@
-package com.user.adapter.tems
+package com.user.adapter.terms
 
-import com.user.adapter.tems.entity.TermsAgreementEntity
-import com.user.adapter.tems.persistence.TermsAgreementEntityRepository
+import com.user.adapter.terms.entity.TermsAgreementEntity
+import com.user.adapter.terms.persistence.TermsAgreementEntityRepository
 import com.user.application.port.out.TermsAgreementPort
 import com.user.domain.terms.TermsAgreement
 import com.user.application.request.TermsAgreementRequest
