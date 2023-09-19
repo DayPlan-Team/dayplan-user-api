@@ -20,7 +20,7 @@ data class TermsEntity(
     val content: String,
 
     @Column
-    val isMandatory: Boolean,
+    val mandatory: Boolean,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ data class TermsEntity(
         return Terms(
             sequence = sequence,
             content = content,
-            isMandatory = isMandatory,
+            mandatory = mandatory,
             termsId = id,
         )
     }

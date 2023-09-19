@@ -1,0 +1,10 @@
+{
+  "terms": [
+    {
+      "terms_id": 1,
+      "sequence": 1,
+      "content": "서비스 이용 약관",
+      "is_mandatory": true
+    }
+  ]
+}
