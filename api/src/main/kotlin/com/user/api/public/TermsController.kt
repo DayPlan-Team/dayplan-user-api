@@ -6,6 +6,7 @@ import com.user.application.port.out.UserQueryPort
 import com.user.application.request.TermsAgreementRequest
 import com.user.application.service.TermsAgreementUpsertService
 import com.user.domain.terms.Terms
+import com.user.util.Logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,8 +26,10 @@ class TermsController(
 
     @GetMapping
     fun getTerms(@RequestHeader("UserId") userId: Long): ResponseEntity<TermsApiResponse> {
-        userQueryPort.findUserByUserId(userId)
 
+        log.info("userId = $userId")
+
+        userQueryPort.findUserByUserId(userId)
         val terms = termsQueryPort.findAll().sortedBy { it.sequence }
 
         return ResponseEntity.ok(
@@ -70,4 +73,6 @@ class TermsController(
             )
         }
     }
+
+    companion object : Logger()
 }

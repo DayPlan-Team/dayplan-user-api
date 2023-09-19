@@ -4,5 +4,5 @@ data class Terms(
     val termsId: Long,
     val sequence: Long,
     val content: String,
-    val isMandatory: Boolean,
+    val mandatory: Boolean,
 )

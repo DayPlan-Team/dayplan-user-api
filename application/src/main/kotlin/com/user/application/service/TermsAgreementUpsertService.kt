@@ -21,7 +21,7 @@ class TermsAgreementUpsertService(
 
         val termsAgreementRequestForPort = terms.map {
             val termsAgreementRequest = termsMap[it.termsId] ?: throw SystemException(SystemExceptionCode.NOT_MATCH_TERMS)
-            if (it.isMandatory) {
+            if (it.mandatory) {
                 require(termsAgreementRequest.isAgreed) { throw UserException(UserExceptionCode.MANDATORY_TERMS_IS_NOT_AGREED)}
             }
             termsAgreementRequest
