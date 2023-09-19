@@ -1,4 +1,4 @@
-package com.user.adapter.user
+package com.user.adapter.users
 
 import com.user.application.port.out.UserAccountSocialSourcePort
 import com.user.application.response.UserSourceResponse
