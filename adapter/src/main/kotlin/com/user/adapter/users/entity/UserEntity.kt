@@ -29,6 +29,9 @@ data class UserEntity(
     @Column
     val isVerified: Boolean,
 
+    @Column
+    val mandatoryTermsAgreed: Boolean = false,
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -38,6 +41,7 @@ data class UserEntity(
         return User(
             email = email,
             userAccountStatus = userAccountStatus,
+            mandatoryTermsAgreed = mandatoryTermsAgreed,
             isVerified = isVerified,
             nickName = nickName,
             userId = id,
@@ -49,6 +53,7 @@ data class UserEntity(
             return UserEntity(
                 email = user.email,
                 userAccountStatus = user.userAccountStatus,
+                mandatoryTermsAgreed = user.mandatoryTermsAgreed,
                 isVerified = user.isVerified,
                 nickName = user.nickName,
                 id = user.userId,

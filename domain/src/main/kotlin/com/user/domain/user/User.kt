@@ -7,6 +7,7 @@ data class User(
     val email: String,
     val userAccountStatus: UserAccountStatus,
     val isVerified: Boolean,
+    val mandatoryTermsAgreed: Boolean = false,
     val nickName: String = "",
     val userId: Long = 0L,
 ) {
@@ -15,8 +16,20 @@ data class User(
         return User(
             email = email,
             userAccountStatus = userAccountStatus,
+            mandatoryTermsAgreed = mandatoryTermsAgreed,
             isVerified = isVerified,
             nickName = userProfileRequest.nickName,
+            userId = userId
+        )
+    }
+
+    fun from(mandatoryTermsAgreed: Boolean): User {
+        return User(
+            email = email,
+            userAccountStatus = userAccountStatus,
+            mandatoryTermsAgreed = mandatoryTermsAgreed,
+            isVerified = isVerified,
+            nickName = nickName,
             userId = userId
         )
     }
