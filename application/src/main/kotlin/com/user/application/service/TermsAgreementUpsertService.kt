@@ -3,9 +3,8 @@ package com.user.application.service
 import com.user.application.port.out.TermsAgreementPort
 import com.user.application.port.out.TermsQueryPort
 import com.user.application.request.TermsAgreementRequest
-import com.user.util.exception.SystemException
+import com.user.domain.user.User
 import com.user.util.exception.UserException
-import com.user.util.exceptioncode.SystemExceptionCode
 import com.user.util.exceptioncode.UserExceptionCode
 import org.springframework.stereotype.Service
 
@@ -15,7 +14,7 @@ class TermsAgreementUpsertService(
     private val termsAgreementPort: TermsAgreementPort,
 ) {
 
-    fun upsertTermsAgreement(userId: Long, termsAgreementRequests: List<TermsAgreementRequest>) {
+    fun upsertTermsAgreement(user: User, termsAgreementRequests: List<TermsAgreementRequest>) {
         val termsMap = termsAgreementRequests.associateBy { it.termsId }
         val terms = termsQueryPort.findAll()
 
@@ -30,6 +29,6 @@ class TermsAgreementUpsertService(
             termsAgreementRequest
         }
 
-        termsAgreementPort.upsertTermsAgreement(userId, termsAgreementRequestForPort)
+        termsAgreementPort.upsertTermsAgreement(user, termsAgreementRequestForPort)
     }
 }

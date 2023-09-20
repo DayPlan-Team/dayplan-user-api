@@ -47,7 +47,7 @@ class TermsController(
         val user = userQueryPort.findUserByUserId(userId)
 
         termsAgreementUpsertService.upsertTermsAgreement(
-            user.userId,
+            user,
             termsAgreementApiBoxingRequest.termsAgreements.map { it.toTermsAgreementRequest() },
         )
 
