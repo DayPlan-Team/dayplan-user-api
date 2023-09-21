@@ -8,19 +8,19 @@ import org.springframework.stereotype.Component
 
 @Component
 @Profile("local", "default")
-class LocalDateInitializer(
+class LocalDataInitializer(
     private val termsEntityRepository: TermsEntityRepository,
 ) : CommandLineRunner {
 
     private val termsEntities = listOf(
         TermsEntity(
-            id = 0,
+            id = 1,
             sequence = 1,
             content = "서비스 이용 약관",
             mandatory = true,
         ),
         TermsEntity(
-            id = 0,
+            id = 2,
             sequence = 2,
             content = "위치 정보 제공 동의",
             mandatory = true,
