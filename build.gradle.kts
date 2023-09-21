@@ -70,6 +70,9 @@ subprojects {
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
         testImplementation("io.mockk:mockk:1.13.7")
         implementation(kotlin("script-runtime"))
+
+        runtimeOnly("com.mysql:mysql-connector-j")
+        implementation("mysql:mysql-connector-java:8.0.32")
     }
 
     tasks.register("prepareKotlinBuildScriptModel"){}
