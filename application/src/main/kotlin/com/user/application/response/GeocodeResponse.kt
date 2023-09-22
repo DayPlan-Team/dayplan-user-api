@@ -29,11 +29,13 @@ data class GeocodingRegion(
     @JsonProperty("area1") val area1: GeocodingArea,
     @JsonProperty("area2") val area2: GeocodingArea,
     @JsonProperty("area3") val area3: GeocodingArea,
+    @JsonProperty("area4") val area4: GeocodingArea,
 )
 
 data class GeocodingArea(
     @JsonProperty("name") val name: String = "",
     @JsonProperty("coords") val coords: GeocodingCoords,
+    @JsonProperty("alias", required = false) val alias: String? = "",
 )
 
 data class GeocodingCoords(

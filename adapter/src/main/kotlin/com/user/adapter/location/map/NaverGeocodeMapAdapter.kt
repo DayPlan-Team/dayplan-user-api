@@ -10,6 +10,7 @@ import com.user.application.response.GeocodingRegion
 import com.user.application.response.GeocodeResponse
 import com.user.application.response.GeocodingResults
 import com.user.application.response.GeocodingStatus
+import com.user.util.Logger
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -82,6 +83,16 @@ class NaverGeocodeMapAdapter(
                             )
                         ),
                     ),
+                    area4 = GeocodingArea(
+                        name = "서초동",
+                        coords = GeocodingCoords(
+                            center = GeocodingCoordsCenter(
+                                crs = "EPSG:4326",
+                                longitude = 127.01951,
+                                latitude = 37.49012,
+                            )
+                        ),
+                    ),
                 )
             ),
         )
@@ -89,6 +100,9 @@ class NaverGeocodeMapAdapter(
 
 
     override fun getGeoCodingResponse(geocodeRequest: GeocodeRequest): GeocodeResponse {
+        log.info("reverseGeoCode = ${reverseGeoCode(geocodeRequest).toString()}")
+
+
         return try {
             reverseGeoCode(geocodeRequest) ?: defaultResponse
         } catch (e : Exception) {
@@ -107,7 +121,7 @@ class NaverGeocodeMapAdapter(
             .block()
     }
 
-    companion object {
+    companion object : Logger() {
         const val NAVER_OPEN_API_REVERSE_COORDINATE =
             "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?output=json&"
         const val API_KEY_ID = "X-NCP-APIGW-API-KEY-ID"

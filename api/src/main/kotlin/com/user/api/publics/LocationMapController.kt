@@ -3,6 +3,7 @@ package com.user.api.publics
 import com.user.application.request.GeocodeRequest
 import com.user.application.service.GeoCodeService
 import com.user.application.service.UserVerifyService
+import com.user.util.Logger
 import com.user.util.address.AddressCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -26,6 +27,8 @@ class LocationMapController(
         @RequestParam("longitude") longitude: Double,
     ): ResponseEntity<AddressCode> {
 
+        log.info("latitude = $latitude, longitude = $longitude")
+
         val user = userVerifyService.verifyAndGetUser(userId)
         CoordinatesVerifier.verifyCoordinates(latitude to longitude)
 
@@ -35,6 +38,8 @@ class LocationMapController(
                 longitude = longitude,
             ),
         )
+
+        log.info("response = $addressCode")
 
         return ResponseEntity.ok(addressCode)
     }
@@ -66,4 +71,5 @@ class LocationMapController(
         val data: T,
     )
 
+    companion object : Logger()
 }

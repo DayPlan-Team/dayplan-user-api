@@ -17,7 +17,7 @@ class NaverMapAdapterTest(
     val log = Logger().log
 
     given("위도와 경도가 주어져요") {
-        val coordinates = GeocodeRequest(37.5038061, 127.0241492)
+        val coordinates = GeocodeRequest(36.5929071, 127.2923750)
 
         `when`("네이버 맵으로 주소 요청을 보내면") {
             val result = naverMapAdapter.getGeoCodingResponse(coordinates)
