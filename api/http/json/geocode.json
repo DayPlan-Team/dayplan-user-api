@@ -1,0 +1,131 @@
+{
+  "status": {
+    "code": 0,
+    "name": "ok",
+    "message": "done"
+  },
+  "results": [
+    {
+      "name": "legalcode",
+      "code": {
+        "id": "4115010900",
+        "type": "L",
+        "mappingId": "02150109"
+      },
+      "region": {
+        "area0": {
+          "name": "kr",
+          "coords": {
+            "center": {
+              "crs": "",
+              "x": 0.0,
+              "y": 0.0
+            }
+          }
+        },
+        "area1": {
+          "name": "경기도",
+          "coords": {
+            "center": {
+              "crs": "EPSG:4326",
+              "x": 127.550802,
+              "y": 37.4363177
+            }
+          },
+          "alias": "경기"
+        },
+        "area2": {
+          "name": "의정부시",
+          "coords": {
+            "center": {
+              "crs": "EPSG:4326",
+              "x": 127.033753,
+              "y": 37.738083
+            }
+          }
+        },
+        "area3": {
+          "name": "금오동",
+          "coords": {
+            "center": {
+              "crs": "EPSG:4326",
+              "x": 127.0664,
+              "y": 37.7572
+            }
+          }
+        },
+        "area4": {
+          "name": "",
+          "coords": {
+            "center": {
+              "crs": "",
+              "x": 0.0,
+              "y": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "admcode",
+      "code": {
+        "id": "4115058000",
+        "type": "A",
+        "mappingId": "02150580"
+      },
+      "region": {
+        "area0": {
+          "name": "kr",
+          "coords": {
+            "center": {
+              "crs": "",
+              "x": 0.0,
+              "y": 0.0
+            }
+          }
+        },
+        "area1": {
+          "name": "경기도",
+          "coords": {
+            "center": {
+              "crs": "EPSG:4326",
+              "x": 127.550802,
+              "y": 37.4363177
+            }
+          },
+          "alias": "경기"
+        },
+        "area2": {
+          "name": "의정부시",
+          "coords": {
+            "center": {
+              "crs": "EPSG:4326",
+              "x": 127.033753,
+              "y": 37.738083
+            }
+          }
+        },
+        "area3": {
+          "name": "자금동",
+          "coords": {
+            "center": {
+              "crs": "EPSG:4326",
+              "x": 127.0582251,
+              "y": 37.7502752
+            }
+          }
+        },
+        "area4": {
+          "name": "",
+          "coords": {
+            "center": {
+              "crs": "",
+              "x": 0.0,
+              "y": 0.0
+            }
+          }
+        }
+      }
+    }
+  ]
+}
