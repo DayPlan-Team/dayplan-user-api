@@ -1,4 +1,4 @@
-package com.user.api.public.mapper
+package com.user.api.publics.mapper
 
 import com.user.application.request.UserAccountSocialCreationRequest
 import com.user.util.social.SocialType

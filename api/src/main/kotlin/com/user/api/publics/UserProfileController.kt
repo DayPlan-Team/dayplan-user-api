@@ -1,4 +1,4 @@
-package com.user.api.public
+package com.user.api.publics
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.UserProfileUpdateService

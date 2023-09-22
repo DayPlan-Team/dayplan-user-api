@@ -1,4 +1,4 @@
-package com.user.api.public
+package com.user.api.publics
 
 import com.user.application.port.out.UserQueryPort
 import com.user.domain.share.UserAccountStatus

@@ -1,7 +1,7 @@
-package com.user.api.public
+package com.user.api.publics
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.user.api.public.mapper.UserAccountSocialCreationMapper
+import com.user.api.publics.mapper.UserAccountSocialCreationMapper
 import com.user.application.service.UserRegistrationService
 import com.user.util.Logger
 import org.springframework.http.ResponseEntity
