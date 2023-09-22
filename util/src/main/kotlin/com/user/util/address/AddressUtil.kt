@@ -24,7 +24,12 @@ object AddressUtil {
 
     fun transformToAddress(city: String, district: String): AddressCode {
         val cityCode = cityToCityNameMap[city]?.get(0) ?: return AddressCode()
-        val districtCode = districtToDistrictNameMap[district]?.get(0) ?: return AddressCode()
+        val districtCode = districtToDistrictNameMap[district]?.get(0) ?: return AddressCode(
+            city = city,
+            district = "",
+            cityCode = cityCode.code,
+            districtCode = 0L,
+        )
 
         return AddressCode(
             city = city,
