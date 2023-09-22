@@ -1,21 +1,48 @@
-package com.user.api.public
+package com.user.api.publics
 
+import com.user.application.request.GeocodeRequest
+import com.user.application.service.GeoCodeService
 import com.user.application.service.UserVerifyService
+import com.user.util.address.AddressCode
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/user/location")
 class LocationMapController(
     private val userVerifyService: UserVerifyService,
+    private val geoCodeService: GeoCodeService,
 ) {
+
+    @GetMapping("/geocode")
+    fun getAddressCodeByGeocode(
+        @RequestHeader("UserId") userId: Long,
+        @RequestParam("latitude") latitude: Double,
+        @RequestParam("longitude") longitude: Double,
+    ): ResponseEntity<AddressCode> {
+
+        val user = userVerifyService.verifyAndGetUser(userId)
+        CoordinatesVerifier.verifyCoordinates(latitude to longitude)
+
+        val addressCode = geoCodeService.getRegionAddress(
+            GeocodeRequest(
+                latitude = latitude,
+                longitude = longitude,
+            ),
+        )
+
+        return ResponseEntity.ok(addressCode)
+    }
+
 
     @GetMapping("/city")
     fun getCity(@RequestHeader("UserId") userId: Long) {
-        val user = userVerifyService.verifyAndGetUser(userId)
+        userVerifyService.verifyAndGetUser(userId)
     }
 
     @GetMapping("/city/{cityCode}/district")
