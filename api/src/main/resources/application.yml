@@ -8,6 +8,10 @@ social:
       auth-uri: https://accounts.google.com/o/oauth2/auth
       token-uri: https://oauth2.googleapis.com/token
 
+naver:
+  map-client-id: prz24s4qtp
+  map-client-secret: ${NAVER_MAP_CLIENT_SECRET_KEY}
+
 jwt:
   access-expiration-time: 1296000
   refresh-expiration-time: 2592000
