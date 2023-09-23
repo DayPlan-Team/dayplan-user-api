@@ -51,17 +51,19 @@ class LocationMapController(
     @GetMapping("/city")
     fun getCity(
         @RequestHeader("UserId") userId: Long,
-    ): ResponseEntity<List<LocationResponse>> {
+    ): ResponseEntity<LocationOuterResponse<List<LocationResponse>>> {
 
         userVerifyService.verifyAndGetUser(userId)
 
         return ResponseEntity.ok(
-            AddressUtil.cities.map {
-                LocationResponse(
-                    name = it.koreanName,
-                    code = it.code,
-                )
-            },
+            LocationOuterResponse(
+                results = AddressUtil.cities.map {
+                    LocationResponse(
+                        name = it.koreanName,
+                        code = it.code,
+                    )
+                }
+            ),
         )
     }
 
@@ -83,17 +85,19 @@ class LocationMapController(
     fun getDistrictsInCity(
         @RequestHeader("UserId") userId: Long,
         @PathVariable("cityCode") cityCode: Long,
-    ): ResponseEntity<List<LocationResponse>> {
+    ): ResponseEntity<LocationOuterResponse<List<LocationResponse>>> {
 
         userVerifyService.verifyAndGetUser(userId)
         return ResponseEntity.ok(
-            AddressUtil.getDistrictByCityCode(cityCode)
-                .map {
-                    LocationResponse(
-                        name = it.koreanName,
-                        code = it.code,
-                    )
-                }
+            LocationOuterResponse(
+                results = AddressUtil.getDistrictByCityCode(cityCode)
+                    .map {
+                        LocationResponse(
+                            name = it.koreanName,
+                            code = it.code,
+                        )
+                    },
+            )
         )
     }
 
@@ -111,6 +115,10 @@ class LocationMapController(
             boundaryLocationPort.getDistrictBoundaryLocation(districtCode)
         )
     }
+
+    data class LocationOuterResponse<T>(
+        val results: T
+    )
 
     data class LocationResponse(
         val name: String,
