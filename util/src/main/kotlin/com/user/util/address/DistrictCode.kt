@@ -9,6 +9,7 @@ enum class DistrictCode(
 ) {
 
     // 서울
+    DEFAULT(10, CityCode.DEFAULT, "미상"),
     SEOUL_JONGNO(11010, SEOUL, "종로구"),
     SEOUL_JUNG(11020, SEOUL, "중구"),
     SEOUL_YONGSAN(11030, SEOUL, "용산구"),

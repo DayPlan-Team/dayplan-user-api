@@ -10,10 +10,14 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Index
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "user_current_location")
+@Table(
+    name = "user_location_history",
+    indexes = [Index(name = "idx_userId", columnList = "userId")],
+)
 data class UserLocationHistoryEntity(
     @Column
     val userId: Long,
@@ -35,4 +39,18 @@ data class UserLocationHistoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
-) : BaseEntity()
+) : BaseEntity() {
+
+    companion object {
+        fun from(userLocationEntity: UserLocationEntity): UserLocationHistoryEntity {
+            return UserLocationHistoryEntity(
+                userId = userLocationEntity.userId,
+                latitude = userLocationEntity.latitude,
+                longitude = userLocationEntity.longitude,
+                cityCode = userLocationEntity.cityCode,
+                districtCode = userLocationEntity.districtCode,
+            )
+        }
+    }
+
+}

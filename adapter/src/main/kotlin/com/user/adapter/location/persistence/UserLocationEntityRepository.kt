@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserLocationEntityRepository : JpaRepository<UserLocationEntity, Long>
+interface UserLocationEntityRepository : JpaRepository<UserLocationEntity, Long> {
+    fun findByUserId(userId: Long): UserLocationEntity?
+}
