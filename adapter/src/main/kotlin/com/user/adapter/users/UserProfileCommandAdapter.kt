@@ -6,8 +6,10 @@ import com.user.application.port.out.UserProfileCommandPort
 import com.user.domain.user.User
 import com.user.domain.user.request.UserProfileRequest
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
+@Transactional
 class UserProfileCommandAdapter(
     private val userEntityRepository: UserEntityRepository,
 ) : UserProfileCommandPort {
