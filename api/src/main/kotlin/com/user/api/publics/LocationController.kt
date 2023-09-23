@@ -5,7 +5,7 @@ import com.user.application.request.GeocodeRequest
 import com.user.application.service.UserLocationService
 import com.user.application.service.UserVerifyService
 import com.user.domain.location.BoundaryLocation
-import com.user.domain.userlocation.Location
+import com.user.domain.userlocation.Coordinates
 import com.user.util.Logger
 import com.user.util.address.AddressUtil
 import org.springframework.http.ResponseEntity
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope.Empty
 
@@ -30,17 +29,17 @@ class LocationController(
     @PostMapping
     fun upsertUserLocation(
         @RequestHeader("UserId") userId: Long,
-        @RequestBody location: Location,
+        @RequestBody coordinates: Coordinates,
     ): ResponseEntity<Empty> {
 
         val user = userVerifyService.verifyAndGetUser(userId)
-        CoordinatesVerifier.verifyCoordinates(location.latitude to location.longitude)
-
+        CoordinatesVerifier.verifyCoordinates(coordinates.latitude to coordinates.longitude)
+        log.info("latitude = ${coordinates.latitude}, longitude = ${coordinates.longitude}")
         userLocationService.getRegionAddress(
             user = user,
             geocodeRequest = GeocodeRequest(
-                latitude = location.latitude,
-                longitude = location.longitude,
+                latitude = coordinates.latitude,
+                longitude = coordinates.longitude,
             ),
         )
 
