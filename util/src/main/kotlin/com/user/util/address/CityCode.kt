@@ -4,6 +4,7 @@ enum class CityCode(
     val code: Long,
     val koreanName: String,
 ) {
+    DEFAULT(0, "미상"),
     SEOUL(11, "서울특별시"),
     BUSAN(21, "부산광역시"),
     DAEGU(22, "대구광역시"),
