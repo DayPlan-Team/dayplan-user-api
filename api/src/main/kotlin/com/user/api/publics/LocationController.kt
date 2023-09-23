@@ -5,11 +5,14 @@ import com.user.application.request.GeocodeRequest
 import com.user.application.service.UserLocationService
 import com.user.application.service.UserVerifyService
 import com.user.domain.location.BoundaryLocation
+import com.user.domain.userlocation.Location
 import com.user.util.Logger
 import com.user.util.address.AddressUtil
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -18,29 +21,26 @@ import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope.Empty
 
 @RestController
 @RequestMapping("/user/location")
-class LocationMapController(
+class LocationController(
     private val userVerifyService: UserVerifyService,
     private val userLocationService: UserLocationService,
     private val boundaryLocationPort: BoundaryLocationPort,
 ) {
 
-    @GetMapping
-    fun getAddressCodeByGeocode(
+    @PostMapping
+    fun upsertUserLocation(
         @RequestHeader("UserId") userId: Long,
-        @RequestParam("latitude") latitude: Double,
-        @RequestParam("longitude") longitude: Double,
+        @RequestBody location: Location,
     ): ResponseEntity<Empty> {
 
-        log.info("latitude = $latitude, longitude = $longitude")
-
         val user = userVerifyService.verifyAndGetUser(userId)
-        CoordinatesVerifier.verifyCoordinates(latitude to longitude)
+        CoordinatesVerifier.verifyCoordinates(location.latitude to location.longitude)
 
         userLocationService.getRegionAddress(
             user = user,
             geocodeRequest = GeocodeRequest(
-                latitude = latitude,
-                longitude = longitude,
+                latitude = location.latitude,
+                longitude = location.longitude,
             ),
         )
 
