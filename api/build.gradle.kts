@@ -13,7 +13,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation("org.springframework.boot:spring-boot-starter")
-    implementation("com.google.api-client:google-api-client:1.32.5")
+    implementation("com.google.api-client:google-api-client:1.32.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation(project(":util"))
