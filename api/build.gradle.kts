@@ -6,6 +6,10 @@ val bootJar: BootJar by tasks
 bootJar.enabled = false
 jar.enabled = true
 
+plugins {
+    kotlin("plugin.jpa") version "1.8.22"
+}
+
 dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
