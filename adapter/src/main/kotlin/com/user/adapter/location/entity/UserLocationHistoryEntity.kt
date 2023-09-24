@@ -42,7 +42,7 @@ data class UserLocationHistoryEntity(
 ) : BaseEntity() {
 
     companion object {
-        fun from(userLocationEntity: UserLocationEntity): UserLocationHistoryEntity {
+        fun fromUserLocationEntity(userLocationEntity: UserLocationEntity): UserLocationHistoryEntity {
             return UserLocationHistoryEntity(
                 userId = userLocationEntity.userId,
                 latitude = userLocationEntity.latitude,

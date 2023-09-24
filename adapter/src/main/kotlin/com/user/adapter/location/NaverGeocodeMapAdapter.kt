@@ -1,4 +1,4 @@
-package com.user.adapter.location.map
+package com.user.adapter.location
 
 import com.user.application.port.out.GeocodeMapPort
 import com.user.application.request.GeocodeRequest

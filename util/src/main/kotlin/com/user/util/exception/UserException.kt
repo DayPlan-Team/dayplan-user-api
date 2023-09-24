@@ -4,7 +4,7 @@ import com.user.util.exceptioncode.UserExceptionCode
 
 class UserException(
     val code: UserExceptionCode,
-) : Error() {
+) : Exception() {
     override val cause: Throwable
         get() = Throwable(code.errorCode)
     override val message: String

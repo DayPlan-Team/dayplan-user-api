@@ -36,7 +36,7 @@ class UserLocationAdapter(
         )
 
         userLocationEntityRepository.save(userLocationToUpsertEntity)
-        userLocationHistoryEntityRepository.save(UserLocationHistoryEntity.from(userLocationToUpsertEntity))
+        userLocationHistoryEntityRepository.save(UserLocationHistoryEntity.fromUserLocationEntity(userLocationToUpsertEntity))
     }
 
     companion object : Logger()
