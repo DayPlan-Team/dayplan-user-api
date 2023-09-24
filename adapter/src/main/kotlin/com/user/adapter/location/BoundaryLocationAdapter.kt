@@ -1,4 +1,4 @@
-package com.user.adapter.location.map
+package com.user.adapter.location
 
 import com.user.adapter.location.persistence.LocationCityEntityRepository
 import com.user.adapter.location.persistence.LocationDistrictEntityRepository

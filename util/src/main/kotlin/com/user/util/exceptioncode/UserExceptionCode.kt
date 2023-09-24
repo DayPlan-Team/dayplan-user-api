@@ -17,4 +17,6 @@ enum class UserExceptionCode(
     BAD_REQUEST_DISTRICT_CODE(400, "USR0008", "올바르지 않은 시/군/구에요"),
 
     MANDATORY_TERMS_IS_NOT_AGREED(400, "USR1006", "필수 약관은 모두 동의해야해요"),
+
+    PLACE_ALREADY_ROCK(500, "USR1007", "다른 요청이 처리 중입니다. 잠시 후에 요청해주세요")
 }

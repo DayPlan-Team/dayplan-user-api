@@ -28,6 +28,9 @@ dependencies {
     /* RabbitMq */
     implementation("org.springframework.boot:spring-boot-starter-amqp")
 
+    /* RedissonClient */
+    implementation("org.redisson:redisson-spring-boot-starter:3.17.7")
+
     /* MySQL */
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("mysql:mysql-connector-java:8.0.32")

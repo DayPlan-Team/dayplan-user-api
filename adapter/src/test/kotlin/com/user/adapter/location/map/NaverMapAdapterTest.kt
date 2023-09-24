@@ -1,5 +1,6 @@
 package com.user.adapter.location.map
 
+import com.user.adapter.location.NaverGeocodeMapAdapter
 import com.user.application.request.GeocodeRequest
 import com.user.util.Logger
 import io.kotest.core.spec.style.BehaviorSpec
