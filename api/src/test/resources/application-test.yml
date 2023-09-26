@@ -1,4 +1,6 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
   config:
     activate:
       on-profile: test
@@ -10,7 +12,6 @@ spring:
   h2:
     console:
       enabled: true
-
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -37,7 +38,7 @@ social:
   client:
     google:
       client-id: 833986886547-u9hddjs9c7vtv6q9u9op9q2abnbqkmhf.apps.googleusercontent.com
-      client-secret: testkey
+      client-secret: ${GOOGLE_CLIENT_SECRET_KEY}
       redirect-uri: http://localhost:8080/user/creation/social/google
       resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
       auth-uri: https://accounts.google.com/o/oauth2/auth
@@ -45,17 +46,17 @@ social:
 
 naver:
   map-client-id: prz24s4qtp
-  map-client-secret: testkey
+  map-client-secret: ${NAVER_MAP_CLIENT_SECRET_KEY}
 
 jwt:
   access-expiration-time: 1296000
   refresh-expiration-time: 2592000
-  secret-key: testkey
+  secret-key: ${JWT_SECRET_KEY}
 
 logging:
   level:
     root: info
 
 encryption:
-  secret-key: testkey
-  salt: testkey
+  secret-key: ${ENCRYPTION_SECRET_KEY}
+  salt: ${SALT}
