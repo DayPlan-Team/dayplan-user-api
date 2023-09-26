@@ -1,20 +1,21 @@
 package com.user.adapter.users
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.user.adapter.client.GoogleAccountClient
 import com.user.application.port.out.UserAccountSocialSourcePort
 import com.user.application.response.UserSourceResponse
-import com.user.util.Logger
 import com.user.util.exception.SystemException
+import com.user.util.exception.UserException
 import com.user.util.exceptioncode.SystemExceptionCode
+import com.user.util.exceptioncode.UserExceptionCode
 import com.user.util.social.SocialType
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.client.WebClient
 
 @Qualifier("userAccountGoogleSourceAdapter")
 @Component
 class UserAccountGoogleSourceAdapter(
-    private val webClient: WebClient,
+    private val googleAccountClient: GoogleAccountClient,
 ) : UserAccountSocialSourcePort {
     override fun getSocialUserSource(code: String, socialType: SocialType): UserSourceResponse {
 
@@ -27,12 +28,19 @@ class UserAccountGoogleSourceAdapter(
     }
 
     private fun getGoogleValidatedTokenResponseFromIdToken(idToken: String): GoogleValidatedTokenResponse {
-        return webClient.get()
-            .uri("$GOOGLE_TOKEN_URI?id_token=$idToken")
-            .retrieve()
-            .bodyToMono(GoogleValidatedTokenResponse::class.java)
-            .block()
-            ?: throw SystemException(SystemExceptionCode.SOCIAL_LOGIN_TIME_ERROR)
+        val callback = try {
+            googleAccountClient.getGoogleResponseByIdToken(idToken)
+        } catch (e: Exception) {
+            throw SystemException(SystemExceptionCode.SOCIAL_LOGIN_TIME_ERROR)
+        }
+
+        val response = callback.execute()
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return it
+            } ?: throw UserException(UserExceptionCode.USER_NOT_VERIFIED)
+        }
+        else throw SystemException(SystemExceptionCode.SOCIAL_LOGIN_TIME_ERROR)
     }
 
     data class GoogleValidatedTokenResponse(
@@ -53,9 +61,5 @@ class UserAccountGoogleSourceAdapter(
         @JsonProperty("kid") val kid: String,
         @JsonProperty("typ") val idToken: String,
     )
-
-    companion object : Logger() {
-        private const val GOOGLE_TOKEN_URI = "https://oauth2.googleapis.com/tokeninfo"
-    }
 }
 

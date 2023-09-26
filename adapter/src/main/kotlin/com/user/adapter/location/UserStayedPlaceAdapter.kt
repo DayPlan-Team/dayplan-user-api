@@ -16,12 +16,12 @@ class UserStayedPlaceAdapter(
     private val userStayedPlaceEntityRepository: UserStayedPlaceEntityRepository,
     private val placeEntityRepository: PlaceEntityRepository,
 ) : UserStayedPlacePort {
-    override fun upsertUserStayedPlacePort(userStayedPlace: UserStayedPlace) {
+    override fun upsertUserStayedPlace(userStayedPlace: UserStayedPlace) {
         val userStayedPlaceEntity = UserStayedPlaceEntity.fromUserStayedPlace(userStayedPlace)
         userStayedPlaceEntityRepository.save(userStayedPlaceEntity)
     }
 
-    override fun getUserStayedPlace(user: User): List<UserStayedPlace> {
+    override fun getUserStayedPlaceByUser(user: User): List<UserStayedPlace> {
         val userStayedPlaceMapByPlaceId =
             userStayedPlaceEntityRepository.findUserStayedPlaceEntitiesByUserId(user.userId)
                 .associateBy { it.placeId }

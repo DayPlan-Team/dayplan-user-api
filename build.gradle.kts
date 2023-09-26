@@ -69,6 +69,7 @@ subprojects {
         testImplementation("io.kotest:kotest-assertions-core:5.4.2")
         testImplementation("io.kotest:kotest-property:5.4.2")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+        testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
         testImplementation("io.mockk:mockk:1.13.7")
         implementation(kotlin("script-runtime"))
 
