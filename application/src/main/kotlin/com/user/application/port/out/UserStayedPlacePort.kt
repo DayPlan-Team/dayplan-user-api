@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component
 
 @Component
 interface UserStayedPlacePort {
-    fun upsertUserStayedPlacePort(userStayedPlace: UserStayedPlace)
+    fun upsertUserStayedPlace(userStayedPlace: UserStayedPlace)
 
-    fun getUserStayedPlace(user: User): List<UserStayedPlace>
+    fun getUserStayedPlaceByUser(user: User): List<UserStayedPlace>
 
     fun getUserStayedPlaceOrNullByPlace(user: User, place: Place): UserStayedPlace?
 

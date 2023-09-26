@@ -1,34 +1,25 @@
 package com.user.adapter.location
 
+import com.user.adapter.client.NaverGeocodeClient
 import com.user.application.port.out.GeocodeMapPort
 import com.user.application.request.GeocodeRequest
+import com.user.application.response.GeocodeResponse
 import com.user.application.response.GeocodingArea
 import com.user.application.response.GeocodingCode
 import com.user.application.response.GeocodingCoords
 import com.user.application.response.GeocodingCoordsCenter
 import com.user.application.response.GeocodingRegion
-import com.user.application.response.GeocodeResponse
 import com.user.application.response.GeocodingResults
 import com.user.application.response.GeocodingStatus
 import com.user.util.Logger
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.client.WebClient
 
 @Component
 class NaverGeocodeMapAdapter(
-    private val webClient: WebClient,
+    private val naverGeocodeClient: NaverGeocodeClient,
 ) : GeocodeMapPort {
 
-    @Value("\${naver.map-client-id}")
-    private lateinit var clientId: String
-
-    @Value("\${naver.map-client-secret}")
-    private lateinit var secretKey: String
-
-    val defaultResponse =  GeocodeResponse(
+    val defaultResponse = GeocodeResponse(
         status = GeocodingStatus(
             code = GEOCODING_RESPONSE_CODE,
             name = GEOCODING_RESPONSE_NAME,
@@ -100,32 +91,20 @@ class NaverGeocodeMapAdapter(
 
 
     override fun getGeoCodingResponse(geocodeRequest: GeocodeRequest): GeocodeResponse {
-        log.info("reverseGeoCode = ${reverseGeoCode(geocodeRequest).toString()}")
 
-
-        return try {
-            reverseGeoCode(geocodeRequest) ?: defaultResponse
-        } catch (e : Exception) {
-            defaultResponse
+        try {
+            val response = naverGeocodeClient.getGeocodeResponse("${geocodeRequest.longitude},${geocodeRequest.latitude}").execute()
+            if (response.isSuccessful) {
+                return response.body() ?: defaultResponse
+            }
+        } catch (e: Exception) {
+            return defaultResponse
         }
-    }
 
-    private fun reverseGeoCode(coordinates: GeocodeRequest): GeocodeResponse? {
-        return webClient.get()
-            .uri(NAVER_OPEN_API_REVERSE_COORDINATE + "coords=${coordinates.longitude},${coordinates.latitude}")
-            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .header(API_KEY_ID, clientId)
-            .header(API_KEY_SECRET, secretKey)
-            .retrieve()
-            .bodyToMono(GeocodeResponse::class.java)
-            .block()
+        return defaultResponse
     }
 
     companion object : Logger() {
-        const val NAVER_OPEN_API_REVERSE_COORDINATE =
-            "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?output=json&"
-        const val API_KEY_ID = "X-NCP-APIGW-API-KEY-ID"
-        const val API_KEY_SECRET = "X-NCP-APIGW-API-KEY"
         const val GEOCODING_RESPONSE_CODE = -9999
         const val GEOCODING_RESPONSE_NAME = "response-error"
         const val GEOCODING_RESPONSE_MESSAGE = "default"

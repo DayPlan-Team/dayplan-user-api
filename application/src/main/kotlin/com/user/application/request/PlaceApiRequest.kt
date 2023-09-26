@@ -2,7 +2,7 @@ package com.user.application.request
 
 import com.user.domain.location.PlaceCategory
 
-data class PlaceRequest(
+data class PlaceApiRequest(
     val placeName: String,
     val placeCategory: PlaceCategory,
     val latitude: Double,

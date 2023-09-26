@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component
 @Component
 interface PlacePort {
 
-    fun savePlace(place: Place): Place
+    fun upsertPlace(place: Place): Place
 
     fun getPlaceOrNullByAddress(address: String): Place?
+
+    fun getPlaceOrNullById(id: Long): Place
 
 }
