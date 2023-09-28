@@ -2,6 +2,7 @@ package com.user.application.service
 
 import com.user.application.port.out.PlacePort
 import com.user.domain.location.Place
+import com.user.util.Logger
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,11 +16,11 @@ class PlaceService(
         return placePort.getPlaceOrNullByAddress(place.address) ?: placePort.upsertPlace(place)
     }
 
-    fun getAndUpdatePlaceCounter(place: Place) {
-        val findPlace = placePort.getPlaceOrNullById(place.id)
+    fun updatePlaceCounter(place: Place) {
         placePort.upsertPlace(
-            place = findPlace.plusUserRegistrationCountAndReturn()
+            place = place.plusUserRegistrationCountAndReturn()
         )
     }
 
+    companion object : Logger()
 }

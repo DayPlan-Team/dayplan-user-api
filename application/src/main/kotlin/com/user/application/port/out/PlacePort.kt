@@ -10,6 +10,6 @@ interface PlacePort {
 
     fun getPlaceOrNullByAddress(address: String): Place?
 
-    fun getPlaceOrNullById(id: Long): Place
+    fun getPlaceById(id: Long): Place
 
 }

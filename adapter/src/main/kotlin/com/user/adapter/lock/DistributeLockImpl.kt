@@ -1,5 +1,6 @@
 package com.user.adapter.lock
 
+import com.user.util.Logger
 import com.user.util.lock.DistributeLock
 import com.user.util.lock.DistributeLockType
 import com.user.util.lock.LockService
@@ -38,5 +39,7 @@ class DistributeLockImpl<R>(
             action = action,
         )
     }
+
+    companion object : Logger()
 
 }

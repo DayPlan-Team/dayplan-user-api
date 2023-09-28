@@ -6,6 +6,7 @@ import com.user.application.service.UserStayedPlaceService
 import com.user.application.service.UserVerifyService
 import com.user.domain.location.Place
 import com.user.domain.location.PlaceCategory
+import com.user.util.Logger
 import com.user.util.exception.UserException
 import com.user.util.exceptioncode.UserExceptionCode
 import com.user.util.lock.DistributeLock
@@ -35,13 +36,13 @@ class UserStayedPlaceController(
         val user = userVerifyService.verifyAndGetUser(userId)
         val placeRequest = placeApiRequest.toPlaceRequest()
 
-        val place = distributeLock.withLock(
+        distributeLock.withLockUnit(
             distributeLockType = DistributeLockType.PLACE_REGISTRATION,
             key = placeRequest.address,
-            lockTime = 1_000,
+            lockTime = 2_000,
             exception = UserException(UserExceptionCode.PLACE_ALREADY_ROCK),
             action = {
-                placeService.getOrCreatePlace(
+                val place = placeService.getOrCreatePlace(
                     Place(
                         placeName = placeRequest.placeName,
                         placeCategory = placeRequest.placeCategory,
@@ -51,22 +52,13 @@ class UserStayedPlaceController(
                         roadAddress = placeRequest.roadAddress,
                     ),
                 )
-            }
-        )
 
-        userStayedPlaceService.upsertUserStayedPlace(
-            user = user,
-            place = place,
-            placeApiRequest = placeRequest,
-        )
-
-        distributeLock.withLockUnit(
-            distributeLockType = DistributeLockType.PLACE_REGISTRATION,
-            key = placeRequest.address,
-            lockTime = 1_000,
-            exception = UserException(UserExceptionCode.PLACE_ALREADY_ROCK),
-            action = {
-                placeService.getAndUpdatePlaceCounter(place)
+                userStayedPlaceService.upsertUserStayedPlace(
+                    user = user,
+                    place = place,
+                    placeApiRequest = placeRequest,
+                )
+                placeService.updatePlaceCounter(place)
             }
         )
 
@@ -94,4 +86,6 @@ class UserStayedPlaceController(
             )
         }
     }
+
+    companion object : Logger()
 }

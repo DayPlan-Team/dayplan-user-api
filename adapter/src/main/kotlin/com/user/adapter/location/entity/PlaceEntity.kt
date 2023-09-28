@@ -1,16 +1,21 @@
 package com.user.adapter.location.entity
 
+import com.user.adapter.share.BaseEntity
 import com.user.domain.location.Place
 import com.user.domain.location.PlaceCategory
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Index
 import jakarta.persistence.Table
+import org.hibernate.annotations.DynamicUpdate
 
 @Entity
+@DynamicUpdate
 @Table(
     name = "place",
     indexes = [
@@ -18,12 +23,14 @@ import jakarta.persistence.Table
         Index(name = "idx_address", columnList = "address"),
     ]
 )
-data class PlaceEntity(
+data class
+PlaceEntity(
 
     @Column
     val placeName: String,
 
     @Column
+    @Enumerated(EnumType.STRING)
     val placeCategory: PlaceCategory,
 
     @Column
@@ -44,7 +51,7 @@ data class PlaceEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
-) {
+) : BaseEntity() {
     companion object {
         fun fromPlace(place: Place): PlaceEntity {
             return PlaceEntity(

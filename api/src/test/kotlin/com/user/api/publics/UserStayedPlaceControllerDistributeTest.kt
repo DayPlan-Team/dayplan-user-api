@@ -87,6 +87,7 @@ class UserStayedPlaceControllerDistributeTest : FunSpec() {
 
                 places.size shouldBe 1L
                 places[0].address shouldBe  "서울특별시 스프링로 코틀린대로 47"
+                places[0].userRegistrationCount shouldBe 5L
 
                 userStayedPlaces.size shouldBe 5L
                 userStayedPlaceIds.size shouldBe 1L
