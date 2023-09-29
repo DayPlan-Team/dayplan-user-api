@@ -2,7 +2,6 @@ package com.user.adapter
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest(classes = [AdapterTestConfiguration::class])
 class AdapterApplicationTests {
