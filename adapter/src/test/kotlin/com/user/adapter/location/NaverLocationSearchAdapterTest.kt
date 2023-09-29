@@ -1,14 +1,22 @@
 package com.user.adapter.location
 
+import com.user.adapter.AdapterTestConfiguration
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.shouldBe
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 
-class NaverLocationSearchAdapterTest : FunSpec({
+@ActiveProfiles("test")
+@SpringBootTest(classes = [AdapterTestConfiguration::class])
+class NaverLocationSearchAdapterTest(
+    @Autowired private val naverLocationSearchAdapter: NaverLocationSearchAdapter,
+) : FunSpec({
 
 
     context("") {
+        val query = "강동구 성내동 까치 부동산"
         test("") {
-
+            val result = naverLocationSearchAdapter.searchLocation(query)
         }
     }
 
