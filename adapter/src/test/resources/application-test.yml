@@ -1,19 +1,55 @@
+social:
+  client:
+    google:
+      client-id: 833986886547-u9hddjs9c7vtv6q9u9op9q2abnbqkmhf.apps.googleusercontent.com
+      client-secret: ${GOOGLE_CLIENT_SECRET_KEY}
+      redirect-uri: http://localhost:8080/user/creation/social/google
+      resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
+      auth-uri: https://accounts.google.com/o/oauth2/auth
+      token-uri: https://oauth2.googleapis.com/token
+
+naver:
+  map-client-id: prz24s4qtp
+  map-client-secret: ${NAVER_MAP_CLIENT_SECRET_KEY}
+  develop-client-id: fZDbnomZT2TEeFgejPuJ
+  develop-client-secret: ${NAVER_DEVELOP_SECRET_KEY}
+
+jwt:
+  access-expiration-time: 1296000
+  refresh-expiration-time: 2592000
+  secret-key: ${JWT_SECRET_KEY}
+
+logging:
+  level:
+    root: info
+
+encryption:
+  secret-key: ${ENCRYPTION_SECRET_KEY}
+  salt: ${SALT}
+
 spring:
   config:
     activate:
-      on-profile: test
+      on-profile: default, local
+
+  #  datasource:
+  #    url: jdbc:h2:tcp://localhost/~/Documents/h2-db/dayplan-user-local
+  #    driver-class-name: org.h2.Driver
+  #    username: sa
+  #    password:
+  #  h2:
+  #    console:
+  #      enabled: true
+
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dayplanuserlocal
+    username: root
     password:
-  h2:
-    console:
-      enabled: true
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -32,30 +68,14 @@ spring:
 
   jackson:
     property-naming-strategy: SNAKE_CASE
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
 
-social:
-  client:
-    google:
-      client-id: 833986886547-u9hddjs9c7vtv6q9u9op9q2abnbqkmhf.apps.googleusercontent.com
-      client-secret: ${GOOGLE_CLIENT_SECRET_KEY}
-      redirect-uri: http://localhost:8080/user/creation/social/google
-      resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
-      auth-uri: https://accounts.google.com/o/oauth2/auth
-      token-uri: https://oauth2.googleapis.com/token
-
-naver:
-  map-client-id: prz24s4qtp
-  map-client-secret: ${NAVER_MAP_CLIENT_SECRET_KEY}
-
-jwt:
-  access-expiration-time: 1296000
-  refresh-expiration-time: 2592000
-  secret-key: ${JWT_SECRET_KEY}
-
-logging:
-  level:
-    root: info
-
-encryption:
-  secret-key: ${ENCRYPTION_SECRET_KEY}
-  salt: ${SALT}
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dayplanuser
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
