@@ -13,10 +13,10 @@ class NaverLocationSearchAdapterTest(
 ) : FunSpec({
 
 
-    context("") {
+    context("테스트1") {
         val query = "강동구 성내동 까치 부동산"
-        test("") {
-            val result = naverLocationSearchAdapter.searchLocation(query)
+        test("테스트2") {
+            naverLocationSearchAdapter.searchLocation(query)
         }
     }
 

@@ -4,15 +4,16 @@ import com.user.adapter.client.NaverSearchClient
 import com.user.application.port.out.LocationSearchPort
 import com.user.util.Logger
 import org.springframework.stereotype.Component
-import java.net.URLDecoder
+import java.net.URLEncoder
 
 @Component
 class NaverLocationSearchAdapter(
     private val naverSearchClient: NaverSearchClient,
 ) : LocationSearchPort {
     override fun searchLocation(query: String) {
-        val decode = URLDecoder.decode(query, UTF_8)
-        val location = naverSearchClient.searchLocation(decode)
+        val encode = URLEncoder.encode(query, UTF_8)
+        log.info("encode = $encode")
+        val location = naverSearchClient.searchLocation(encode)
 
         val response = location.execute()
         if (response.isSuccessful) {
