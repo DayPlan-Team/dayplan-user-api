@@ -1,7 +1,6 @@
 package com.user.adapter.client
 
-import com.user.application.response.LocationItem
-import com.user.application.response.LocationItemResponse
+import com.user.application.response.PlaceItemResponse
 import org.springframework.stereotype.Component
 import retrofit2.Call
 import retrofit2.http.GET
@@ -12,9 +11,10 @@ import retrofit2.http.Query
 interface NaverSearchClient {
 
     @Headers(ApiClientUtil.CONTENT_TYPE_APPLICATION_JSON)
-    @GET("/v1/search/local.json")
+    @GET("/v1/search/local.json?display=10&sort=random")
     fun searchLocation(
-        @Query("query") coords: String,
-    ): Call<LocationItemResponse>
+        @Query("query") place: String,
+        @Query("start") start: Int = 1,
+    ): Call<PlaceItemResponse>
 
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope.Empty
 
@@ -114,16 +113,6 @@ class LocationController(
             boundaryLocationPort.getDistrictBoundaryLocation(districtCode)
         )
     }
-
-    @GetMapping("/search")
-    fun searchLocation(
-        @RequestHeader("UserId") userId: Long,
-        @RequestParam("query") query: String,
-    ) {
-        val user = userVerifyService.verifyAndGetUser(userId)
-
-    }
-
 
     data class LocationOuterResponse<T>(
         val results: T

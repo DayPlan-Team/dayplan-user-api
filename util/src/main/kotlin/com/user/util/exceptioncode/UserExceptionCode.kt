@@ -15,6 +15,7 @@ enum class UserExceptionCode(
     BAD_REQUEST_COORDINATES(400, "USR0006", "올바르지 않은 좌표에요"),
     BAD_REQUEST_CITY_CODE(400, "USR0007", "올바르지 않은 시/도에요"),
     BAD_REQUEST_DISTRICT_CODE(400, "USR0008", "올바르지 않은 시/군/구에요"),
+    NOT_FOUND_LOCATION_PLACE(400, "USR0009", "주변 정보를 찾을 수 없습니다."),
 
     MANDATORY_TERMS_IS_NOT_AGREED(400, "USR1006", "필수 약관은 모두 동의해야해요"),
 
