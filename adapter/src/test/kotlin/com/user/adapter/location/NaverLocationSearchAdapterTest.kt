@@ -9,14 +9,14 @@ import org.springframework.test.context.ActiveProfiles
 @ActiveProfiles("test")
 @SpringBootTest(classes = [AdapterTestConfiguration::class])
 class NaverLocationSearchAdapterTest(
-    @Autowired private val naverLocationSearchAdapter: NaverLocationSearchAdapter,
+    @Autowired private val naverPlaceSearchAdapter: NaverPlaceSearchAdapter,
 ) : FunSpec({
 
 
     context("테스트1") {
         val query = "강동구 성내동 까치 부동산"
         test("테스트2") {
-            naverLocationSearchAdapter.searchLocation(query)
+            naverPlaceSearchAdapter.searchLocation(query)
         }
     }
 
