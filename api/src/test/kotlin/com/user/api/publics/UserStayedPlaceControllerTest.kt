@@ -3,7 +3,7 @@ package com.user.api.publics
 import com.google.gson.Gson
 import com.ninjasquad.springmockk.MockkBean
 import com.user.api.ApiTestConfiguration
-import com.user.application.request.PlaceApiRequest
+import com.user.application.request.PlaceRequest
 import com.user.application.service.UserVerifyService
 import com.user.domain.location.PlaceCategory
 import com.user.domain.share.UserAccountStatus
@@ -45,7 +45,7 @@ class UserStayedPlaceControllerTest : FunSpec() {
                 userId = userId,
             )
 
-            val placeApiRequest = PlaceApiRequest(
+            val placeRequest = PlaceRequest(
                 placeName = "스타벅스",
                 placeCategory = PlaceCategory.CAFE,
                 latitude = 127.033234,
@@ -61,7 +61,7 @@ class UserStayedPlaceControllerTest : FunSpec() {
                 val resultBuilder = MockMvcRequestBuilders.post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .header(USER_ID_HEADER, USER_ID_HEADER_VALUE)
-                    .content(Gson().toJson(placeApiRequest))
+                    .content(Gson().toJson(placeRequest))
 
                 mockMvc.perform(resultBuilder)
                     .andReturn()

@@ -6,7 +6,7 @@ import com.user.adapter.location.persistence.UserStayedPlaceEntityRepository
 import com.user.adapter.users.entity.UserEntity
 import com.user.adapter.users.persistence.UserEntityRepository
 import com.user.api.ApiTestConfiguration
-import com.user.application.request.PlaceApiRequest
+import com.user.application.request.PlaceRequest
 import com.user.domain.location.PlaceCategory
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
@@ -47,7 +47,7 @@ class UserStayedPlaceControllerDistributeTest : FunSpec() {
     init {
         context("다수 유저의 동일한 플레이스 요청이 주어져요") {
 
-            val placeApiRequest = PlaceApiRequest(
+            val placeRequest = PlaceRequest(
                 placeName = "스타벅스",
                 placeCategory = PlaceCategory.CAFE,
                 latitude = 127.033234,
@@ -66,12 +66,12 @@ class UserStayedPlaceControllerDistributeTest : FunSpec() {
                 for (i in 1 .. threadCount) {
                     executorService.submit {
                         try {
-                            val resultABuilder = MockMvcRequestBuilders.post(BASE_URL)
+                            val resultBuilder = MockMvcRequestBuilders.post(BASE_URL)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(USER_ID_HEADER, i)
-                                .content(Gson().toJson(placeApiRequest))
+                                .content(Gson().toJson(placeRequest))
 
-                            mockMvc.perform(resultABuilder)
+                            mockMvc.perform(resultBuilder)
                                 .andExpect { it.response.status shouldBe 200 }
 
                         } finally {
