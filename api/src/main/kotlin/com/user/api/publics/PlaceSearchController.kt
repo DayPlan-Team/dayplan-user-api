@@ -3,6 +3,7 @@ package com.user.api.publics
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.PlaceSearchService
 import com.user.application.service.UserVerifyService
+import com.user.util.address.AddressUtil
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
@@ -20,12 +21,15 @@ class PlaceSearchController(
     @GetMapping("/search")
     fun searchLocation(
         @RequestHeader("UserId") userId: Long,
+        @RequestParam("citycode") cityCode: Long,
+        @RequestParam("districtcode") districtCode: Long,
         @RequestParam("place") place: String,
         @RequestParam("start", required = false) start: Int = 1,
     ): ResponseEntity<PlaceItemApiResponse> {
         userVerifyService.verifyAndGetUser(userId)
 
-        val placeItemResponse = placeSearchService.searchPlace(place, start)
+        val placeSearchQuery = AddressUtil.verifyAndGetAddress(cityCode, districtCode, place)
+        val placeItemResponse = placeSearchService.searchPlace(placeSearchQuery, start)
 
         val result = PlaceItemApiResponse(
             total = placeItemResponse.total,
