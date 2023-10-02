@@ -15,6 +15,11 @@ class PlaceAdapter(
 ) : PlacePort {
 
     @Transactional
+    override fun createPlace(place: Place) {
+        placeEntityRepository.save(PlaceEntity.fromPlace(place))
+    }
+
+    @Transactional
     override fun upsertPlace(place: Place): Place {
         val savedPlace = placeEntityRepository.saveAndFlush(
             PlaceEntity.fromPlace(place)
