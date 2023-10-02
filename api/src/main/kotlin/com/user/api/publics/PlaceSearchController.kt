@@ -3,6 +3,7 @@ package com.user.api.publics
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.PlaceSearchService
 import com.user.application.service.UserVerifyService
+import com.user.util.Logger
 import com.user.util.address.AddressUtil
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,18 +26,19 @@ class PlaceSearchController(
         @RequestParam("districtcode") districtCode: Long,
         @RequestParam("place") place: String,
         @RequestParam("start", required = false) start: Int = 1,
-    ): ResponseEntity<PlaceItemApiResponse> {
+    ): ResponseEntity<PlaceItemApiOuterResponse> {
         userVerifyService.verifyAndGetUser(userId)
 
+        log.info("userId = $userId, citycode = $cityCode, districtcode = $districtCode, place = $place, start = $start")
         val placeSearchQuery = AddressUtil.verifyAndGetAddress(cityCode, districtCode, place)
         val placeItemResponse = placeSearchService.searchPlace(placeSearchQuery, start)
 
-        val result = PlaceItemApiResponse(
+        val result = PlaceItemApiOuterResponse(
             total = placeItemResponse.total,
             start = placeItemResponse.start,
             display = placeItemResponse.display,
             items = placeItemResponse.items.map {
-                PlaceApiItem(
+                PlaceItemApiResponse(
                     title = it.title,
                     link = it.link,
                     category = it.category,
@@ -49,18 +51,19 @@ class PlaceSearchController(
                 )
             }
         )
+        log.info("result = ${result.items.size}")
 
         return ResponseEntity.ok(result)
     }
 
-    data class PlaceItemApiResponse(
+    data class PlaceItemApiOuterResponse(
         @JsonProperty("total") val total: Int = 0,
         @JsonProperty("start") val start: Int = 1,
         @JsonProperty("display") val display: Int = 10,
-        @JsonProperty("items") val items: List<PlaceApiItem> = emptyList(),
+        @JsonProperty("items") val items: List<PlaceItemApiResponse> = emptyList(),
     )
 
-    data class PlaceApiItem(
+    data class PlaceItemApiResponse(
         @JsonProperty("title") val title: String = "",
         @JsonProperty("link") val link: String = "",
         @JsonProperty("category") val category: String = "",
@@ -71,4 +74,6 @@ class PlaceSearchController(
         @JsonProperty("mapx") val mapx: String = "",
         @JsonProperty("mapy") val mapy: String = "",
     )
+
+    companion object : Logger()
 }
