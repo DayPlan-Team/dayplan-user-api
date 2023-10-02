@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 
 @Component
 interface DistributeLock<R> {
-    fun withLock(
+    fun withLockRetry(
         distributeLockType: DistributeLockType,
         key: String,
         lockTime: Long,
@@ -12,7 +12,23 @@ interface DistributeLock<R> {
         action: () -> R,
     ): R
 
-    fun withLockUnit(
+    fun withLockUnitRetry(
+        distributeLockType: DistributeLockType,
+        key: String,
+        lockTime: Long,
+        exception: Exception,
+        action: () -> Unit,
+    )
+
+    fun withLockAtomic(
+        distributeLockType: DistributeLockType,
+        key: String,
+        lockTime: Long,
+        exception: Exception,
+        action: () -> R,
+    ): R
+
+    fun withLockUnitAtomic(
         distributeLockType: DistributeLockType,
         key: String,
         lockTime: Long,

@@ -17,7 +17,6 @@ class NaverPlaceSearchAdapter(
 
         val response = location.execute()
         if (response.isSuccessful) {
-            log.info("response = ${response.body()}")
             return response.body() ?: PlaceItemResponse()
         }
 

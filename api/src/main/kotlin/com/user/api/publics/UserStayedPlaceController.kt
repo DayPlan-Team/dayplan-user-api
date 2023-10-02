@@ -1,6 +1,7 @@
 package com.user.api.publics
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.user.application.request.PlaceRequest
 import com.user.application.service.PlaceService
 import com.user.application.service.UserStayedPlaceService
 import com.user.application.service.UserVerifyService
@@ -36,7 +37,7 @@ class UserStayedPlaceController(
         val user = userVerifyService.verifyAndGetUser(userId)
         val placeRequest = placeApiRequest.toPlaceRequest()
 
-        distributeLock.withLockUnit(
+        distributeLock.withLockUnitRetry(
             distributeLockType = DistributeLockType.PLACE_REGISTRATION,
             key = placeRequest.address,
             lockTime = 2_000,
@@ -50,13 +51,15 @@ class UserStayedPlaceController(
                         longitude = placeRequest.longitude,
                         address = placeRequest.address,
                         roadAddress = placeRequest.roadAddress,
+                        link = placeRequest.link,
+                        telephone = placeRequest.telephone,
                     ),
                 )
 
                 userStayedPlaceService.upsertUserStayedPlace(
                     user = user,
                     place = place,
-                    placeApiRequest = placeRequest,
+                    placeRequest = placeRequest,
                 )
                 placeService.updatePlaceCounter(place)
             }
@@ -73,9 +76,11 @@ class UserStayedPlaceController(
         @JsonProperty("address") val address: String,
         @JsonProperty("roadAddress") val roadAddress: String,
         @JsonProperty("placeUserDescription") val placeUserDescription: String,
+        @JsonProperty("link") val link: String = "",
+        @JsonProperty("telephone") val telephone: String = "",
     ) {
-        fun toPlaceRequest(): com.user.application.request.PlaceApiRequest {
-            return com.user.application.request.PlaceApiRequest(
+        fun toPlaceRequest(): PlaceRequest {
+            return PlaceRequest(
                 placeName = placeName,
                 placeCategory = placeCategory,
                 latitude = latitude,
@@ -83,6 +88,8 @@ class UserStayedPlaceController(
                 address = address,
                 roadAddress = roadAddress,
                 placeUserDescription = placeUserDescription,
+                link = link,
+                telephone = telephone,
             )
         }
     }

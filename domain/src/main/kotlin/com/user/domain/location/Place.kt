@@ -8,6 +8,8 @@ data class Place(
     val address: String,
     val roadAddress: String,
     val userRegistrationCount: Long = 0L,
+    val link: String = "",
+    val telephone: String = "",
     val id: Long = 0L,
 ) {
     fun plusUserRegistrationCountAndReturn(): Place {
@@ -19,6 +21,8 @@ data class Place(
             address = address,
             roadAddress = roadAddress,
             userRegistrationCount = userRegistrationCount + 1,
+            link = link,
+            telephone = telephone,
             id = id,
         )
     }

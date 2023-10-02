@@ -1,7 +1,7 @@
 package com.user.application.service
 
 import com.user.application.port.out.UserStayedPlacePort
-import com.user.application.request.PlaceApiRequest
+import com.user.application.request.PlaceRequest
 import com.user.domain.location.Place
 import com.user.domain.location.UserStayedPlace
 import com.user.domain.user.User
@@ -15,14 +15,14 @@ class UserStayedPlaceService(
     private val userStayedPlacePort: UserStayedPlacePort,
 ) {
 
-    fun upsertUserStayedPlace(user: User, place: Place, placeApiRequest: PlaceApiRequest) {
+    fun upsertUserStayedPlace(user: User, place: Place, placeRequest: PlaceRequest) {
         userStayedPlacePort.getUserStayedPlaceOrNullByPlace(user, place)
             ?.let {
                 userStayedPlacePort.upsertUserStayedPlace(
                     UserStayedPlace(
                         user = user,
                         place = place,
-                        placeUserDescription = placeApiRequest.placeUserDescription,
+                        placeUserDescription = placeRequest.placeUserDescription,
                         id = it.id
                     ),
                 )
@@ -31,7 +31,7 @@ class UserStayedPlaceService(
                 UserStayedPlace(
                     user = user,
                     place = place,
-                    placeUserDescription = placeApiRequest.placeUserDescription,
+                    placeUserDescription = placeRequest.placeUserDescription,
                 ),
             )
         }

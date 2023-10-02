@@ -48,6 +48,12 @@ PlaceEntity(
     @Column
     val userRegistrationCount: Long = 0L,
 
+    @Column
+    val link: String = "",
+
+    @Column
+    val telephone: String = "",
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
@@ -62,6 +68,8 @@ PlaceEntity(
                 address = place.address,
                 roadAddress = place.roadAddress,
                 userRegistrationCount = place.userRegistrationCount,
+                link = place.link,
+                telephone = place.telephone,
                 id = place.id,
             )
         }
@@ -76,6 +84,8 @@ PlaceEntity(
             address = address,
             roadAddress = roadAddress,
             userRegistrationCount = userRegistrationCount,
+            link = link,
+            telephone = telephone,
             id = id,
         )
     }

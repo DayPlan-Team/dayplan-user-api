@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component
 class DistributeLockImpl<R>(
     private val lockService: LockService<R>
 ) : DistributeLock<R> {
-    override fun withLock(
+    override fun withLockRetry(
         distributeLockType: DistributeLockType,
         key: String,
         lockTime: Long,
         exception: Exception,
         action: () -> R
     ): R {
-        return lockService.lock(
+        return lockService.lockRetry(
             key = "${distributeLockType.name}:$key",
             lockTime = lockTime,
             exception = exception,
@@ -25,14 +25,44 @@ class DistributeLockImpl<R>(
         )
     }
 
-    override fun withLockUnit(
+    override fun withLockUnitRetry(
         distributeLockType: DistributeLockType,
         key: String,
         lockTime: Long,
         exception: Exception,
         action: () -> Unit
     ) {
-        lockService.lockUnit(
+        lockService.lockUnitRetry(
+            key = "${distributeLockType.name}:$key",
+            lockTime = lockTime,
+            exception = exception,
+            action = action,
+        )
+    }
+
+    override fun withLockAtomic(
+        distributeLockType: DistributeLockType,
+        key: String,
+        lockTime: Long,
+        exception: Exception,
+        action: () -> R
+    ): R {
+        return lockService.lockAtomic(
+            key = "${distributeLockType.name}:$key",
+            lockTime = lockTime,
+            exception = exception,
+            action = action,
+        )
+    }
+
+    override fun withLockUnitAtomic(
+        distributeLockType: DistributeLockType,
+        key: String,
+        lockTime: Long,
+        exception: Exception,
+        action: () -> Unit
+    ) {
+        lockService.lockUnitAtomic(
             key = "${distributeLockType.name}:$key",
             lockTime = lockTime,
             exception = exception,

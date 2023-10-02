@@ -3,6 +3,7 @@ package com.user.api.publics
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.PlaceSearchService
 import com.user.application.service.UserVerifyService
+import com.user.domain.location.PlaceCategory
 import com.user.util.Logger
 import com.user.util.address.AddressUtil
 import org.springframework.http.ResponseEntity
@@ -20,18 +21,22 @@ class PlaceSearchController(
 ) {
 
     @GetMapping("/search")
-    fun searchLocation(
+    suspend fun searchLocation(
         @RequestHeader("UserId") userId: Long,
         @RequestParam("citycode") cityCode: Long,
         @RequestParam("districtcode") districtCode: Long,
-        @RequestParam("place") place: String,
-        @RequestParam("start", required = false) start: Int = 1,
+        @RequestParam("place") placeCategory: PlaceCategory,
+        @RequestParam("start", required = false) start: Int? = 1,
     ): ResponseEntity<PlaceItemApiOuterResponse> {
+
+        log.info("result.request test")
+
         userVerifyService.verifyAndGetUser(userId)
 
-        log.info("userId = $userId, citycode = $cityCode, districtcode = $districtCode, place = $place, start = $start")
-        val placeSearchQuery = AddressUtil.verifyAndGetAddress(cityCode, districtCode, place)
-        val placeItemResponse = placeSearchService.searchPlace(placeSearchQuery, start)
+        val placeSearchQuery = AddressUtil.verifyAndGetAddress(cityCode, districtCode, placeCategory.koreanName)
+        val actualStart = start ?: 1
+
+        val placeItemResponse = placeSearchService.searchPlace(placeSearchQuery, placeCategory, actualStart)
 
         val result = PlaceItemApiOuterResponse(
             total = placeItemResponse.total,
@@ -51,7 +56,7 @@ class PlaceSearchController(
                 )
             }
         )
-        log.info("result = ${result.items.size}")
+        log.info("result.size = ${result.items.size}")
 
         return ResponseEntity.ok(result)
     }

@@ -6,7 +6,7 @@ import com.user.adapter.location.persistence.UserStayedPlaceEntityRepository
 import com.user.adapter.users.entity.UserEntity
 import com.user.adapter.users.persistence.UserEntityRepository
 import com.user.application.ApplicationTestConfiguration
-import com.user.application.request.PlaceApiRequest
+import com.user.application.request.PlaceRequest
 import com.user.domain.location.Place
 import com.user.domain.location.PlaceCategory
 import com.user.domain.share.UserAccountStatus
@@ -49,7 +49,7 @@ class UserStayedPlaceServiceBootTest(
             roadAddress = "서울특별시 스프링구 코틀린동 37",
         )
 
-        val placeApiRequest = PlaceApiRequest(
+        val placeRequest = PlaceRequest(
             placeName = "스타벅스",
             placeCategory = PlaceCategory.CAFE,
             latitude = 127.033234,
@@ -72,7 +72,7 @@ class UserStayedPlaceServiceBootTest(
             userStayedPlaceService.upsertUserStayedPlace(
                 user = saveUser,
                 place = savePlace,
-                placeApiRequest = placeApiRequest,
+                placeRequest = placeRequest,
             )
 
             val userStayedPlaceResult = userStayedPlaceEntityRepository.findAll()
@@ -80,7 +80,7 @@ class UserStayedPlaceServiceBootTest(
                 .first()
 
             then("새로운 플레이스에 대한 위치와 유저의 플레이스가 저장되어야 해요") {
-                userStayedPlaceResult shouldBe placeApiRequest.placeUserDescription
+                userStayedPlaceResult shouldBe placeRequest.placeUserDescription
             }
         }
     }

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component
 @Component
 interface PlacePort {
 
+    fun createPlace(place: Place)
+
     fun upsertPlace(place: Place): Place
 
     fun getPlaceOrNullByAddress(address: String): Place?

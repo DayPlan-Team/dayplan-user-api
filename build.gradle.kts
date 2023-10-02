@@ -75,6 +75,8 @@ subprojects {
 
         runtimeOnly("com.mysql:mysql-connector-j")
         implementation("mysql:mysql-connector-java:8.0.32")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.5.2")
     }
 
     tasks.register("prepareKotlinBuildScriptModel"){}
