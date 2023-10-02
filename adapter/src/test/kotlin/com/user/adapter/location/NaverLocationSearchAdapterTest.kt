@@ -16,7 +16,7 @@ class NaverLocationSearchAdapterTest(
     context("테스트1") {
         val query = "강동구 성내동 까치 부동산"
         test("테스트2") {
-            naverPlaceSearchAdapter.searchLocation(query)
+            naverPlaceSearchAdapter.searchLocation(query, 1)
         }
     }
 
