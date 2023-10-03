@@ -7,4 +7,5 @@ import org.springframework.stereotype.Component
 interface UserLocationPort {
     fun upsertUserLocation(userLocation: UserLocation)
 
+    suspend fun sendUserLocation(userLocation: UserLocation)
 }

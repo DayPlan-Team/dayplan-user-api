@@ -1,8 +1,9 @@
 package com.user.adapter.location
 
-import com.user.adapter.location.entity.UserLocationEntity
+import com.user.adapter.client.DateCourseClient
+import com.user.adapter.location.entity.UserCurrentLocationEntity
 import com.user.adapter.location.entity.UserLocationHistoryEntity
-import com.user.adapter.location.persistence.UserLocationEntityRepository
+import com.user.adapter.location.persistence.UserCurrentLocationEntityRepository
 import com.user.adapter.location.persistence.UserLocationHistoryEntityRepository
 import com.user.application.port.out.UserLocationPort
 import com.user.domain.location.UserLocation
@@ -13,30 +14,35 @@ import org.springframework.transaction.annotation.Transactional
 @Component
 @Transactional
 class UserLocationAdapter(
-    private val userLocationEntityRepository: UserLocationEntityRepository,
+    private val userCurrentLocationEntityRepository: UserCurrentLocationEntityRepository,
     private val userLocationHistoryEntityRepository: UserLocationHistoryEntityRepository,
+    private val dateCourseClient: DateCourseClient,
 ) : UserLocationPort {
     override fun upsertUserLocation(userLocation: UserLocation) {
-        val userLocationEntity = userLocationEntityRepository.findByUserId(userLocation.user.userId)
+        val userLocationEntity = userCurrentLocationEntityRepository.findByUserId(userLocation.user.userId)
         val userLocationToUpsertEntity = userLocationEntity?.let {
-            UserLocationEntity(
+            UserCurrentLocationEntity(
                 userId = userLocation.user.userId,
                 latitude = userLocation.latitude,
                 longitude = userLocation.longitude,
-                cityCode = userLocation.cityCode,
-                districtCode = userLocation.districtCode,
                 id = it.id,
             )
-        } ?: UserLocationEntity(
+        } ?: UserCurrentLocationEntity(
             userId = userLocation.user.userId,
             latitude = userLocation.latitude,
             longitude = userLocation.longitude,
-            cityCode = userLocation.cityCode,
-            districtCode = userLocation.districtCode,
         )
 
-        userLocationEntityRepository.save(userLocationToUpsertEntity)
+        userCurrentLocationEntityRepository.save(userLocationToUpsertEntity)
         userLocationHistoryEntityRepository.save(UserLocationHistoryEntity.fromUserLocationEntity(userLocationToUpsertEntity))
+    }
+
+    override suspend fun sendUserLocation(userLocation: UserLocation) {
+        try {
+            dateCourseClient.sendUserLocation(userLocation)
+        } catch (e: Exception) {
+            log.error(e.message)
+        }
     }
 
     companion object : Logger()
