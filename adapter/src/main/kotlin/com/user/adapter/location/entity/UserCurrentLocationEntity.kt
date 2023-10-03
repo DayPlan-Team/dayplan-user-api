@@ -1,12 +1,8 @@
 package com.user.adapter.location.entity
 
 import com.user.adapter.share.BaseEntity
-import com.user.util.address.CityCode
-import com.user.util.address.DistrictCode
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -18,7 +14,7 @@ import jakarta.persistence.Table
     name = "user_current_location",
     indexes = [Index(name = "idx_userId", columnList = "userId")],
 )
-data class UserLocationEntity(
+data class UserCurrentLocationEntity(
 
     @Column
     val userId: Long,
@@ -28,14 +24,6 @@ data class UserLocationEntity(
 
     @Column
     val longitude: Double,
-
-    @Column
-    @Enumerated(value = EnumType.STRING)
-    val cityCode: CityCode,
-
-    @Column
-    @Enumerated(value = EnumType.STRING)
-    val districtCode: DistrictCode,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -63,22 +63,13 @@ object AddressUtil {
         districtByDistrictCode[districtCode] ?: throw UserException(UserExceptionCode.BAD_REQUEST_DISTRICT_CODE)
     }
 
-    fun verifyAndGetAddress(cityCode: Long, districtCode: Long): String {
-        verifyAddressCode(cityCode, districtCode)
-        return StringBuilder()
-            .append(cityByCityCode[cityCode]!!.koreanName)
-            .append("\t")
-            .append(districtByDistrictCode[districtCode]!!.koreanName)
-            .toString()
-    }
-
     fun verifyAndGetAddress(cityCode: Long, districtCode: Long, place: String): String {
         verifyAddressCode(cityCode, districtCode)
         return StringBuilder()
             .append(cityByCityCode[cityCode]!!.koreanName)
-            .append("\t")
+            .append(" ")
             .append(districtByDistrictCode[districtCode]!!.koreanName)
-            .append("\t")
+            .append(" ")
             .append(place)
             .toString()
     }

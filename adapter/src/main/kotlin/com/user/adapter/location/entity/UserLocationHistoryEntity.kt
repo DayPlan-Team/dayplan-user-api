@@ -1,12 +1,8 @@
 package com.user.adapter.location.entity
 
 import com.user.adapter.share.BaseEntity
-import com.user.util.address.CityCode
-import com.user.util.address.DistrictCode
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -28,27 +24,17 @@ data class UserLocationHistoryEntity(
     @Column
     val longitude: Double,
 
-    @Column
-    @Enumerated(value = EnumType.STRING)
-    val cityCode: CityCode,
-
-    @Column
-    @Enumerated(value = EnumType.STRING)
-    val districtCode: DistrictCode,
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
 ) : BaseEntity() {
 
     companion object {
-        fun fromUserLocationEntity(userLocationEntity: UserLocationEntity): UserLocationHistoryEntity {
+        fun fromUserLocationEntity(userCurrentLocationEntity: UserCurrentLocationEntity): UserLocationHistoryEntity {
             return UserLocationHistoryEntity(
-                userId = userLocationEntity.userId,
-                latitude = userLocationEntity.latitude,
-                longitude = userLocationEntity.longitude,
-                cityCode = userLocationEntity.cityCode,
-                districtCode = userLocationEntity.districtCode,
+                userId = userCurrentLocationEntity.userId,
+                latitude = userCurrentLocationEntity.latitude,
+                longitude = userCurrentLocationEntity.longitude,
             )
         }
     }

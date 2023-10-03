@@ -29,8 +29,6 @@ class PlaceSearchController(
         @RequestParam("start", required = false) start: Int? = 1,
     ): ResponseEntity<PlaceItemApiOuterResponse> {
 
-        log.info("result.request test")
-
         userVerifyService.verifyAndGetUser(userId)
 
         val placeSearchQuery = AddressUtil.verifyAndGetAddress(cityCode, districtCode, placeCategory.koreanName)

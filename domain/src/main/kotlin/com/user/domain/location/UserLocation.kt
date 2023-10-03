@@ -8,6 +8,12 @@ data class UserLocation(
     val user: User,
     val latitude: Double,
     val longitude: Double,
+)
+
+data class UserAdministrativeLocation(
+    val user: User,
+    val latitude: Double,
+    val longitude: Double,
     val cityCode: CityCode,
     val districtCode: DistrictCode,
 )

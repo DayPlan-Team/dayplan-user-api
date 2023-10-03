@@ -1,7 +1,6 @@
 package com.user.api.publics
 
 import com.user.application.port.out.BoundaryLocationPort
-import com.user.application.request.GeocodeRequest
 import com.user.application.service.UserLocationService
 import com.user.application.service.UserVerifyService
 import com.user.domain.location.BoundaryLocation
@@ -34,13 +33,10 @@ class LocationController(
 
         val user = userVerifyService.verifyAndGetUser(userId)
         CoordinatesVerifier.verifyCoordinates(coordinates.latitude to coordinates.longitude)
-        log.info("latitude = ${coordinates.latitude}, longitude = ${coordinates.longitude}")
-        userLocationService.getRegionAddress(
+
+        userLocationService.upsertUserLocation(
             user = user,
-            geocodeRequest = GeocodeRequest(
-                latitude = coordinates.latitude,
-                longitude = coordinates.longitude,
-            ),
+            coordinates = coordinates,
         )
 
         return ResponseEntity.ok().build()

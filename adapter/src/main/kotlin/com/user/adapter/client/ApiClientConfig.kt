@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -27,7 +28,7 @@ class ApiClientConfig {
     @Bean
     fun applyGoogleAccountClient(): GoogleAccountClient {
         return Retrofit.Builder()
-            .baseUrl("https://oauth2.googleapis.com")
+            .baseUrl(GOOGLE_LOGIN_URL)
             .client(OkHttpClient.Builder().build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -37,7 +38,7 @@ class ApiClientConfig {
     @Bean
     fun applyNaverGeocodeClient(): NaverGeocodeClient {
         return Retrofit.Builder()
-            .baseUrl("https://naveropenapi.apigw.ntruss.com")
+            .baseUrl(NAVER_GEOCODE_URL)
             .client(OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val originRequest = chain.request()
@@ -55,7 +56,7 @@ class ApiClientConfig {
     @Bean
     fun applyNaverSearch(): NaverSearchClient {
         return Retrofit.Builder()
-            .baseUrl("https://openapi.naver.com")
+            .baseUrl(NAVER_OPEN_URL)
             .client(OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val originRequest = chain.request()
@@ -70,11 +71,27 @@ class ApiClientConfig {
             .create(NaverSearchClient::class.java)
     }
 
+    @Profile("default | local | dev")
+    @Bean
+    fun applyDateCourseStayCheck(): DateCourseClient {
+        return Retrofit.Builder()
+            .baseUrl(CONTENT_SERVER_DEV_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(DateCourseClient::class.java)
+    }
+
 
     companion object {
         const val NAVER_OPEN_API_KEY_ID = "X-NCP-APIGW-API-KEY-ID"
         const val NAVER_OPEN_API_KEY_SECRET = "X-NCP-APIGW-API-KEY"
         const val NAVER_CLIENT_ID = "X-Naver-Client-Id"
         const val NAVER_CLIENT_SECRET = "X-Naver-Client-Secret"
+
+        const val GOOGLE_LOGIN_URL = "https://oauth2.googleapis.com"
+        const val NAVER_GEOCODE_URL = "https://naveropenapi.apigw.ntruss.com"
+        const val NAVER_OPEN_URL = "https://openapi.naver.com"
+
+        const val CONTENT_SERVER_DEV_URL = "http://localhost:8078"
     }
 }
