@@ -35,9 +35,10 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("mysql:mysql-connector-java:8.0.32")
 
-    /* Api */
+    /* API */
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-java8:2.9.0")
 
     implementation(project(":util"))
     implementation(project(":domain"))

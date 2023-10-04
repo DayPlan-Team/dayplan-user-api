@@ -2,6 +2,7 @@ package com.user.api.internals
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.UserVerifyService
+import com.user.util.Logger
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,16 +19,20 @@ class UserInternalVerifyController(
     fun verifyAndGetUser(
         @RequestParam("userId") userId: Long,
     ): ResponseEntity<UserResponse> {
+
+        log.info("request = $userId")
         val user = userVerifyService.verifyAndGetUser(userId = userId)
 
         return ResponseEntity.ok(
             UserResponse(
-                userId = userId,
+                userId = user.userId,
             )
         )
     }
 
     data class UserResponse(
-        @JsonProperty("userId") val userId: Long,
+        val userId: Long,
     )
+
+    companion object : Logger()
 }
