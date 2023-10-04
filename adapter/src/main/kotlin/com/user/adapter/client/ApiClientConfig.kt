@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 @Configuration
 class ApiClientConfig {
@@ -29,7 +30,12 @@ class ApiClientConfig {
     fun applyGoogleAccountClient(): GoogleAccountClient {
         return Retrofit.Builder()
             .baseUrl(GOOGLE_LOGIN_URL)
-            .client(OkHttpClient.Builder().build())
+            .client(
+                OkHttpClient.Builder()
+                    .connectTimeout(10, TimeUnit.SECONDS)    // 연결 타임아웃
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build()
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(GoogleAccountClient::class.java)
@@ -47,7 +53,10 @@ class ApiClientConfig {
                         .header(NAVER_OPEN_API_KEY_SECRET, naverOpenApiClientSecret)
                         .build()
                     chain.proceed(newRequest)
-                }.build())
+                }
+                .connectTimeout(10, TimeUnit.SECONDS)    // 연결 타임아웃
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(NaverGeocodeClient::class.java)
@@ -65,7 +74,10 @@ class ApiClientConfig {
                         .header(NAVER_CLIENT_SECRET, naverDevelopClientSecret)
                         .build()
                     chain.proceed(newRequest)
-                }.build())
+                }
+                .connectTimeout(10, TimeUnit.SECONDS)    // 연결 타임아웃
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(NaverSearchClient::class.java)
@@ -76,6 +88,12 @@ class ApiClientConfig {
     fun applyDateCourseStayCheck(): DateCourseClient {
         return Retrofit.Builder()
             .baseUrl(CONTENT_SERVER_DEV_URL)
+            .client(
+                OkHttpClient.Builder()
+                    .connectTimeout(10, TimeUnit.SECONDS)    // 연결 타임아웃
+                    .readTimeout(30, TimeUnit.SECONDS)       // 데이터 읽기 타임아웃
+                    .build()
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(DateCourseClient::class.java)

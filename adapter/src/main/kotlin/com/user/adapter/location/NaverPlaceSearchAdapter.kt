@@ -4,23 +4,32 @@ import com.user.adapter.client.NaverSearchClient
 import com.user.application.port.out.PlaceSearchPort
 import com.user.application.response.PlaceItemResponse
 import com.user.util.Logger
+import com.user.util.exception.SystemException
 import com.user.util.exception.UserException
+import com.user.util.exceptioncode.SystemExceptionCode
 import com.user.util.exceptioncode.UserExceptionCode
 import org.springframework.stereotype.Component
+import java.io.IOException
 
 @Component
 class NaverPlaceSearchAdapter(
     private val naverSearchClient: NaverSearchClient,
 ) : PlaceSearchPort {
     override fun searchLocation(place: String, start: Int): PlaceItemResponse {
-        val location = naverSearchClient.searchLocation(place)
+        try {
 
-        val response = location.execute()
-        if (response.isSuccessful) {
-            return response.body() ?: PlaceItemResponse()
+            val location = naverSearchClient.searchLocation(place)
+
+            val response = location.execute()
+            if (response.isSuccessful) {
+                return response.body() ?: PlaceItemResponse()
+            }
+
+            throw UserException(UserExceptionCode.NOT_FOUND_LOCATION_PLACE)
+
+        } catch (e: IOException) {
+            throw SystemException(SystemExceptionCode.NETWORK_SERVER_ERROR)
         }
-
-        throw UserException(UserExceptionCode.NOT_FOUND_LOCATION_PLACE)
     }
 
     companion object : Logger()
