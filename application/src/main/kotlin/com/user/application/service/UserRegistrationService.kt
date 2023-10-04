@@ -32,7 +32,7 @@ class UserRegistrationService(
         val user = userCreationUseCase.createUser(
             UserCreationRequest(
                 email = userSourceResponse.email,
-                isVerified = userSourceResponse.isVerified,
+                isVerified = true,
                 accountStatus = UserAccountStatus.NORMAL,
             )
         )
