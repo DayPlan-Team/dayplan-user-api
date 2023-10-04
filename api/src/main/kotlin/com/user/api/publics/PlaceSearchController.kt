@@ -40,6 +40,7 @@ class PlaceSearchController(
         val result = PlaceSearchItemApiOuterResponse(
             items = places.map {
                 PlaceSearchItemApiResponse(
+                    placeId = it.id,
                     title = it.placeName,
                     link = it.link,
                     category = it.placeCategory.koreanName,
@@ -62,7 +63,7 @@ class PlaceSearchController(
     )
 
     data class PlaceSearchItemApiResponse(
-        @JsonProperty("id") val id: Long = 0L,
+        @JsonProperty("placeId") val placeId: Long = 0L,
         @JsonProperty("title") val title: String = "",
         @JsonProperty("link") val link: String = "",
         @JsonProperty("category") val category: String = "",
