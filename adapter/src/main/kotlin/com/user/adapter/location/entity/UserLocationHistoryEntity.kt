@@ -12,7 +12,7 @@ import jakarta.persistence.Table
 @Entity
 @Table(
     name = "user_location_history",
-    indexes = [Index(name = "idx_userId", columnList = "userId")],
+    indexes = [Index(name = "idx_location_history_userId", columnList = "userId")],
 )
 data class UserLocationHistoryEntity(
     @Column

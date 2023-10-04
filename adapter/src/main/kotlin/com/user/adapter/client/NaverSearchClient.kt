@@ -1,6 +1,6 @@
 package com.user.adapter.client
 
-import com.user.application.response.PlaceItemResponse
+import com.user.application.response.PlacePortItemResponse
 import org.springframework.stereotype.Component
 import retrofit2.Call
 import retrofit2.http.GET
@@ -15,6 +15,6 @@ interface NaverSearchClient {
     fun searchLocation(
         @Query("query") place: String,
         @Query("start") start: Int = 1,
-    ): Call<PlaceItemResponse>
+    ): Call<PlacePortItemResponse>
 
 }

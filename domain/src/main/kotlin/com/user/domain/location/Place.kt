@@ -1,6 +1,9 @@
 package com.user.domain.location
 
+import com.user.util.address.PlaceCategory
+
 data class Place(
+    val administrativeCategoryId: String,
     val placeName: String,
     val placeCategory: PlaceCategory,
     val latitude: Double,
@@ -10,10 +13,12 @@ data class Place(
     val userRegistrationCount: Long = 0L,
     val link: String = "",
     val telephone: String = "",
+    val description: String = "",
     val id: Long = 0L,
 ) {
     fun plusUserRegistrationCountAndReturn(): Place {
         return Place(
+            administrativeCategoryId = administrativeCategoryId,
             placeName = placeName,
             placeCategory = placeCategory,
             latitude = latitude,
@@ -23,6 +28,7 @@ data class Place(
             userRegistrationCount = userRegistrationCount + 1,
             link = link,
             telephone = telephone,
+            description = description,
             id = id,
         )
     }

@@ -1,4 +1,4 @@
-package com.user.domain.location
+package com.user.util.address
 
 enum class PlaceCategory(
     val koreanName: String,

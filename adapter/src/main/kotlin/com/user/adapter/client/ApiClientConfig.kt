@@ -83,15 +83,15 @@ class ApiClientConfig {
             .create(NaverSearchClient::class.java)
     }
 
-    @Profile("default | local | dev")
+    @Profile("!prod")
     @Bean
     fun applyDateCourseStayCheck(): DateCourseClient {
         return Retrofit.Builder()
             .baseUrl(CONTENT_SERVER_DEV_URL)
             .client(
                 OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)    // 연결 타임아웃
-                    .readTimeout(30, TimeUnit.SECONDS)       // 데이터 읽기 타임아웃
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
                     .build()
             )
             .addConverterFactory(GsonConverterFactory.create())

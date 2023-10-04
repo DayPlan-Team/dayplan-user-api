@@ -2,7 +2,7 @@ package com.user.adapter.location
 
 import com.user.adapter.client.NaverSearchClient
 import com.user.application.port.out.PlaceSearchPort
-import com.user.application.response.PlaceItemResponse
+import com.user.application.response.PlacePortItemResponse
 import com.user.util.Logger
 import com.user.util.exception.SystemException
 import com.user.util.exception.UserException
@@ -15,14 +15,14 @@ import java.io.IOException
 class NaverPlaceSearchAdapter(
     private val naverSearchClient: NaverSearchClient,
 ) : PlaceSearchPort {
-    override fun searchLocation(place: String, start: Int): PlaceItemResponse {
+    override fun searchLocation(place: String, start: Int): PlacePortItemResponse {
         try {
 
             val location = naverSearchClient.searchLocation(place)
 
             val response = location.execute()
             if (response.isSuccessful) {
-                return response.body() ?: PlaceItemResponse()
+                return response.body() ?: PlacePortItemResponse()
             }
 
             throw UserException(UserExceptionCode.NOT_FOUND_LOCATION_PLACE)

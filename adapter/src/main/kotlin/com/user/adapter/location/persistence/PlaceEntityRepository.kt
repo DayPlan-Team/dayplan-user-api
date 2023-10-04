@@ -9,4 +9,6 @@ interface PlaceEntityRepository : JpaRepository<PlaceEntity, Long> {
     fun findPlaceEntitiesByIdIn(ids: List<Long>): List<PlaceEntity>
 
     fun findByAddress(address: String): PlaceEntity?
+
+    fun findPlaceEntitiesByAdministrativeCategoryId(administrativeCategoryId: String): List<PlaceEntity>
 }

@@ -74,6 +74,16 @@ object AddressUtil {
             .toString()
     }
 
+    fun createAdministrativeCategorySequence(
+        cityCode: Long,
+        districtCode: Long,
+        category: PlaceCategory,
+        sequence: Int
+    ): String {
+        return StringBuilder().append("$cityCode").append("_").append("$districtCode").append("_").append("$category")
+            .append("$sequence").toString()
+    }
+
     private fun verifyAddressCode(cityCode: Long, districtCode: Long) {
         verifyCityCode(cityCode)
         verifyDistrictCode(districtCode)
