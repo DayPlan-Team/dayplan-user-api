@@ -12,7 +12,10 @@ import com.user.application.response.GeocodingRegion
 import com.user.application.response.GeocodingResults
 import com.user.application.response.GeocodingStatus
 import com.user.util.Logger
+import com.user.util.exception.SystemException
+import com.user.util.exceptioncode.SystemExceptionCode
 import org.springframework.stereotype.Component
+import java.io.IOException
 
 @Component
 class NaverGeocodeMapAdapter(
@@ -97,8 +100,8 @@ class NaverGeocodeMapAdapter(
             if (response.isSuccessful) {
                 return response.body() ?: defaultResponse
             }
-        } catch (e: Exception) {
-            return defaultResponse
+        } catch (e: IOException) {
+            throw SystemException(SystemExceptionCode.NETWORK_SERVER_ERROR)
         }
 
         return defaultResponse
