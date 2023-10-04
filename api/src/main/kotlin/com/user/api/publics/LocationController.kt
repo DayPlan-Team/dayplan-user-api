@@ -1,9 +1,7 @@
 package com.user.api.publics
 
-import com.user.application.port.out.BoundaryLocationPort
 import com.user.application.service.UserLocationService
 import com.user.application.service.UserVerifyService
-import com.user.domain.location.BoundaryLocation
 import com.user.domain.userlocation.Coordinates
 import com.user.util.Logger
 import com.user.util.address.AddressUtil
@@ -22,7 +20,6 @@ import kotlin.reflect.jvm.internal.impl.resolve.scopes.MemberScope.Empty
 class LocationController(
     private val userVerifyService: UserVerifyService,
     private val userLocationService: UserLocationService,
-    private val boundaryLocationPort: BoundaryLocationPort,
 ) {
 
     @PostMapping
@@ -61,20 +58,6 @@ class LocationController(
         )
     }
 
-    @GetMapping("/city/{cityCode}/boundary")
-    fun getCityBoundary(
-        @RequestHeader("UserId") userId: Long,
-        @PathVariable("cityCode") cityCode: Long,
-    ): ResponseEntity<BoundaryLocation> {
-
-        userVerifyService.verifyAndGetUser(userId)
-        AddressUtil.verifyCityCode(cityCode)
-
-        return ResponseEntity.ok(
-            boundaryLocationPort.getCityBoundaryLocation(cityCode)
-        )
-    }
-
     @GetMapping("/city/{cityCode}/districts")
     fun getDistrictsInCity(
         @RequestHeader("UserId") userId: Long,
@@ -95,20 +78,6 @@ class LocationController(
         )
     }
 
-
-    @GetMapping("/districts/{districtCode}/boundary")
-    fun getDistrictFromCity(
-        @RequestHeader("UserId") userId: Long,
-        @PathVariable("districtCode") districtCode: Long,
-    ): ResponseEntity<BoundaryLocation> {
-
-        userVerifyService.verifyAndGetUser(userId)
-        AddressUtil.verifyDistrictCode(districtCode)
-
-        return ResponseEntity.ok(
-            boundaryLocationPort.getDistrictBoundaryLocation(districtCode)
-        )
-    }
 
     data class LocationOuterResponse<T>(
         val results: T

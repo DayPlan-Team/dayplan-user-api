@@ -15,13 +15,8 @@ class PlaceAdapter(
 ) : PlacePort {
 
     @Transactional
-    override fun createPlace(place: Place) {
-        placeEntityRepository.save(PlaceEntity.fromPlace(place))
-    }
-
-    @Transactional
     override fun upsertPlace(place: Place): Place {
-        val savedPlace = placeEntityRepository.saveAndFlush(
+        val savedPlace = placeEntityRepository.save(
             PlaceEntity.fromPlace(place)
         )
         return savedPlace.toPlace()
@@ -36,5 +31,10 @@ class PlaceAdapter(
         return placeEntityRepository.findById(id)
             .orElseThrow { SystemException(SystemExceptionCode.NOT_MATCH_PLACE) }
             .toPlace()
+    }
+
+    override fun getPlacesByAdministrativeCategoryId(administrativeCategoryId: String): List<Place> {
+        return placeEntityRepository.findPlaceEntitiesByAdministrativeCategoryId(administrativeCategoryId)
+            .map { it.toPlace() }
     }
 }

@@ -7,10 +7,16 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Index
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "terms_agreement")
+@Table(
+    name = "terms_agreement",
+    indexes = [
+        Index(name = "idx_terms_userId", columnList = "userId"),
+    ]
+)
 data class TermsAgreementEntity(
 
     @Column

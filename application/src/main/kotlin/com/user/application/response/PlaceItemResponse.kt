@@ -2,7 +2,7 @@ package com.user.application.response
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class PlaceItemResponse(
+data class PlacePortItemResponse(
     @JsonProperty("lastBuildDate") val lastBuildDate: String = "",
     @JsonProperty("total") val total: Int = 0,
     @JsonProperty("start") val start: Int = 1,

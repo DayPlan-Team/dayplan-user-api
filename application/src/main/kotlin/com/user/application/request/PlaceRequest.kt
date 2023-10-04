@@ -1,6 +1,6 @@
 package com.user.application.request
 
-import com.user.domain.location.PlaceCategory
+import com.user.util.address.PlaceCategory
 
 data class PlaceRequest(
     val placeName: String,

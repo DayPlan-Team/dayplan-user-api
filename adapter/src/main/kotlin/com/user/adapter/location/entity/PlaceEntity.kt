@@ -2,7 +2,7 @@ package com.user.adapter.location.entity
 
 import com.user.adapter.share.BaseEntity
 import com.user.domain.location.Place
-import com.user.domain.location.PlaceCategory
+import com.user.util.address.PlaceCategory
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -21,10 +21,14 @@ import org.hibernate.annotations.DynamicUpdate
     indexes = [
         Index(name = "idx_placeName", columnList = "placeName"),
         Index(name = "idx_address", columnList = "address"),
+        Index(name = "idx_administrativeCategoryId", columnList = "administrativeCategoryId")
     ]
 )
 data class
 PlaceEntity(
+
+    @Column
+    val administrativeCategoryId: String,
 
     @Column
     val placeName: String,
@@ -54,6 +58,9 @@ PlaceEntity(
     @Column
     val telephone: String = "",
 
+    @Column
+    val description: String = "",
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
@@ -61,6 +68,7 @@ PlaceEntity(
     companion object {
         fun fromPlace(place: Place): PlaceEntity {
             return PlaceEntity(
+                administrativeCategoryId = place.administrativeCategoryId,
                 placeName = place.placeName,
                 placeCategory = place.placeCategory,
                 latitude = place.latitude,
@@ -70,6 +78,7 @@ PlaceEntity(
                 userRegistrationCount = place.userRegistrationCount,
                 link = place.link,
                 telephone = place.telephone,
+                description = place.description,
                 id = place.id,
             )
         }
@@ -77,6 +86,7 @@ PlaceEntity(
 
     fun toPlace(): Place {
         return Place(
+            administrativeCategoryId = administrativeCategoryId,
             placeName = placeName,
             placeCategory = placeCategory,
             latitude = latitude,
@@ -86,6 +96,7 @@ PlaceEntity(
             userRegistrationCount = userRegistrationCount,
             link = link,
             telephone = telephone,
+            description = description,
             id = id,
         )
     }

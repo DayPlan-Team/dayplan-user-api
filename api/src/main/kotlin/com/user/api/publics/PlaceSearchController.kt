@@ -3,7 +3,7 @@ package com.user.api.publics
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.PlaceSearchService
 import com.user.application.service.UserVerifyService
-import com.user.domain.location.PlaceCategory
+import com.user.util.address.PlaceCategory
 import com.user.util.Logger
 import com.user.util.address.AddressUtil
 import org.springframework.http.ResponseEntity
@@ -27,30 +27,28 @@ class PlaceSearchController(
         @RequestParam("districtcode") districtCode: Long,
         @RequestParam("place") placeCategory: PlaceCategory,
         @RequestParam("start", required = false) start: Int? = 1,
-    ): ResponseEntity<PlaceItemApiOuterResponse> {
+    ): ResponseEntity<PlaceSearchItemApiOuterResponse> {
 
         userVerifyService.verifyAndGetUser(userId)
 
         val placeSearchQuery = AddressUtil.verifyAndGetAddress(cityCode, districtCode, placeCategory.koreanName)
         val actualStart = start ?: 1
+        val administrativeSequence = AddressUtil.createAdministrativeCategorySequence(cityCode, districtCode, placeCategory, actualStart)
 
-        val placeItemResponse = placeSearchService.searchPlace(placeSearchQuery, placeCategory, actualStart)
+        val places = placeSearchService.searchPlace(placeSearchQuery, placeCategory, actualStart, administrativeSequence)
 
-        val result = PlaceItemApiOuterResponse(
-            total = placeItemResponse.total,
-            start = placeItemResponse.start,
-            display = placeItemResponse.display,
-            items = placeItemResponse.items.map {
-                PlaceItemApiResponse(
-                    title = it.title,
+        val result = PlaceSearchItemApiOuterResponse(
+            items = places.map {
+                PlaceSearchItemApiResponse(
+                    title = it.placeName,
                     link = it.link,
-                    category = it.category,
+                    category = it.placeCategory.koreanName,
                     description = it.description,
                     telephone = it.telephone,
                     address = it.address,
                     roadAddress = it.roadAddress,
-                    mapx = it.mapx,
-                    mapy = it.mapy,
+                    latitude = it.latitude,
+                    longitude = it.longitude,
                 )
             }
         )
@@ -59,14 +57,12 @@ class PlaceSearchController(
         return ResponseEntity.ok(result)
     }
 
-    data class PlaceItemApiOuterResponse(
-        @JsonProperty("total") val total: Int = 0,
-        @JsonProperty("start") val start: Int = 1,
-        @JsonProperty("display") val display: Int = 10,
-        @JsonProperty("items") val items: List<PlaceItemApiResponse> = emptyList(),
+    data class PlaceSearchItemApiOuterResponse(
+        @JsonProperty("items") val items: List<PlaceSearchItemApiResponse> = emptyList(),
     )
 
-    data class PlaceItemApiResponse(
+    data class PlaceSearchItemApiResponse(
+        @JsonProperty("id") val id: Long = 0L,
         @JsonProperty("title") val title: String = "",
         @JsonProperty("link") val link: String = "",
         @JsonProperty("category") val category: String = "",
@@ -74,8 +70,8 @@ class PlaceSearchController(
         @JsonProperty("telephone") val telephone: String = "",
         @JsonProperty("address") val address: String = "",
         @JsonProperty("roadAddress") val roadAddress: String = "",
-        @JsonProperty("mapx") val mapx: String = "",
-        @JsonProperty("mapy") val mapy: String = "",
+        @JsonProperty("latitude") val latitude: Double = 0.0,
+        @JsonProperty("longitude") val longitude: Double = 0.0,
     )
 
     companion object : Logger()
