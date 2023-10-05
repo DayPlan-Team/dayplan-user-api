@@ -17,7 +17,7 @@ class PlaceSearchService(
     private val placePort: PlacePort,
     private val distributeLock: DistributeLock<Place>
 ) {
-    suspend fun searchPlace(
+    fun searchPlace(
         place: String,
         placeCategory: PlaceCategory,
         start: Int,
