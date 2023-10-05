@@ -21,7 +21,7 @@ class PlaceSearchController(
 ) {
 
     @GetMapping("/search")
-    suspend fun searchLocation(
+    fun searchLocation(
         @RequestHeader("UserId") userId: Long,
         @RequestParam("citycode") cityCode: Long,
         @RequestParam("districtcode") districtCode: Long,

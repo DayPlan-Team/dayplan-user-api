@@ -33,6 +33,13 @@ class PlaceAdapter(
             .toPlace()
     }
 
+    override fun getPlaceByIds(ids: List<Long>): List<Place> {
+        return placeEntityRepository.findPlaceEntitiesByIdIn(ids)
+            .map {
+                it.toPlace()
+            }
+    }
+
     override fun getPlacesByAdministrativeCategoryId(administrativeCategoryId: String): List<Place> {
         return placeEntityRepository.findPlaceEntitiesByAdministrativeCategoryId(administrativeCategoryId)
             .map { it.toPlace() }

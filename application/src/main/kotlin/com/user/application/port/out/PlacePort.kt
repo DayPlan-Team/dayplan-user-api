@@ -12,6 +12,8 @@ interface PlacePort {
 
     fun getPlaceById(id: Long): Place
 
+    fun getPlaceByIds(ids: List<Long>): List<Place>
+
     fun getPlacesByAdministrativeCategoryId(administrativeCategoryId: String): List<Place>
 
 }
