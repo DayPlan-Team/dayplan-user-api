@@ -34,4 +34,8 @@ data class User(
         )
     }
 
+    companion object {
+        const val DEFAULT_NICKNAME = "익명"
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.user.api.internals
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.UserVerifyService
 import com.user.util.Logger
 import org.springframework.http.ResponseEntity
@@ -26,12 +25,14 @@ class UserInternalVerifyController(
         return ResponseEntity.ok(
             UserResponse(
                 userId = user.userId,
+                nickName = user.nickName,
             )
         )
     }
 
     data class UserResponse(
         val userId: Long,
+        val nickName: String,
     )
 
     companion object : Logger()
