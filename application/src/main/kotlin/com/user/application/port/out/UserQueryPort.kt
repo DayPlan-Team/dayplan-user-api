@@ -8,4 +8,6 @@ interface UserQueryPort {
     fun findUserByUserId(userId: Long): User
 
     fun findUserByEmailOrNull(email: String): User?
+
+    fun findUsesByUserIds(userIds: List<Long>): List<User>
 }
