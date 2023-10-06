@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "3.1.3"
@@ -20,10 +21,12 @@ dependencies {
 
 }
 
-tasks.bootJar {
-    mainClass = "com.user.ApiApplication"
-}
+group = "com.dayplanuser"
+version = "0.0.1-SNAPSHOT"
 
+tasks.bootJar {
+    mainClass = "com.user.api.ApiApplicationKt"
+}
 
 allprojects {
 
