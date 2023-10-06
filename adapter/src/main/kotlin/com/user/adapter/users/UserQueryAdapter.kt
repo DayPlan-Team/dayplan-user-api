@@ -22,4 +22,11 @@ class UserQueryAdapter(
     override fun findUserByEmailOrNull(email: String): User? {
         return userEntityRepository.findByEmail(email)?.toUser()
     }
+
+    override fun findUsesByUserIds(userIds: List<Long>): List<User> {
+        return userEntityRepository.findUserEntitiesByIdIn(userIds)
+            .map {
+                it.toUser()
+            }
+    }
 }

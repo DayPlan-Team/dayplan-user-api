@@ -1,5 +1,7 @@
 package com.user.api.internals
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.user.application.port.out.UserQueryPort
 import com.user.application.service.UserVerifyService
 import com.user.util.Logger
 import org.springframework.http.ResponseEntity
@@ -10,8 +12,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/user/internal")
-class UserInternalVerifyController(
+class UserInternalController(
     private val userVerifyService: UserVerifyService,
+    private val userQueryPort: UserQueryPort,
 ) {
 
     @GetMapping("/verify")
@@ -30,10 +33,34 @@ class UserInternalVerifyController(
         )
     }
 
+    @GetMapping("/users")
+    fun getUsers(
+        @RequestParam("userId") userId: List<Long>,
+    ): ResponseEntity<UserResponses> {
+        val userResponses = userQueryPort.findUsesByUserIds(userId)
+            .map {
+                UserResponse(
+                    userId = it.userId,
+                    nickName = it.nickName,
+                )
+            }
+        log.info("response = $userResponses")
+        return ResponseEntity.ok(
+            UserResponses(
+                users = userResponses
+            )
+        )
+    }
+
     data class UserResponse(
-        val userId: Long,
-        val nickName: String,
+        @JsonProperty("userId") val userId: Long,
+        @JsonProperty("nickName") val nickName: String,
     )
+
+    data class UserResponses(
+        @JsonProperty("users") val users: List<UserResponse>,
+    )
+
 
     companion object : Logger()
 }
