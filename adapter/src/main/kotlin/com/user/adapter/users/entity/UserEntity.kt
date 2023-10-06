@@ -50,6 +50,7 @@ data class UserEntity(
 
     companion object {
         fun from(user: User): UserEntity {
+
             return UserEntity(
                 email = user.email,
                 userAccountStatus = user.userAccountStatus,
