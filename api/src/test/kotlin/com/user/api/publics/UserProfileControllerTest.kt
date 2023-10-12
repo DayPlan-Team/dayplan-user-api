@@ -48,7 +48,7 @@ class UserProfileControllerTest : FunSpec() {
                     .content(userProfileApiRequest)
 
                 mockMvc.perform(mockMvcRequestBuilder)
-                    .andExpect { it.response.status shouldBe 201 }
+                    .andExpect { it.response.status shouldBe 200 }
             }
         }
 
