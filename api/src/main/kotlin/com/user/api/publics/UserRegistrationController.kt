@@ -3,6 +3,7 @@ package com.user.api.publics
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.api.publics.mapper.UserAccountSocialCreationMapper
 import com.user.application.service.UserRegistrationService
+import com.user.domain.authentication.port.AuthenticationTicketPort
 import com.user.util.Logger
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/user/registration")
 class UserRegistrationController(
     private val userRegistrationService: UserRegistrationService,
+    private val authenticationTicketPort: AuthenticationTicketPort,
 ) {
     @GetMapping("/social/{registrationId}")
     fun createUserIfNotAndCreateAuthenticationTicketBySocial(
@@ -22,7 +24,8 @@ class UserRegistrationController(
     ): ResponseEntity<AuthenticationTicketResponse> {
 
         val request = UserAccountSocialCreationMapper.mapper(code, registrationId)
-        val authenticationTicket = userRegistrationService.createUserIfNotExistsAndCreateAuthenticationTicket(request)
+        val user = userRegistrationService.createUserIfSocialRegistrationNotExists(request)
+        val authenticationTicket = authenticationTicketPort.createAuthenticationTicket(user.userId)
 
         log.info("accessToken = ${authenticationTicket.accessToken}")
         log.info("refreshToken = ${authenticationTicket.refreshToken}")

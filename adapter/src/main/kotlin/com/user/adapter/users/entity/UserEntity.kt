@@ -27,9 +27,6 @@ data class UserEntity(
     val userAccountStatus: UserAccountStatus,
 
     @Column
-    val isVerified: Boolean,
-
-    @Column
     val mandatoryTermsAgreed: Boolean = false,
 
     @Id
@@ -37,12 +34,11 @@ data class UserEntity(
     @Column
     val id: Long = 0L,
 ) : BaseEntity() {
-    fun toUser(): User {
+    fun toDomainModel(): User {
         return User(
             email = email,
             userAccountStatus = userAccountStatus,
             mandatoryTermsAgreed = mandatoryTermsAgreed,
-            isVerified = isVerified,
             nickName = nickName,
             userId = id,
         )
@@ -55,7 +51,6 @@ data class UserEntity(
                 email = user.email,
                 userAccountStatus = user.userAccountStatus,
                 mandatoryTermsAgreed = user.mandatoryTermsAgreed,
-                isVerified = user.isVerified,
                 nickName = user.nickName,
                 id = user.userId,
             )

@@ -9,7 +9,6 @@ class UserCreator : UserCreationUseCase {
     override fun createUser(userCreationRequest: UserCreationRequest): User {
         return User(
             email = userCreationRequest.email,
-            isVerified = userCreationRequest.isVerified,
             userAccountStatus = userCreationRequest.accountStatus,
         )
     }

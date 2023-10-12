@@ -4,6 +4,5 @@ import com.user.domain.share.UserAccountStatus
 
 data class UserCreationRequest(
     val email: String,
-    val isVerified: Boolean,
     val accountStatus: UserAccountStatus,
 )

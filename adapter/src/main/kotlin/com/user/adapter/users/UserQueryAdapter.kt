@@ -16,17 +16,17 @@ class UserQueryAdapter(
     override fun findUserByUserId(userId: Long): User {
         return userEntityRepository.findById(userId)
             .orElseThrow { UserException(UserExceptionCode.NOT_FOUND_USER) }
-            .toUser()
+            .toDomainModel()
     }
 
     override fun findUserByEmailOrNull(email: String): User? {
-        return userEntityRepository.findByEmail(email)?.toUser()
+        return userEntityRepository.findByEmail(email)?.toDomainModel()
     }
 
     override fun findUsesByUserIds(userIds: List<Long>): List<User> {
         return userEntityRepository.findUserEntitiesByIdIn(userIds)
             .map {
-                it.toUser()
+                it.toDomainModel()
             }
     }
 }

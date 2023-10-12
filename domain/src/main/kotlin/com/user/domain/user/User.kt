@@ -6,7 +6,6 @@ import com.user.domain.user.request.UserProfileRequest
 data class User(
     val email: String,
     val userAccountStatus: UserAccountStatus,
-    val isVerified: Boolean,
     val mandatoryTermsAgreed: Boolean = false,
     val nickName: String = "",
     val userId: Long = 0L,
@@ -17,7 +16,6 @@ data class User(
             email = email,
             userAccountStatus = userAccountStatus,
             mandatoryTermsAgreed = mandatoryTermsAgreed,
-            isVerified = isVerified,
             nickName = userProfileRequest.nickName,
             userId = userId
         )
@@ -28,7 +26,6 @@ data class User(
             email = email,
             userAccountStatus = userAccountStatus,
             mandatoryTermsAgreed = mandatoryTermsAgreed,
-            isVerified = isVerified,
             nickName = nickName,
             userId = userId
         )

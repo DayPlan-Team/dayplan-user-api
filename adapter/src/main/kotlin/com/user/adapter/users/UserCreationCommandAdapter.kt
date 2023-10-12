@@ -12,16 +12,15 @@ import org.springframework.transaction.annotation.Transactional
 class UserCreationCommandAdapter(
     private val userEntityRepository: UserEntityRepository,
 ) : UserCreationCommandPort {
-    override fun save(user: User): Long {
+    override fun save(user: User): User {
 
         val userEntity = UserEntity(
             id = user.userId,
             email = user.email,
             nickName = user.nickName,
             userAccountStatus = user.userAccountStatus,
-            isVerified = user.isVerified,
         )
 
-        return userEntityRepository.save(userEntity).id
+        return userEntityRepository.save(userEntity).toDomainModel()
     }
 }
