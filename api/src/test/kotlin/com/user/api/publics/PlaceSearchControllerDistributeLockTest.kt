@@ -57,7 +57,6 @@ class PlaceSearchControllerDistributeLockTest : FunSpec() {
             every { userVerifyService.verifyAndGetUser(1) } returns User(
                 email = "shein1@naver.com",
                 userAccountStatus = UserAccountStatus.NORMAL,
-                isVerified = true,
                 mandatoryTermsAgreed = true,
                 nickName = "GoseKose",
                 userId = 1,
@@ -66,7 +65,6 @@ class PlaceSearchControllerDistributeLockTest : FunSpec() {
             every { userVerifyService.verifyAndGetUser(2) } returns User(
                 email = "shein2@naver.com",
                 userAccountStatus = UserAccountStatus.NORMAL,
-                isVerified = true,
                 mandatoryTermsAgreed = true,
                 nickName = "GoseKose",
                 userId = 2,
@@ -75,7 +73,6 @@ class PlaceSearchControllerDistributeLockTest : FunSpec() {
             every { userVerifyService.verifyAndGetUser(3) } returns User(
                 email = "shein3@naver.com",
                 userAccountStatus = UserAccountStatus.NORMAL,
-                isVerified = true,
                 mandatoryTermsAgreed = true,
                 nickName = "GoseKose",
                 userId = 3,
@@ -115,18 +112,6 @@ class PlaceSearchControllerDistributeLockTest : FunSpec() {
             val citycode = CityCode.SEOUL.code
             val districtcode = DistrictCode.SEOUL_DOBONG.code
             val place = PlaceCategory.CAFE
-
-//            test("한명의 place 검색 요청이 주어지면") {
-//                val resultBuilder = MockMvcRequestBuilders.get(BASE_URL)
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .header(USER_ID_HEADER, 1)
-//                    .param("citycode", citycode.toString())
-//                    .param("districtcode", districtcode.toString())
-//                    .param("place", place.toString())
-//
-//                mockMvc.perform(resultBuilder)
-//                    .andExpect { it.response.status shouldBe 200 }
-//            }
 
             test("다수의 place 검색 요청이 주어지면") {
                 val threadCount = 3

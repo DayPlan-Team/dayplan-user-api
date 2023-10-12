@@ -23,7 +23,6 @@ class UserAccountGoogleSourceAdapter(
 
         return UserSourceResponse(
             email = response.email,
-            isVerified = response.emailVerified,
         )
     }
 

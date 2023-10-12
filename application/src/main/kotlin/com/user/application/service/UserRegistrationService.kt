@@ -4,9 +4,9 @@ import com.user.application.port.out.UserAccountSocialSourcePort
 import com.user.application.port.out.UserCreationCommandPort
 import com.user.application.port.out.UserQueryPort
 import com.user.application.request.UserAccountSocialCreationRequest
-import com.user.domain.authentication.AuthenticationTicket
-import com.user.domain.authentication.port.AuthenticationTicketPort
+import com.user.application.response.UserSourceResponse
 import com.user.domain.share.UserAccountStatus
+import com.user.domain.user.User
 import com.user.domain.user.request.UserCreationRequest
 import com.user.domain.user.usecase.UserCreationUseCase
 import com.user.util.Logger
@@ -18,27 +18,25 @@ class UserRegistrationService(
     private val userCreationCommandPort: UserCreationCommandPort,
     private val userAccountSocialSourcePort: UserAccountSocialSourcePort,
     private val userQueryPort: UserQueryPort,
-    private val authenticationTicketPort: AuthenticationTicketPort,
 ) {
+    fun createUserIfSocialRegistrationNotExists(request: UserAccountSocialCreationRequest): User {
+        val userSourceResponse = getSocialUserSourceBySocialRequest(request)
 
-    fun createUserIfNotExistsAndCreateAuthenticationTicket(request: UserAccountSocialCreationRequest): AuthenticationTicket {
-        val userSourceResponse = userAccountSocialSourcePort.getSocialUserSource(request.code, request.socialType)
         val findUser = userQueryPort.findUserByEmailOrNull(userSourceResponse.email)
-
-        if (findUser != null) {
-            return authenticationTicketPort.createAuthenticationTicket(findUser.userId)
-        }
+        if (findUser != null) return findUser
 
         val user = userCreationUseCase.createUser(
             UserCreationRequest(
                 email = userSourceResponse.email,
-                isVerified = true,
                 accountStatus = UserAccountStatus.NORMAL,
             )
         )
-        val userId = userCreationCommandPort.save(user)
 
-        return authenticationTicketPort.createAuthenticationTicket(userId)
+        return userCreationCommandPort.save(user)
+    }
+
+    private fun getSocialUserSourceBySocialRequest(request: UserAccountSocialCreationRequest): UserSourceResponse {
+        return userAccountSocialSourcePort.getSocialUserSource(request.code, request.socialType)
     }
 
     companion object : Logger()

@@ -22,7 +22,6 @@ class UserVerifyController(
 
         return ResponseEntity.ok(
             VerifyUserResponse(
-                verified = user.isVerified,
                 userStatus = user.userAccountStatus,
                 mandatoryTermsAgreed = user.mandatoryTermsAgreed,
             ),
@@ -30,7 +29,6 @@ class UserVerifyController(
     }
 
     data class VerifyUserResponse(
-        val verified: Boolean,
         val userStatus: UserAccountStatus,
         val mandatoryTermsAgreed: Boolean,
     )

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service
 
 @Service
 interface UserCreationCommandPort {
-    fun save(user: User): Long
+    fun save(user: User): User
 }

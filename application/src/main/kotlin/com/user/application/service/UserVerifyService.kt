@@ -14,7 +14,6 @@ class UserVerifyService(
     fun verifyAndGetUser(userId: Long): User {
         val user = userQueryPort.findUserByUserId(userId)
 
-        require(user.isVerified) { throw UserException(UserExceptionCode.USER_NOT_VERIFIED)}
         require(user.userAccountStatus == UserAccountStatus.NORMAL) { throw UserException(UserExceptionCode.USER_STATUS_NOT_NORMAL)}
         require(user.mandatoryTermsAgreed) { throw UserException(UserExceptionCode.MANDATORY_TERMS_IS_NOT_AGREED)}
 
