@@ -21,14 +21,14 @@ class UserProfileController(
     fun upsertUserProfile(
         @RequestHeader("UserId") userId: Long,
         @RequestBody userProfileApiRequest: UserProfileApiRequest,
-    ): ResponseEntity<HttpStatus> {
+    ): ResponseEntity<Unit> {
         val userProfileRequest = userProfileApiRequest.toUserProfileRequest()
         userProfileUpdateService.upsertUserProfile(userId, userProfileRequest)
-        return ResponseEntity.ok(HttpStatus.OK)
+        return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
     data class UserProfileApiRequest(
-        @JsonProperty("nick_name") val nickName: String,
+        @JsonProperty("nickName") val nickName: String,
     ) {
         fun toUserProfileRequest(): UserProfileRequest {
             return UserProfileRequest(
