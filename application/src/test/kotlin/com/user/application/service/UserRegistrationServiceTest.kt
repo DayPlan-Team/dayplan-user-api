@@ -5,7 +5,6 @@ import com.user.application.port.out.UserCreationCommandPort
 import com.user.application.port.out.UserQueryPort
 import com.user.application.request.UserAccountSocialCreationRequest
 import com.user.application.response.UserSourceResponse
-import com.user.domain.authentication.port.AuthenticationTicketPort
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
 import com.user.domain.user.usecase.UserCreationUseCase
@@ -13,11 +12,9 @@ import com.user.util.social.SocialType
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.springframework.test.context.ActiveProfiles
 
 class UserRegistrationServiceTest(
     private val userCreationCommandPort: UserCreationCommandPort = mockk(),
