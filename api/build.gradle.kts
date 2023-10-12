@@ -18,8 +18,10 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-java8:2.9.0")
 
     testImplementation("com.ninja-squad:springmockk:4.0.2")
+
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation("org.springframework.boot:spring-boot-starter")
