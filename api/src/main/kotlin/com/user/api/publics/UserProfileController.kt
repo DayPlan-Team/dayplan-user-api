@@ -3,7 +3,6 @@ package com.user.api.publics
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.service.UserProfileUpdateService
 import com.user.domain.user.request.UserProfileRequest
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,7 +23,7 @@ class UserProfileController(
     ): ResponseEntity<Unit> {
         val userProfileRequest = userProfileApiRequest.toUserProfileRequest()
         userProfileUpdateService.upsertUserProfile(userId, userProfileRequest)
-        return ResponseEntity.status(HttpStatus.CREATED).build()
+        return ResponseEntity.ok().build()
     }
 
     data class UserProfileApiRequest(

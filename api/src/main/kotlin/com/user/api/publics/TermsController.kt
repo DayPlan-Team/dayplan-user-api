@@ -7,7 +7,6 @@ import com.user.application.request.TermsAgreementRequest
 import com.user.application.service.TermsAgreementUpsertService
 import com.user.domain.terms.Terms
 import com.user.util.Logger
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -43,7 +42,7 @@ class TermsController(
     fun upsertTermsAgreement(
         @RequestHeader("UserId") userId: Long,
         @RequestBody termsAgreementApiBoxingRequest: TermsAgreementApiBoxingRequest,
-    ): ResponseEntity<HttpStatus> {
+    ): ResponseEntity<Unit> {
         val user = userQueryPort.findUserByUserId(userId)
 
         termsAgreementUpsertService.upsertTermsAgreement(
