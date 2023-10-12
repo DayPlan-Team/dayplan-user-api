@@ -25,9 +25,6 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
-    /* RabbitMq */
-    implementation("org.springframework.boot:spring-boot-starter-amqp")
-
     /* RedissonClient */
     implementation("org.redisson:redisson-spring-boot-starter:3.17.7")
 
