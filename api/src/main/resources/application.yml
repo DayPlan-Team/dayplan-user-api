@@ -27,6 +27,10 @@ encryption:
   secret-key: ${ENCRYPTION_SECRET_KEY}
   salt: ${SALT}
 
+grpc:
+  server:
+    port: 50051
+
 spring:
   config:
     activate:
@@ -68,6 +72,7 @@ spring:
 
   jackson:
     property-naming-strategy: SNAKE_CASE
+
 ---
 spring:
   config:
