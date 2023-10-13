@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = ["com.user.adapter.**"])
 @EntityScan(basePackages = ["com.user.adapter.**"])
-@ComponentScan(basePackages = ["com.user.**", "com.dayplan.**"])
+@ComponentScan(basePackages = ["com.user.**"])
 class ApiApplication
 
 fun main(args: Array<String>) {
