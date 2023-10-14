@@ -1,10 +1,10 @@
-package com.user.domain.authentication.port
+package com.user.domain.authentication.usecase
 
 import com.user.domain.authentication.AuthenticationTicket
 import org.springframework.stereotype.Component
 
 @Component
-interface AuthenticationTicketPort {
+interface AuthenticationTicketUseCase {
     fun createAuthenticationTicket(userId: Long): AuthenticationTicket
 
     fun reissueAuthenticationTicket(userId: Long): String
