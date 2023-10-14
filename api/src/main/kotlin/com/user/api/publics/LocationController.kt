@@ -39,54 +39,5 @@ class LocationController(
         return ResponseEntity.ok().build()
     }
 
-    @GetMapping("/city")
-    fun getCity(
-        @RequestHeader("UserId") userId: Long,
-    ): ResponseEntity<LocationOuterResponse<List<LocationResponse>>> {
-
-        userVerifyService.verifyAndGetUser(userId)
-
-        return ResponseEntity.ok(
-            LocationOuterResponse(
-                results = AddressUtil.cities.map {
-                    LocationResponse(
-                        name = it.koreanName,
-                        code = it.code,
-                    )
-                }
-            ),
-        )
-    }
-
-    @GetMapping("/city/{cityCode}/districts")
-    fun getDistrictsInCity(
-        @RequestHeader("UserId") userId: Long,
-        @PathVariable("cityCode") cityCode: Long,
-    ): ResponseEntity<LocationOuterResponse<List<LocationResponse>>> {
-
-        userVerifyService.verifyAndGetUser(userId)
-        return ResponseEntity.ok(
-            LocationOuterResponse(
-                results = AddressUtil.getDistrictByCityCode(cityCode)
-                    .map {
-                        LocationResponse(
-                            name = it.koreanName,
-                            code = it.code,
-                        )
-                    },
-            )
-        )
-    }
-
-
-    data class LocationOuterResponse<T>(
-        val results: T
-    )
-
-    data class LocationResponse(
-        val name: String,
-        val code: Long,
-    )
-
     companion object : Logger()
 }
