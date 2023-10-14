@@ -55,11 +55,11 @@ object AddressUtil {
     }
 
 
-    fun verifyCityCode(cityCode: Long) {
+    private fun verifyCityCode(cityCode: Long) {
         cityByCityCode[cityCode] ?: throw UserException(UserExceptionCode.BAD_REQUEST_CITY_CODE)
     }
 
-    fun verifyDistrictCode(districtCode: Long) {
+    private fun verifyDistrictCode(districtCode: Long) {
         districtByDistrictCode[districtCode] ?: throw UserException(UserExceptionCode.BAD_REQUEST_DISTRICT_CODE)
     }
 
