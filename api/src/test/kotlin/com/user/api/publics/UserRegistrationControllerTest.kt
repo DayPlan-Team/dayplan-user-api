@@ -4,7 +4,7 @@ import com.ninjasquad.springmockk.MockkBean
 import com.user.api.ApiTestConfiguration
 import com.user.application.service.UserRegistrationService
 import com.user.domain.authentication.AuthenticationTicket
-import com.user.domain.authentication.port.AuthenticationTicketPort
+import com.user.domain.authentication.usecase.AuthenticationTicketUseCase
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
 import com.user.util.social.SocialType
@@ -37,7 +37,7 @@ class UserRegistrationControllerTest : FunSpec() {
     private lateinit var userRegistrationService: UserRegistrationService
 
     @MockkBean
-    private lateinit var authenticationTicketPort: AuthenticationTicketPort
+    private lateinit var authenticationTicketUseCase: AuthenticationTicketUseCase
 
     init {
         this.context("유저를 등록하기 위한 요청 정보가 주어져요") {
@@ -56,7 +56,7 @@ class UserRegistrationControllerTest : FunSpec() {
             )
 
             every { userRegistrationService.createUserIfSocialRegistrationNotExists(any()) } returns user
-            every { authenticationTicketPort.createAuthenticationTicket(any()) } returns authenticationTicket
+            every { authenticationTicketUseCase.createAuthenticationTicket(any()) } returns authenticationTicket
 
             test("유저가 잘못된 소셜 타입으로 유저를 생성하면, 실패해요") {
 

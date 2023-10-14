@@ -1,7 +1,7 @@
 package com.user.adapter.authenticationticket
 
 import com.user.domain.authentication.AuthenticationTicket
-import com.user.domain.authentication.port.AuthenticationTicketPort
+import com.user.domain.authentication.usecase.AuthenticationTicketUseCase
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.InitializingBean
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component
 import java.security.Key
 
 @Component
-class AuthenticationTicketAdapter(
+class AuthenticationTicketUseCaseImpl(
     private val jwtTokenBuilder: JwtTokenBuilder,
-) : InitializingBean, AuthenticationTicketPort {
+) : InitializingBean, AuthenticationTicketUseCase {
 
     @Value("\${jwt.secret-key}")
     private lateinit var secretKey: String

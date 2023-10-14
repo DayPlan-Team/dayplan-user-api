@@ -11,6 +11,7 @@ import com.user.domain.user.request.UserCreationRequest
 import com.user.domain.user.usecase.UserCreationUseCase
 import com.user.util.Logger
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserRegistrationService(
@@ -19,6 +20,8 @@ class UserRegistrationService(
     private val userAccountSocialSourcePort: UserAccountSocialSourcePort,
     private val userQueryPort: UserQueryPort,
 ) {
+
+    @Transactional
     fun createUserIfSocialRegistrationNotExists(request: UserAccountSocialCreationRequest): User {
         val userSourceResponse = getSocialUserSourceBySocialRequest(request)
 
