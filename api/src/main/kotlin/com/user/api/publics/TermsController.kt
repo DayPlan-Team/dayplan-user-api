@@ -26,8 +26,6 @@ class TermsController(
     @GetMapping
     fun getTerms(@RequestHeader("UserId") userId: Long): ResponseEntity<TermsApiResponse> {
 
-        log.info("userId = $userId")
-
         userQueryPort.findUserByUserId(userId)
         val terms = termsQueryPort.findAll().sortedBy { it.sequence }
 

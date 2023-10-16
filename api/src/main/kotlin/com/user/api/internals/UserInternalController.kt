@@ -3,6 +3,7 @@ package com.user.api.internals
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.user.application.port.out.UserQueryPort
 import com.user.application.service.UserVerifyService
+import com.user.domain.share.UserAccountStatus
 import com.user.util.Logger
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -28,6 +29,7 @@ class UserInternalController(
         return ResponseEntity.ok(
             UserResponse(
                 userId = user.userId,
+                userAccountStatus = user.userAccountStatus,
                 nickName = user.nickName,
             )
         )
@@ -41,6 +43,7 @@ class UserInternalController(
             .map {
                 UserResponse(
                     userId = it.userId,
+                    userAccountStatus = it.userAccountStatus,
                     nickName = it.nickName,
                 )
             }
@@ -54,6 +57,7 @@ class UserInternalController(
 
     data class UserResponse(
         @JsonProperty("userId") val userId: Long,
+        @JsonProperty("userAccountStatus") val userAccountStatus: UserAccountStatus,
         @JsonProperty("nickName") val nickName: String,
     )
 
