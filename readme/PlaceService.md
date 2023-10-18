@@ -217,7 +217,7 @@
           executorService.submit {
               try {
                   placeSearchService.searchPlace(
-                      place = "중랑구A",
+                      place = "중랑구",
                       placeCategory = PlaceCategory.ACTIVITY,
                       start = 1,
                       administrativeCategoryId = "1234"
@@ -231,7 +231,7 @@
 
 
       val result = placeSearchService.searchPlace(
-          place = "중랑구A",
+          place = "중랑구",
           placeCategory = PlaceCategory.ACTIVITY,
           start = 1,
           administrativeCategoryId = "1234"

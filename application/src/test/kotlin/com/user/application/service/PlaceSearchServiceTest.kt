@@ -29,24 +29,24 @@ class PlaceSearchServiceTest {
 
     val placeItems = listOf(
         PlaceItem(
-            title = "당근",
-            link = "www.karrot.com",
+            title = "B",
+            link = "www.b.com",
             category = "카페",
-            description = "중고마켓",
+            description = "카페",
             telephone = "010-0000-1111",
-            address = "강남역 교보타워1",
-            roadAddress = "강남역 교보타워 1",
+            address = "중랑구A",
+            roadAddress = "중랑구A",
             mapx = "123001002",
             mapy = "3701002",
         ),
         PlaceItem(
-            title = "당근페이",
-            link = "www.karrotpay.com",
+            title = "B",
+            link = "www.b.com",
             category = "카페",
-            description = "페이",
+            description = "카페",
             telephone = "010-0000-1112",
-            address = "강남역 교보타워2",
-            roadAddress = "강남역 교보타워 2",
+            address = "중랑구B",
+            roadAddress = "중랑구B",
             mapx = "123001003",
             mapy = "3701003",
         ),
@@ -75,7 +75,7 @@ class PlaceSearchServiceTest {
             executorService.submit {
                 try {
                     placeSearchService.searchPlace(
-                        place = "강남역 교보타워",
+                        place = "중랑구",
                         placeCategory = PlaceCategory.ACTIVITY,
                         start = 1,
                         administrativeCategoryId = "1234"
@@ -89,14 +89,14 @@ class PlaceSearchServiceTest {
 
 
         val result = placeSearchService.searchPlace(
-            place = "강남역 교보타워",
+            place = "중랑구",
             placeCategory = PlaceCategory.ACTIVITY,
             start = 1,
             administrativeCategoryId = "1234"
         )
 
         /* then */
-        /* place 개수는 당근, 당근페이 2개만 조회되어야 해요 */
+        /* place 개수는 A, B 2개만 조회되어야 해요 */
         result.size shouldBe 2L
     }
 }
