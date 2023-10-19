@@ -15,21 +15,4 @@ data class Place(
     val telephone: String = "",
     val description: String = "",
     val id: Long = 0L,
-) {
-    fun plusUserRegistrationCountAndReturn(): Place {
-        return Place(
-            administrativeCategoryId = administrativeCategoryId,
-            placeName = placeName,
-            placeCategory = placeCategory,
-            latitude = latitude,
-            longitude = longitude,
-            address = address,
-            roadAddress = roadAddress,
-            userRegistrationCount = userRegistrationCount + 1,
-            link = link,
-            telephone = telephone,
-            description = description,
-            id = id,
-        )
-    }
-}
+)

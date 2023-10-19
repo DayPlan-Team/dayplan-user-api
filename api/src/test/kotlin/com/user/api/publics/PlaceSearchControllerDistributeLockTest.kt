@@ -3,9 +3,9 @@ package com.user.api.publics
 import com.ninjasquad.springmockk.MockkBean
 import com.user.adapter.location.persistence.PlaceEntityRepository
 import com.user.api.ApiTestConfiguration
-import com.user.application.port.out.PlaceSearchPort
-import com.user.application.response.PlaceItem
-import com.user.application.response.PlacePortItemResponse
+import com.user.domain.location.port.PlaceSearchPort
+import com.user.domain.location.port.PlaceItem
+import com.user.domain.location.port.PlacePortItemResponse
 import com.user.application.service.UserVerifyService
 import com.user.util.address.PlaceCategory
 import com.user.domain.share.UserAccountStatus
@@ -17,9 +17,6 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.shouldBe
 import io.mockk.every
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest

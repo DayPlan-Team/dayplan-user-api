@@ -1,17 +1,13 @@
 package com.user.api.grpc
 
-import com.user.application.port.out.PlacePort
 import com.user.util.Logger
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
 import io.grpc.Server
-import io.grpc.ServerBuilder
-import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 

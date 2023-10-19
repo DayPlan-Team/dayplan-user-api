@@ -1,7 +1,7 @@
 package com.user.adapter.users
 
 import com.user.adapter.users.persistence.UserEntityRepository
-import com.user.application.port.out.UserQueryPort
+import com.user.domain.user.port.UserQueryPort
 import com.user.domain.user.User
 import com.user.util.exception.UserException
 import com.user.util.exceptioncode.UserExceptionCode

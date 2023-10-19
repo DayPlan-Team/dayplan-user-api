@@ -1,7 +1,7 @@
 package com.user.adapter.terms
 
 import com.user.adapter.terms.persistence.TermsEntityRepository
-import com.user.application.port.out.TermsQueryPort
+import com.user.domain.terms.port.TermsQueryPort
 import com.user.domain.terms.Terms
 import com.user.util.exception.SystemException
 import com.user.util.exceptioncode.SystemExceptionCode

@@ -2,8 +2,8 @@ package com.user.api.publics
 
 import com.ninjasquad.springmockk.MockkBean
 import com.user.api.ApiTestConfiguration
-import com.user.application.port.out.TermsQueryPort
-import com.user.application.port.out.UserQueryPort
+import com.user.domain.terms.port.TermsQueryPort
+import com.user.domain.user.port.UserQueryPort
 import com.user.application.service.TermsAgreementUpsertService
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.terms.Terms

@@ -1,7 +1,7 @@
 package com.user.api.internals
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.user.application.port.out.UserQueryPort
+import com.user.domain.user.port.UserQueryPort
 import com.user.application.service.UserVerifyService
 import com.user.domain.share.UserAccountStatus
 import com.user.util.Logger

@@ -1,6 +1,6 @@
 package com.user.api.grpc
 
-import com.user.application.port.out.PlacePort
+import com.user.domain.location.port.PlacePort
 import com.user.util.Logger
 import com.user.util.exception.UserException
 import com.user.util.exceptioncode.SystemExceptionCode

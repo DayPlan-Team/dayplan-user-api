@@ -1,4 +1,4 @@
-package com.user.application.port.out
+package com.user.domain.terms.port
 
 import com.user.domain.terms.Terms
 import org.springframework.stereotype.Component

@@ -1,7 +1,7 @@
-package com.user.application.port.out
+package com.user.domain.terms.port
 
 import com.user.domain.terms.TermsAgreement
-import com.user.application.request.TermsAgreementRequest
+import com.user.domain.terms.TermsAgreementRequest
 import com.user.domain.user.User
 import org.springframework.stereotype.Component
 

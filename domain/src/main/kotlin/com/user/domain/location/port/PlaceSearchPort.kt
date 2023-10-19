@@ -1,6 +1,5 @@
-package com.user.application.port.out
+package com.user.domain.location.port
 
-import com.user.application.response.PlacePortItemResponse
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,8 +1,8 @@
 package com.user.adapter.location
 
 import com.user.adapter.client.NaverSearchClient
-import com.user.application.port.out.PlaceSearchPort
-import com.user.application.response.PlacePortItemResponse
+import com.user.domain.location.port.PlaceSearchPort
+import com.user.domain.location.port.PlacePortItemResponse
 import com.user.util.Logger
 import com.user.util.exception.SystemException
 import com.user.util.exception.UserException

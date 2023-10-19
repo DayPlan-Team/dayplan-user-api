@@ -5,7 +5,7 @@ import com.user.adapter.location.entity.UserCurrentLocationEntity
 import com.user.adapter.location.entity.UserLocationHistoryEntity
 import com.user.adapter.location.persistence.UserCurrentLocationEntityRepository
 import com.user.adapter.location.persistence.UserLocationHistoryEntityRepository
-import com.user.application.port.out.UserLocationPort
+import com.user.domain.userlocation.port.UserLocationPort
 import com.user.domain.location.UserLocation
 import com.user.util.Logger
 import org.springframework.stereotype.Component

@@ -4,9 +4,9 @@ import com.user.adapter.terms.entity.TermsAgreementEntity
 import com.user.adapter.terms.persistence.TermsAgreementEntityRepository
 import com.user.adapter.users.entity.UserEntity
 import com.user.adapter.users.persistence.UserEntityRepository
-import com.user.application.port.out.TermsAgreementPort
+import com.user.domain.terms.port.TermsAgreementPort
 import com.user.domain.terms.TermsAgreement
-import com.user.application.request.TermsAgreementRequest
+import com.user.domain.terms.TermsAgreementRequest
 import com.user.domain.user.User
 import org.springframework.stereotype.Component
 

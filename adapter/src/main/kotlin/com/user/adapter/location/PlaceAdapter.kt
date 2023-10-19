@@ -2,7 +2,7 @@ package com.user.adapter.location
 
 import com.user.adapter.location.entity.PlaceEntity
 import com.user.adapter.location.persistence.PlaceEntityRepository
-import com.user.application.port.out.PlacePort
+import com.user.domain.location.port.PlacePort
 import com.user.domain.location.Place
 import com.user.util.exception.SystemException
 import com.user.util.exceptioncode.SystemExceptionCode

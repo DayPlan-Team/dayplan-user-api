@@ -1,6 +1,6 @@
 package com.user.application.service
 
-import com.user.application.port.out.UserQueryPort
+import com.user.domain.user.port.UserQueryPort
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
 import com.user.util.exception.UserException
