@@ -8,6 +8,7 @@ jar.enabled = true
 
 plugins {
     kotlin("plugin.jpa") version "1.8.22"
+    kotlin("plugin.noarg") version "1.8.21"
 }
 
 dependencies {
@@ -19,6 +20,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    implementation("org.jetbrains.kotlin:kotlin-noarg:1.8.21")
 
     /* JWT */
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
