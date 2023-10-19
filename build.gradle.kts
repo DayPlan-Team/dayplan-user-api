@@ -31,9 +31,6 @@ dependencies {
 
 }
 
-group = "com.dayplanuser"
-version = "0.0.1-SNAPSHOT"
-
 tasks.bootJar {
     mainClass = "com.user.api.ApiApplicationKt"
 }
@@ -46,7 +43,7 @@ allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs += "-Xjsr305=strict"
-            jvmTarget = "17"
+            jvmTarget = JavaVersion.VERSION_17.toString()
         }
     }
 
@@ -67,6 +64,7 @@ subprojects {
         apply(plugin = "org.jetbrains.kotlin.plugin.spring")
         apply(plugin = "kotlin")
         apply(plugin = "kotlin-kapt")
+        apply(plugin = "org.jetbrains.kotlin.plugin.allopen")
     }
 
     dependencies {

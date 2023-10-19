@@ -5,7 +5,7 @@ spring:
     activate:
       on-profile: test
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -56,3 +56,14 @@ logging:
 encryption:
   secret-key: gslQJkmrazoY1ytKUji6V0Qd49dWiCXxXVFMFQLezNuxEoFTQ7Xl6A1F7piKFybsZnoE06nnvaMbpAbPcKoeBg==
   salt: gslQJkmrazoY1ytKUji6V0Qd49dWiCXxXVFMFQLezNuxEoFTQ7Xl6A1F7piKFybsZnoE06nnvaMbpAbPcKoeBg==
+
+
+grpc:
+  content:
+    server:
+      port: 0
+  user:
+    server:
+      port: 0
+  server:
+    port: ${random.int[9000,9900]}

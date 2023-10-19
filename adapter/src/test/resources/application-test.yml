@@ -5,7 +5,7 @@ spring:
     activate:
       on-profile: test
   datasource:
-    url: jdbc:h2:tcp://localhost/~/Documents/h2-db/dayplan-user-local-test
+    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -14,7 +14,7 @@ spring:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
@@ -25,12 +25,6 @@ spring:
       host: localhost
       port: 6379
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
   jackson:
     property-naming-strategy: SNAKE_CASE
 
@@ -38,7 +32,7 @@ social:
   client:
     google:
       client-id: 833986886547-u9hddjs9c7vtv6q9u9op9q2abnbqkmhf.apps.googleusercontent.com
-      client-secret: ${GOOGLE_CLIENT_SECRET_KEY}
+      client-secret: 12345
       redirect-uri: http://localhost:8080/user/creation/social/google
       resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
       auth-uri: https://accounts.google.com/o/oauth2/auth
@@ -46,19 +40,30 @@ social:
 
 naver:
   map-client-id: prz24s4qtp
-  map-client-secret: ${NAVER_MAP_CLIENT_SECRET_KEY}
+  map-client-secret: 12345
   develop-client-id: fZDbnomZT2TEeFgejPuJ
-  develop-client-secret: ${NAVER_DEVELOP_SECRET_KEY}
+  develop-client-secret: 12345
 
 jwt:
   access-expiration-time: 1296000
   refresh-expiration-time: 2592000
-  secret-key: ${JWT_SECRET_KEY}
+  secret-key: gslQJkmrazoY1ytKUji6V0Qd49dWiCXxXVFMFQLezNuxEoFTQ7Xl6A1F7piKFybsZnoE06nnvaMbpAbPcKoeBg==
 
 logging:
   level:
     root: info
 
 encryption:
-  secret-key: ${ENCRYPTION_SECRET_KEY}
-  salt: ${SALT}
+  secret-key: gslQJkmrazoY1ytKUji6V0Qd49dWiCXxXVFMFQLezNuxEoFTQ7Xl6A1F7piKFybsZnoE06nnvaMbpAbPcKoeBg==
+  salt: gslQJkmrazoY1ytKUji6V0Qd49dWiCXxXVFMFQLezNuxEoFTQ7Xl6A1F7piKFybsZnoE06nnvaMbpAbPcKoeBg==
+
+
+grpc:
+  content:
+    server:
+      port: 0
+  user:
+    server:
+      port: 0
+  server:
+    port: ${random.int[9000,9900]}
