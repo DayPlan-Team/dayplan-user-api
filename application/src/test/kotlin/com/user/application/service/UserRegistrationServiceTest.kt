@@ -1,13 +1,12 @@
 package com.user.application.service
 
 import com.user.application.port.out.UserAccountSocialSourcePort
-import com.user.application.port.out.UserCreationCommandPort
-import com.user.application.port.out.UserQueryPort
-import com.user.application.request.UserAccountSocialCreationRequest
 import com.user.application.response.UserSourceResponse
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
-import com.user.domain.user.usecase.UserCreationUseCase
+import com.user.domain.user.port.UserCreationCommandPort
+import com.user.domain.user.port.UserQueryPort
+import com.user.domain.user.request.UserAccountSocialCreationRequest
 import com.user.util.social.SocialType
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.IsolationMode
@@ -19,14 +18,12 @@ import io.mockk.verify
 class UserRegistrationServiceTest(
     private val userCreationCommandPort: UserCreationCommandPort = mockk(),
     private val userAccountSocialSourcePort: UserAccountSocialSourcePort = mockk(),
-    private val userCreationUseCase: UserCreationUseCase = mockk(),
     private val userQueryPort: UserQueryPort = mockk(),
 ) : BehaviorSpec({
 
     isolationMode = IsolationMode.InstancePerTest
 
     val sut = UserRegistrationService(
-        userCreationUseCase = userCreationUseCase,
         userCreationCommandPort = userCreationCommandPort,
         userAccountSocialSourcePort = userAccountSocialSourcePort,
         userQueryPort = userQueryPort,
@@ -58,7 +55,6 @@ class UserRegistrationServiceTest(
                 )
             } returns UserSourceResponse(email = "shein@naver.com")
             every { userQueryPort.findUserByEmailOrNull(any()) } returns null
-            every { userCreationUseCase.createUser(any()) } returns user
 
             sut.createUserIfSocialRegistrationNotExists(userAccountSocialCreationRequest)
 

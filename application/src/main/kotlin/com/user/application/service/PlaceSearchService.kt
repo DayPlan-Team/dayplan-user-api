@@ -1,7 +1,7 @@
 package com.user.application.service
 
-import com.user.application.port.out.PlacePort
-import com.user.application.port.out.PlaceSearchPort
+import com.user.domain.location.port.PlacePort
+import com.user.domain.location.port.PlaceSearchPort
 import com.user.domain.location.Place
 import com.user.util.address.PlaceCategory
 import com.user.util.Logger

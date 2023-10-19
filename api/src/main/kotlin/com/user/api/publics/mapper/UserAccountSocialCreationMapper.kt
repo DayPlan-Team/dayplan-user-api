@@ -1,6 +1,6 @@
 package com.user.api.publics.mapper
 
-import com.user.application.request.UserAccountSocialCreationRequest
+import com.user.domain.user.request.UserAccountSocialCreationRequest
 import com.user.util.social.SocialType
 import org.springframework.stereotype.Component
 

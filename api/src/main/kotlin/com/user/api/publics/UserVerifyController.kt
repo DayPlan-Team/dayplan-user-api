@@ -1,6 +1,6 @@
 package com.user.api.publics
 
-import com.user.application.port.out.UserQueryPort
+import com.user.domain.user.port.UserQueryPort
 import com.user.domain.share.UserAccountStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

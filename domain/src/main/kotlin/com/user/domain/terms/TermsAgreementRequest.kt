@@ -1,4 +1,4 @@
-package com.user.application.request
+package com.user.domain.terms
 
 data class TermsAgreementRequest(
     val termsId: Long,

@@ -1,6 +1,6 @@
 package com.user.adapter.client
 
-import com.user.application.response.PlacePortItemResponse
+import com.user.domain.location.port.PlacePortItemResponse
 import org.springframework.stereotype.Component
 import retrofit2.Call
 import retrofit2.http.GET

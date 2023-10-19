@@ -1,9 +1,9 @@
 package com.user.api.publics
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.user.application.port.out.TermsQueryPort
-import com.user.application.port.out.UserQueryPort
-import com.user.application.request.TermsAgreementRequest
+import com.user.domain.terms.port.TermsQueryPort
+import com.user.domain.user.port.UserQueryPort
+import com.user.domain.terms.TermsAgreementRequest
 import com.user.application.service.TermsAgreementUpsertService
 import com.user.domain.terms.Terms
 import com.user.util.Logger

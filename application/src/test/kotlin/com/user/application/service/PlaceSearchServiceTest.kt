@@ -2,10 +2,9 @@ package com.user.application.service
 
 import com.ninjasquad.springmockk.MockkBean
 import com.user.application.ApplicationTestConfiguration
-import com.user.application.port.out.PlacePort
-import com.user.application.port.out.PlaceSearchPort
-import com.user.application.response.PlaceItem
-import com.user.application.response.PlacePortItemResponse
+import com.user.domain.location.port.PlaceSearchPort
+import com.user.domain.location.port.PlaceItem
+import com.user.domain.location.port.PlacePortItemResponse
 import com.user.util.address.PlaceCategory
 import io.kotest.matchers.shouldBe
 import io.mockk.every
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 

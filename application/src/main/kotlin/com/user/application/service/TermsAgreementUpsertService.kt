@@ -1,8 +1,8 @@
 package com.user.application.service
 
-import com.user.application.port.out.TermsAgreementPort
-import com.user.application.port.out.TermsQueryPort
-import com.user.application.request.TermsAgreementRequest
+import com.user.domain.terms.port.TermsAgreementPort
+import com.user.domain.terms.port.TermsQueryPort
+import com.user.domain.terms.TermsAgreementRequest
 import com.user.domain.user.User
 import com.user.util.exception.UserException
 import com.user.util.exceptioncode.UserExceptionCode

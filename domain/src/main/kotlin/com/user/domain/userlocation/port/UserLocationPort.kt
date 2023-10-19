@@ -1,4 +1,4 @@
-package com.user.application.port.out
+package com.user.domain.userlocation.port
 
 import com.user.domain.location.UserLocation
 import org.springframework.stereotype.Component

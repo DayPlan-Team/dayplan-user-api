@@ -1,4 +1,4 @@
-package com.user.application.response
+package com.user.domain.location.port
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

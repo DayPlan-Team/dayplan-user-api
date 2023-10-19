@@ -2,7 +2,7 @@ package com.user.adapter.users
 
 import com.user.adapter.users.entity.UserEntity
 import com.user.adapter.users.persistence.UserEntityRepository
-import com.user.application.port.out.UserCreationCommandPort
+import com.user.domain.user.port.UserCreationCommandPort
 import com.user.domain.user.User
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

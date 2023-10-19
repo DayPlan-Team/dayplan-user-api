@@ -1,4 +1,4 @@
-package com.user.application.request
+package com.user.domain.user.request
 
 import com.user.util.social.SocialType
 
