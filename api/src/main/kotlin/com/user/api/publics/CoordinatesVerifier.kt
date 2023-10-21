@@ -24,9 +24,12 @@ object CoordinatesVerifier {
             val point1 = polygon[i]
             val point2 = polygon[(i + 1) % polygon.size]
 
+            if (p == point1 || p == point2) return
+
             if (p.second > minOf(point1.second, point2.second) && p.second <= maxOf(point1.second, point2.second)) {
 
-                val xIntersection = point1.first + (p.second - point1.second) * (point2.first - point1.first) / (point2.second - point1.second)
+                val xIntersection =
+                    point1.first + (p.second - point1.second) * (point2.first - point1.first) / (point2.second - point1.second)
 
                 if (p.first < xIntersection) {
                     intersection++
