@@ -11,24 +11,23 @@ import org.springframework.stereotype.Component
 class TermsQueryAdapter(
     private val termsEntityRepository: TermsEntityRepository,
 ) : TermsQueryPort {
-    override fun findTermsByIdIn(termsIds: List<Long>): List<Terms> {
-        val termsEntity = termsEntityRepository.findTermsEntitiesByIdIn(termsIds)
 
-        return termsEntity.map {
-            it.toDomainModel()
-        }
+    override fun findTermsByIdIn(termsIds: List<Long>): List<Terms> {
+        return termsEntityRepository
+            .findTermsEntitiesByIdIn(termsIds)
+            .map { it.toDomainModel() }
     }
 
     override fun findById(termsId: Long): Terms {
-        val termsEntity = termsEntityRepository
+        return termsEntityRepository
             .findById(termsId)
             .orElseThrow { SystemException(SystemExceptionCode.NOT_MATCH_TERMS) }
-
-        return termsEntity.toDomainModel()
+            .toDomainModel()
     }
 
     override fun findAll(): List<Terms> {
-        return termsEntityRepository.findAll()
+        return termsEntityRepository
+            .findAll()
             .map { it.toDomainModel() }
     }
 }

@@ -15,8 +15,11 @@ class TermsAgreementAdapter(
     private val termsAgreementEntityRepository: TermsAgreementEntityRepository,
     private val userEntityRepository: UserEntityRepository,
 ) : TermsAgreementPort {
+
     override fun findTermsAgreementsByUserId(user: User): List<TermsAgreement> {
-        return termsAgreementEntityRepository.findAllByUserId(user.userId).map { it.toDomainModel() }
+        return termsAgreementEntityRepository
+            .findAllByUserId(user.userId)
+            .map { it.toDomainModel() }
     }
 
     override fun upsertTermsAgreement(user: User, termsAgreementRequests: List<TermsAgreementRequest>) {

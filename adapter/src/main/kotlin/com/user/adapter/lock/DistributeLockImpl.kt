@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component
 class DistributeLockImpl<R>(
     private val lockService: LockService<R>
 ) : DistributeLock<R> {
+
     override fun withLockRetry(
         distributeLockType: DistributeLockType,
         key: String,

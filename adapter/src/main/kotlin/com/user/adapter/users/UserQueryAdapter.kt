@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class UserQueryAdapter(
     private val userEntityRepository: UserEntityRepository,
 ) : UserQueryPort {
+
     override fun findUserByUserId(userId: Long): User {
         return userEntityRepository.findById(userId)
             .orElseThrow { UserException(UserExceptionCode.NOT_FOUND_USER) }
@@ -25,8 +26,6 @@ class UserQueryAdapter(
 
     override fun findUsesByUserIds(userIds: List<Long>): List<User> {
         return userEntityRepository.findUserEntitiesByIdIn(userIds)
-            .map {
-                it.toDomainModel()
-            }
+            .map { it.toDomainModel() }
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component
 class UserAccountSocialSourceAdapterFactory(
     private val userAccountGoogleSourceAdapter: UserAccountGoogleSourceAdapter,
 ) : UserAccountSocialSourcePort {
+
     override fun getSocialUserSource(code: String, socialType: SocialType): UserSourceResponse {
         return when (socialType) {
             SocialType.GOOGLE -> userAccountGoogleSourceAdapter.getSocialUserSource(code, socialType)

@@ -12,6 +12,7 @@ class LockServiceImpl<R>(
     private val redissonClient: RedissonClient,
     private val redisTemplate: RedisTemplate<String, String>
 ) : LockService<R> {
+
     override fun lockRetry(key: String, lockTime: Long, exception: Exception, action: () -> R): R {
         val lock = redissonClient.getLock(key)
 
