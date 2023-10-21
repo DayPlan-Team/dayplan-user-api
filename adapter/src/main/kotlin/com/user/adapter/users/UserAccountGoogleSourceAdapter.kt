@@ -17,13 +17,12 @@ import org.springframework.stereotype.Component
 class UserAccountGoogleSourceAdapter(
     private val googleAccountClient: GoogleAccountClient,
 ) : UserAccountSocialSourcePort {
+
     override fun getSocialUserSource(code: String, socialType: SocialType): UserSourceResponse {
 
         val response = getGoogleValidatedTokenResponseFromIdToken(code)
 
-        return UserSourceResponse(
-            email = response.email,
-        )
+        return UserSourceResponse(response.email)
     }
 
     private fun getGoogleValidatedTokenResponseFromIdToken(idToken: String): GoogleValidatedTokenResponse {
@@ -38,8 +37,7 @@ class UserAccountGoogleSourceAdapter(
             response.body()?.let {
                 return it
             } ?: throw UserException(UserExceptionCode.USER_NOT_VERIFIED)
-        }
-        else throw SystemException(SystemExceptionCode.SOCIAL_LOGIN_TIME_ERROR)
+        } else throw SystemException(SystemExceptionCode.SOCIAL_LOGIN_TIME_ERROR)
     }
 
     data class GoogleValidatedTokenResponse(

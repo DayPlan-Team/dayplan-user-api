@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 class UserCommandAdapter(
     private val userEntityRepository: UserEntityRepository,
 ) : UserCommandPort {
+
     override fun save(user: User): User {
         return userEntityRepository.save(UserEntity.from(user)).toDomainModel()
     }

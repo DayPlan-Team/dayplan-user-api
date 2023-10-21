@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class UserProfileCommandAdapter(
     private val userEntityRepository: UserEntityRepository,
 ) : UserProfileCommandPort {
+
     override fun upsertUserProfile(user: User, userProfileRequest: UserProfileRequest) {
         val updateUser = user.from(userProfileRequest)
         userEntityRepository.save(UserEntity.from(updateUser))

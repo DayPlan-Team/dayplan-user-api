@@ -18,6 +18,7 @@ class UserLocationAdapter(
     private val userLocationHistoryEntityRepository: UserLocationHistoryEntityRepository,
     private val dateCourseClient: DateCourseClient,
 ) : UserLocationPort {
+
     override fun upsertUserLocation(userLocation: UserLocation) {
         val userLocationEntity = userCurrentLocationEntityRepository.findByUserId(userLocation.user.userId)
 
