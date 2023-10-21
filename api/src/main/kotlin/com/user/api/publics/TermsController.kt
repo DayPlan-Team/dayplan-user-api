@@ -23,7 +23,7 @@ class TermsController(
     private val termsAgreementUpsertService: TermsAgreementUpsertService,
 ) {
 
-    @GetMapping
+    @GetMapping("/check")
     fun checkTermsAgreementToUser(@RequestHeader("UserId") userId: Long): ResponseEntity<UserTermsAgreementStatus> {
         val user = userQueryPort.findUserByUserId(userId)
 
@@ -63,7 +63,7 @@ class TermsController(
     }
 
     data class UserTermsAgreementStatus(
-        @JsonProperty("agreementNeed") val mandatoryAllAgreement: Boolean,
+        @JsonProperty("mandatoryAllAgreement") val mandatoryAllAgreement: Boolean,
     )
 
 

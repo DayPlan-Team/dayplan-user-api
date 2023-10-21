@@ -47,6 +47,30 @@ class TermsControllerTest : FunSpec() {
     private lateinit var termsAgreementUpsertService: TermsAgreementUpsertService
 
     init {
+        this.context("유저의 약관 동의 이력이 주어져요") {
+
+            val user = User(
+                email = "shein@com",
+                userAccountStatus = UserAccountStatus.NORMAL,
+                mandatoryTermsAgreed = false,
+                nickName = "shein",
+                userId = 100L,
+            )
+
+            every { userQueryPort.findUserByUserId(any()) } returns user
+
+            test("유저의 필수 약관 동의 여부를 제공해요") {
+
+                val mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("http://localhost:8080/user/terms/check")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("UserId", 100L)
+
+                mockMvc.perform(mockHttpServletRequestBuilder)
+                    .andExpect(status().isOk)
+                    .andExpect(jsonPath("$.mandatoryAllAgreement").value(false))
+            }
+        }
+
 
         this.context("유저에게 제공할 약관들이 주어져요") {
             val terms = listOf(
@@ -91,7 +115,7 @@ class TermsControllerTest : FunSpec() {
                     "mandatory" to false
                 )
 
-                val mockHttpServletRequestBuilder = MockMvcRequestBuilders.get(TERMS_URL)
+                val mockHttpServletRequestBuilder = MockMvcRequestBuilders.get("http://localhost:8080/user/terms")
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("UserId", 100L)
 
@@ -109,21 +133,6 @@ class TermsControllerTest : FunSpec() {
         }
 
         this.context("동의해야 할 약관이 주어져요") {
-            val terms = listOf(
-                Terms(
-                    termsId = 10L,
-                    sequence = 2L,
-                    content = "약관2",
-                    mandatory = false,
-                ),
-                Terms(
-                    termsId = 11L,
-                    sequence = 1L,
-                    content = "약관1",
-                    mandatory = true,
-                ),
-            )
-
             val user = User(
                 email = "shein@com",
                 userAccountStatus = UserAccountStatus.NORMAL,
@@ -136,7 +145,7 @@ class TermsControllerTest : FunSpec() {
             every { termsAgreementUpsertService.upsertTermsAgreement(any(), any()) } just Runs
 
             test("주어진 약관을 동의하는 요청을 보내면 성공해요") {
-                val mockHttpServletRequestBuilder = MockMvcRequestBuilders.post(TERMS_URL)
+                val mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/user/terms")
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("UserId", 100L)
                     .content("{\"termsAgreements\":[{\"termsId\":10,\"agreement\":true},{\"termsId\":11,\"agreement\":true}]}")
@@ -146,9 +155,4 @@ class TermsControllerTest : FunSpec() {
             }
         }
     }
-
-    companion object {
-        const val TERMS_URL = "http://localhost:8080/user/terms"
-    }
-
 }
