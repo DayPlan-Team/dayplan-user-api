@@ -7,7 +7,7 @@ data class User(
     val email: String,
     val userAccountStatus: UserAccountStatus,
     val mandatoryTermsAgreed: Boolean = false,
-    val nickName: String = "",
+    val nickName: String = DEFAULT_NICKNAME,
     val userId: Long = 0L,
 ) {
 
@@ -29,6 +29,14 @@ data class User(
             nickName = nickName,
             userId = userId
         )
+    }
+
+    fun updateUserStatus(userAccountStatus: UserAccountStatus): User {
+        return this.copy(userAccountStatus = userAccountStatus)
+    }
+
+    fun updateMandatoryTermsAgreed(mandatoryTermsAgreed: Boolean): User {
+        return this.copy(mandatoryTermsAgreed = mandatoryTermsAgreed)
     }
 
     companion object {

@@ -2,16 +2,16 @@ package com.user.adapter.users
 
 import com.user.adapter.users.entity.UserEntity
 import com.user.adapter.users.persistence.UserEntityRepository
-import com.user.domain.user.port.UserCreationCommandPort
+import com.user.domain.user.port.UserCommandPort
 import com.user.domain.user.User
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Transactional
-class UserCreationCommandAdapter(
+class UserCommandAdapter(
     private val userEntityRepository: UserEntityRepository,
-) : UserCreationCommandPort {
+) : UserCommandPort {
     override fun save(user: User): User {
 
         val userEntity = UserEntity(

@@ -4,7 +4,7 @@ import com.user.application.port.out.UserAccountSocialSourcePort
 import com.user.application.response.UserSourceResponse
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
-import com.user.domain.user.port.UserCreationCommandPort
+import com.user.domain.user.port.UserCommandPort
 import com.user.domain.user.port.UserQueryPort
 import com.user.domain.user.request.UserAccountSocialCreationRequest
 import com.user.util.social.SocialType
@@ -16,7 +16,7 @@ import io.mockk.mockk
 import io.mockk.verify
 
 class UserRegistrationServiceTest(
-    private val userCreationCommandPort: UserCreationCommandPort = mockk(),
+    private val userCommandPort: UserCommandPort = mockk(),
     private val userAccountSocialSourcePort: UserAccountSocialSourcePort = mockk(),
     private val userQueryPort: UserQueryPort = mockk(),
 ) : BehaviorSpec({
@@ -24,7 +24,7 @@ class UserRegistrationServiceTest(
     isolationMode = IsolationMode.InstancePerTest
 
     val sut = UserRegistrationService(
-        userCreationCommandPort = userCreationCommandPort,
+        userCommandPort = userCommandPort,
         userAccountSocialSourcePort = userAccountSocialSourcePort,
         userQueryPort = userQueryPort,
     )
@@ -44,7 +44,7 @@ class UserRegistrationServiceTest(
             socialType = SocialType.GOOGLE,
         )
 
-        every { userCreationCommandPort.save(any()) } returns user
+        every { userCommandPort.save(any()) } returns user
 
         `when`("소셜 유저 정보를 정상 반환하고, 유저가 처음 가입했을 때") {
 
@@ -59,7 +59,7 @@ class UserRegistrationServiceTest(
             sut.createUserIfSocialRegistrationNotExists(userAccountSocialCreationRequest)
 
             then("유저 저장을 수행해야 해요") {
-                verify(exactly = 1) { userCreationCommandPort.save(any()) }
+                verify(exactly = 1) { userCommandPort.save(any()) }
             }
         }
 
@@ -76,7 +76,7 @@ class UserRegistrationServiceTest(
             sut.createUserIfSocialRegistrationNotExists(userAccountSocialCreationRequest)
 
             then("유저 저장은 수행하지 않아야 해요") {
-                verify(exactly = 0) { userCreationCommandPort.save(any()) }
+                verify(exactly = 0) { userCommandPort.save(any()) }
             }
         }
 
@@ -91,7 +91,7 @@ class UserRegistrationServiceTest(
                     sut.createUserIfSocialRegistrationNotExists(userAccountSocialCreationRequest)
                 }
                 verify(exactly = 0) { userQueryPort.findUserByEmailOrNull(any()) }
-                verify(exactly = 0) { userCreationCommandPort.save(any()) }
+                verify(exactly = 0) { userCommandPort.save(any()) }
             }
         }
     }

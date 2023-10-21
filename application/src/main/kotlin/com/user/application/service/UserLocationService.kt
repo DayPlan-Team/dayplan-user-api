@@ -15,10 +15,6 @@ class UserLocationService(
     private val coroutineScope: CoroutineScope,
     private val userLocationPort: UserLocationPort,
 ) {
-    fun verifyUserGeoCodeRequestLimitedCount() {
-        TODO()
-    }
-
     fun upsertUserLocation(user: User, coordinates: Coordinates) {
         val userLocation = UserLocation(
             user = user,
