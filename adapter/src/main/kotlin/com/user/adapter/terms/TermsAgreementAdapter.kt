@@ -16,31 +16,29 @@ class TermsAgreementAdapter(
     private val userEntityRepository: UserEntityRepository,
 ) : TermsAgreementPort {
     override fun findTermsAgreementsByUserId(user: User): List<TermsAgreement> {
-        return termsAgreementEntityRepository.findAllByUserId(user.userId).map { it.toTermsAgreement() }
+        return termsAgreementEntityRepository.findAllByUserId(user.userId).map { it.toDomainModel() }
     }
 
     override fun upsertTermsAgreement(user: User, termsAgreementRequests: List<TermsAgreementRequest>) {
+        val termsAgreementEntities = toTermsAgreementEntities(
+            user = user,
+            request = termsAgreementRequests,
+        )
+
+        termsAgreementEntityRepository.saveAll(termsAgreementEntities)
+        userEntityRepository.save(UserEntity.from(user.from(true)))
+    }
+
+    private fun toTermsAgreementEntities(user: User, request: List<TermsAgreementRequest>): List<TermsAgreementEntity> {
         val userTermsAgreementsMap = termsAgreementEntityRepository
             .findAllByUserId(user.userId)
             .associateBy { it.termsId }
 
-        val termsAgreementEntities = termsAgreementRequests
+        return request
             .map { termsAgreementRequest ->
-                userTermsAgreementsMap[termsAgreementRequest.termsId]?.let {
-                    TermsAgreementEntity(
-                        id = termsAgreementRequest.termsId,
-                        termsId = termsAgreementRequest.termsId,
-                        userId = user.userId,
-                        agreement = termsAgreementRequest.agreement,
-                    )
-                } ?: TermsAgreementEntity(
-                    termsId = termsAgreementRequest.termsId,
-                    userId = user.userId,
-                    agreement = termsAgreementRequest.agreement,
-                )
+                userTermsAgreementsMap[termsAgreementRequest.termsId]?.let { agreement ->
+                    TermsAgreementEntity.from(agreement, termsAgreementRequest)
+                } ?: TermsAgreementEntity.from(user, termsAgreementRequest)
             }
-
-        termsAgreementEntityRepository.saveAll(termsAgreementEntities)
-        userEntityRepository.save(UserEntity.from(user.from(true)))
     }
 }

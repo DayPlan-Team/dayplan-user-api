@@ -12,7 +12,9 @@ import jakarta.persistence.Table
 @Entity
 @Table(
     name = "user_location_history",
-    indexes = [Index(name = "idx_location_history_userId", columnList = "userId")],
+    indexes = [
+        Index(name = "idx_location_history_userId", columnList = "userId"),
+    ],
 )
 data class UserLocationHistoryEntity(
     @Column
@@ -30,7 +32,7 @@ data class UserLocationHistoryEntity(
 ) : BaseEntity() {
 
     companion object {
-        fun fromUserLocationEntity(userCurrentLocationEntity: UserCurrentLocationEntity): UserLocationHistoryEntity {
+        fun fromEntity(userCurrentLocationEntity: UserCurrentLocationEntity): UserLocationHistoryEntity {
             return UserLocationHistoryEntity(
                 userId = userCurrentLocationEntity.userId,
                 latitude = userCurrentLocationEntity.latitude,

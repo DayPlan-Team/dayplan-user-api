@@ -13,8 +13,9 @@ class TermsQueryAdapter(
 ) : TermsQueryPort {
     override fun findTermsByIdIn(termsIds: List<Long>): List<Terms> {
         val termsEntity = termsEntityRepository.findTermsEntitiesByIdIn(termsIds)
+
         return termsEntity.map {
-            it.toTerms()
+            it.toDomainModel()
         }
     }
 
@@ -23,11 +24,11 @@ class TermsQueryAdapter(
             .findById(termsId)
             .orElseThrow { SystemException(SystemExceptionCode.NOT_MATCH_TERMS) }
 
-        return termsEntity.toTerms()
+        return termsEntity.toDomainModel()
     }
 
     override fun findAll(): List<Terms> {
         return termsEntityRepository.findAll()
-            .map { it.toTerms() }
+            .map { it.toDomainModel() }
     }
 }

@@ -32,7 +32,7 @@ class ApiClientConfig {
             .baseUrl(GOOGLE_LOGIN_URL)
             .client(
                 OkHttpClient.Builder()
-                    .connectTimeout(10, TimeUnit.SECONDS)    // 연결 타임아웃
+                    .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
                     .build()
             )
@@ -54,7 +54,7 @@ class ApiClientConfig {
                         .build()
                     chain.proceed(newRequest)
                 }
-                .connectTimeout(10, TimeUnit.SECONDS)    // 연결 타임아웃
+                .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build())
             .addConverterFactory(GsonConverterFactory.create())
@@ -75,7 +75,7 @@ class ApiClientConfig {
                         .build()
                     chain.proceed(newRequest)
                 }
-                .connectTimeout(10, TimeUnit.SECONDS)    // 연결 타임아웃
+                .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build())
             .addConverterFactory(GsonConverterFactory.create())

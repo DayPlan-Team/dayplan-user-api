@@ -8,6 +8,4 @@ interface AuthenticationTicketUseCase {
     fun createAuthenticationTicket(userId: Long): AuthenticationTicket
 
     fun reissueAuthenticationTicket(userId: Long): String
-
-    fun deleteAuthenticationTicket(userId: Long)
 }

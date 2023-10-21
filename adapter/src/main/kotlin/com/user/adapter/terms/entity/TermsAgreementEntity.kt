@@ -2,6 +2,8 @@ package com.user.adapter.terms.entity
 
 import com.user.adapter.share.BaseEntity
 import com.user.domain.terms.TermsAgreement
+import com.user.domain.terms.TermsAgreementRequest
+import com.user.domain.user.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -34,11 +36,33 @@ data class TermsAgreementEntity(
     val id: Long = 0L,
 ) : BaseEntity() {
 
-    fun toTermsAgreement(): TermsAgreement {
+    fun toDomainModel(): TermsAgreement {
         return TermsAgreement(
             userId = userId,
             termsId = termsId,
             agreement = agreement,
         )
+    }
+
+    companion object {
+        fun from(
+            termsAgreementEntity: TermsAgreementEntity,
+            termsAgreementRequest: TermsAgreementRequest
+        ): TermsAgreementEntity {
+            return TermsAgreementEntity(
+                id = termsAgreementEntity.id,
+                termsId = termsAgreementEntity.termsId,
+                userId = termsAgreementEntity.userId,
+                agreement = termsAgreementRequest.agreement,
+            )
+        }
+
+        fun from(user: User, termsAgreementRequest: TermsAgreementRequest): TermsAgreementEntity {
+            return TermsAgreementEntity(
+                termsId = termsAgreementRequest.termsId,
+                userId = user.userId,
+                agreement = termsAgreementRequest.agreement,
+            )
+        }
     }
 }

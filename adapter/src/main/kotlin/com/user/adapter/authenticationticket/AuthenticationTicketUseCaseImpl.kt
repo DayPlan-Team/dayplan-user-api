@@ -42,8 +42,4 @@ class AuthenticationTicketUseCaseImpl(
     override fun reissueAuthenticationTicket(userId: Long): String {
         return jwtTokenBuilder.buildJwtToken(userId.toString(), accessExpirationTime)
     }
-
-    override fun deleteAuthenticationTicket(userId: Long) {
-        TODO("Not yet implemented")
-    }
 }
