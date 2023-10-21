@@ -3,7 +3,6 @@ package com.user.adapter.client
 import com.user.application.response.GeocodeResponse
 import org.springframework.stereotype.Component
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query

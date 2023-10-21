@@ -13,14 +13,6 @@ class UserCommandAdapter(
     private val userEntityRepository: UserEntityRepository,
 ) : UserCommandPort {
     override fun save(user: User): User {
-
-        val userEntity = UserEntity(
-            id = user.userId,
-            email = user.email,
-            nickName = user.nickName,
-            userAccountStatus = user.userAccountStatus,
-        )
-
-        return userEntityRepository.save(userEntity).toDomainModel()
+        return userEntityRepository.save(UserEntity.from(user)).toDomainModel()
     }
 }

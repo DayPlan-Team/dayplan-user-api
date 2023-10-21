@@ -28,7 +28,7 @@ data class TermsEntity(
     val id: Long,
 ) : BaseEntity() {
 
-    fun toTerms(): Terms {
+    fun toDomainModel(): Terms {
         return Terms(
             sequence = sequence,
             content = content,

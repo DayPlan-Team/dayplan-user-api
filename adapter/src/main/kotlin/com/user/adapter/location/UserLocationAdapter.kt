@@ -20,21 +20,13 @@ class UserLocationAdapter(
 ) : UserLocationPort {
     override fun upsertUserLocation(userLocation: UserLocation) {
         val userLocationEntity = userCurrentLocationEntityRepository.findByUserId(userLocation.user.userId)
+
         val userLocationToUpsertEntity = userLocationEntity?.let {
-            UserCurrentLocationEntity(
-                userId = userLocation.user.userId,
-                latitude = userLocation.latitude,
-                longitude = userLocation.longitude,
-                id = it.id,
-            )
-        } ?: UserCurrentLocationEntity(
-            userId = userLocation.user.userId,
-            latitude = userLocation.latitude,
-            longitude = userLocation.longitude,
-        )
+            UserCurrentLocationEntity.from(userLocationEntity, userLocation)
+        } ?: UserCurrentLocationEntity.from(userLocation)
 
         userCurrentLocationEntityRepository.save(userLocationToUpsertEntity)
-        userLocationHistoryEntityRepository.save(UserLocationHistoryEntity.fromUserLocationEntity(userLocationToUpsertEntity))
+        userLocationHistoryEntityRepository.save(UserLocationHistoryEntity.fromEntity(userLocationToUpsertEntity))
     }
 
     override suspend fun sendUserLocation(userLocation: UserLocation) {

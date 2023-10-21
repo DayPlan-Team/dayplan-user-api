@@ -66,7 +66,7 @@ PlaceEntity(
     val id: Long = 0L,
 ) : BaseEntity() {
     companion object {
-        fun fromPlace(place: Place): PlaceEntity {
+        fun fromDomainModel(place: Place): PlaceEntity {
             return PlaceEntity(
                 administrativeCategoryId = place.administrativeCategoryId,
                 placeName = place.placeName,
@@ -84,7 +84,7 @@ PlaceEntity(
         }
     }
 
-    fun toPlace(): Place {
+    fun toDomainModel(): Place {
         return Place(
             administrativeCategoryId = administrativeCategoryId,
             placeName = placeName,

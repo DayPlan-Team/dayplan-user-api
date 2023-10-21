@@ -17,31 +17,31 @@ class PlaceAdapter(
     @Transactional
     override fun upsertPlace(place: Place): Place {
         val savedPlace = placeEntityRepository.save(
-            PlaceEntity.fromPlace(place)
+            PlaceEntity.fromDomainModel(place)
         )
-        return savedPlace.toPlace()
+        return savedPlace.toDomainModel()
     }
 
     override fun getPlaceOrNullByAddress(address: String): Place? {
         return placeEntityRepository.findByAddress(address)
-            ?.toPlace()
+            ?.toDomainModel()
     }
 
     override fun getPlaceById(id: Long): Place {
         return placeEntityRepository.findById(id)
             .orElseThrow { SystemException(SystemExceptionCode.NOT_MATCH_PLACE) }
-            .toPlace()
+            .toDomainModel()
     }
 
     override fun getPlaceByIds(ids: List<Long>): List<Place> {
         return placeEntityRepository.findPlaceEntitiesByIdIn(ids)
             .map {
-                it.toPlace()
+                it.toDomainModel()
             }
     }
 
     override fun getPlacesByAdministrativeCategoryId(administrativeCategoryId: String): List<Place> {
         return placeEntityRepository.findPlaceEntitiesByAdministrativeCategoryId(administrativeCategoryId)
-            .map { it.toPlace() }
+            .map { it.toDomainModel() }
     }
 }
