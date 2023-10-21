@@ -1,7 +1,7 @@
 package com.user.application.service
 
 import com.user.application.port.out.UserAccountSocialSourcePort
-import com.user.domain.user.port.UserCreationCommandPort
+import com.user.domain.user.port.UserCommandPort
 import com.user.domain.user.port.UserQueryPort
 import com.user.domain.user.request.UserAccountSocialCreationRequest
 import com.user.application.response.UserSourceResponse
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserRegistrationService(
-    private val userCreationCommandPort: UserCreationCommandPort,
+    private val userCommandPort: UserCommandPort,
     private val userAccountSocialSourcePort: UserAccountSocialSourcePort,
     private val userQueryPort: UserQueryPort,
 ) : UserRegistrationUseCase {
@@ -27,7 +27,7 @@ class UserRegistrationService(
         val findUser = userQueryPort.findUserByEmailOrNull(userSourceResponse.email)
         if (findUser != null) return findUser
 
-        return userCreationCommandPort.save(
+        return userCommandPort.save(
             UserCreationRequest(
                 email = userSourceResponse.email,
                 accountStatus = UserAccountStatus.NORMAL,

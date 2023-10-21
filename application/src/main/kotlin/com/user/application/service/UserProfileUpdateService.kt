@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service
 @Transactional
 class UserProfileUpdateService(
     private val userQueryPort: UserQueryPort,
-    private val userCommandPort: UserProfileCommandPort,
+    private val userProfileCommandPort: UserProfileCommandPort,
 ) {
 
     fun upsertUserProfile(userId: Long, userProfileRequest: UserProfileRequest) {
         val user = userQueryPort.findUserByUserId(userId)
-        userCommandPort.upsertUserProfile(user, userProfileRequest)
+        userProfileCommandPort.upsertUserProfile(user, userProfileRequest)
     }
 }

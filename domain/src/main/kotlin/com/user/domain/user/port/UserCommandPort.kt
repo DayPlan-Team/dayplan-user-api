@@ -4,6 +4,6 @@ import com.user.domain.user.User
 import org.springframework.stereotype.Service
 
 @Service
-interface UserCreationCommandPort {
+interface UserCommandPort {
     fun save(user: User): User
 }
