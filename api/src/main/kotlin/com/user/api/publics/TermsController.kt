@@ -1,11 +1,11 @@
 package com.user.api.publics
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.user.domain.terms.port.TermsQueryPort
-import com.user.domain.user.port.UserQueryPort
-import com.user.domain.terms.TermsAgreementRequest
 import com.user.application.service.TermsAgreementUpsertService
 import com.user.domain.terms.Terms
+import com.user.domain.terms.TermsAgreementRequest
+import com.user.domain.terms.port.TermsQueryPort
+import com.user.domain.user.port.UserQueryPort
 import com.user.util.Logger
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,6 +22,17 @@ class TermsController(
     private val termsQueryPort: TermsQueryPort,
     private val termsAgreementUpsertService: TermsAgreementUpsertService,
 ) {
+
+    @GetMapping
+    fun checkTermsAgreementToUser(@RequestHeader("UserId") userId: Long): ResponseEntity<UserTermsAgreementStatus> {
+        val user = userQueryPort.findUserByUserId(userId)
+
+        return ResponseEntity.ok(
+            UserTermsAgreementStatus(
+                mandatoryAllAgreement = user.mandatoryTermsAgreed,
+            )
+        )
+    }
 
     @GetMapping
     fun getTerms(@RequestHeader("UserId") userId: Long): ResponseEntity<TermsApiResponse> {
@@ -50,6 +61,11 @@ class TermsController(
 
         return ResponseEntity.ok().build()
     }
+
+    data class UserTermsAgreementStatus(
+        @JsonProperty("agreementNeed") val mandatoryAllAgreement: Boolean,
+    )
+
 
     data class TermsApiResponse(
         val terms: List<Terms>
