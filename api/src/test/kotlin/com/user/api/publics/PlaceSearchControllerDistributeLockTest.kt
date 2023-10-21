@@ -49,7 +49,7 @@ class PlaceSearchControllerDistributeLockTest : FunSpec() {
 
     init {
 
-        context("유저가 place를 검색할 기본 조건이 주어져요") {
+        this.context("유저가 place를 검색할 기본 조건이 주어져요") {
 
             every { userVerifyService.verifyAndGetUser(1) } returns User(
                 email = "shein1@naver.com",
