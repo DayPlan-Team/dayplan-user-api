@@ -25,6 +25,8 @@ class ApiClientConfig {
     @Value("\${naver.develop-client-secret}")
     private lateinit var naverDevelopClientSecret: String
 
+    @Value("\${content.server.url}")
+    private lateinit var contentServerUrl: String
 
     @Bean
     fun applyGoogleAccountClient(): GoogleAccountClient {
@@ -85,9 +87,25 @@ class ApiClientConfig {
 
     @Profile("!prod")
     @Bean
-    fun applyDateCourseStayCheck(): DateCourseClient {
+    fun applyLocalDateCourseStayCheck(): DateCourseClient {
         return Retrofit.Builder()
             .baseUrl(CONTENT_SERVER_DEV_URL)
+            .client(
+                OkHttpClient.Builder()
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build()
+            )
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(DateCourseClient::class.java)
+    }
+
+    @Profile("prod")
+    @Bean
+    fun applyProdDateCourseStayCheck(): DateCourseClient {
+        return Retrofit.Builder()
+            .baseUrl(contentServerUrl)
             .client(
                 OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
