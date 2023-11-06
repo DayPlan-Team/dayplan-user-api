@@ -1,41 +1,35 @@
 package com.user.api.publics
 
 import com.ninjasquad.springmockk.MockkBean
-import com.user.api.ApiTestConfiguration
-import com.user.domain.terms.port.TermsQueryPort
-import com.user.domain.user.port.UserQueryPort
+import com.user.api.exception.ExceptionController
 import com.user.application.service.TermsAgreementUpsertService
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.terms.Terms
+import com.user.domain.terms.port.TermsQueryPort
 import com.user.domain.user.User
+import com.user.domain.user.port.UserQueryPort
 import io.kotest.core.extensions.Extension
 import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import org.hamcrest.Matchers
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
-@SpringBootTest(classes = [ApiTestConfiguration::class])
 class TermsControllerTest : FunSpec() {
 
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerTest
     override fun extensions(): List<Extension> = listOf(SpringExtension)
-
-    @Autowired
-    private lateinit var mockMvc: MockMvc
 
     @MockkBean
     private lateinit var userQueryPort: UserQueryPort
@@ -46,8 +40,25 @@ class TermsControllerTest : FunSpec() {
     @MockkBean
     private lateinit var termsAgreementUpsertService: TermsAgreementUpsertService
 
+    private lateinit var mockMvc: MockMvc
+
+    override suspend fun beforeSpec(spec: Spec) {
+        val termsController = TermsController(
+            userQueryPort = userQueryPort,
+            termsQueryPort = termsQueryPort,
+            termsAgreementUpsertService = termsAgreementUpsertService,
+        )
+
+        val exceptionController = ExceptionController()
+
+        mockMvc = MockMvcBuilders
+            .standaloneSetup(termsController)
+            .setControllerAdvice(exceptionController)
+            .build()
+    }
+
     init {
-        this.context("유저의 약관 동의 이력이 주어져요") {
+        context("유저의 약관 동의 이력이 주어져요") {
 
             val user = User(
                 email = "shein@com",
@@ -72,7 +83,7 @@ class TermsControllerTest : FunSpec() {
         }
 
 
-        this.context("유저에게 제공할 약관들이 주어져요") {
+        context("유저에게 제공할 약관들이 주어져요") {
             val terms = listOf(
                 Terms(
                     termsId = 10L,
@@ -132,7 +143,7 @@ class TermsControllerTest : FunSpec() {
             }
         }
 
-        this.context("동의해야 할 약관이 주어져요") {
+        context("동의해야 할 약관이 주어져요") {
             val user = User(
                 email = "shein@com",
                 userAccountStatus = UserAccountStatus.NORMAL,
