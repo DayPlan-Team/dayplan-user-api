@@ -1,38 +1,32 @@
 package com.user.api.publics
 
 import com.ninjasquad.springmockk.MockkBean
-import com.user.api.ApiTestConfiguration
+import com.user.api.exception.ExceptionController
 import com.user.application.service.UserLocationService
 import com.user.application.service.UserVerifyService
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
 import io.kotest.core.extensions.Extension
 import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
-@SpringBootTest(classes = [ApiTestConfiguration::class])
-class LocationControllerTest : FunSpec() {
+class LocationControllerMockMvcTest : FunSpec() {
 
     override fun extensions(): List<Extension> = listOf(SpringExtension)
 
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerLeaf
-
-    @Autowired
-    private lateinit var mockMvc: MockMvc
 
     @MockkBean
     private lateinit var userVerifyService: UserVerifyService
@@ -40,9 +34,26 @@ class LocationControllerTest : FunSpec() {
     @MockkBean
     private lateinit var userLocationService: UserLocationService
 
+    private lateinit var mockMvc: MockMvc
+
+
+    override suspend fun beforeSpec(spec: Spec) {
+        val locationController = LocationController(
+            userVerifyService = userVerifyService,
+            userLocationService = userLocationService,
+        )
+
+        val exceptionController = ExceptionController()
+
+        mockMvc = MockMvcBuilders
+            .standaloneSetup(locationController)
+            .setControllerAdvice(exceptionController)
+            .build()
+    }
+
     init {
 
-        this.context("유저 정보 및 유저 검증 및 저장에 대한 mock이 주어져요") {
+        context("유저 정보 및 유저 검증 및 저장에 대한 mock이 주어져요") {
             val user = User(
                 email = "shein1@naver.com",
                 userAccountStatus = UserAccountStatus.NORMAL,

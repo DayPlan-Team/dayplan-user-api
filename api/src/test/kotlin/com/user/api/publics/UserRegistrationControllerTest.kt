@@ -1,7 +1,7 @@
 package com.user.api.publics
 
 import com.ninjasquad.springmockk.MockkBean
-import com.user.api.ApiTestConfiguration
+import com.user.api.exception.ExceptionController
 import com.user.application.service.UserRegistrationService
 import com.user.domain.authentication.AuthenticationTicket
 import com.user.domain.authentication.usecase.AuthenticationTicketUseCase
@@ -10,28 +10,22 @@ import com.user.domain.user.User
 import com.user.util.social.SocialType
 import io.kotest.core.extensions.Extension
 import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.kotest.matchers.shouldBe
 import io.mockk.every
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
-@SpringBootTest(classes = [ApiTestConfiguration::class])
 class UserRegistrationControllerTest : FunSpec() {
 
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerTest
     override fun extensions(): List<Extension> = listOf(SpringExtension)
-
-    @Autowired
-    private lateinit var mockMvc: MockMvc
 
     @MockkBean
     private lateinit var userRegistrationService: UserRegistrationService
@@ -39,8 +33,24 @@ class UserRegistrationControllerTest : FunSpec() {
     @MockkBean
     private lateinit var authenticationTicketUseCase: AuthenticationTicketUseCase
 
+    private lateinit var mockMvc: MockMvc
+
+    override suspend fun beforeSpec(spec: Spec) {
+        val userRegistrationController = UserRegistrationController(
+            userRegistrationService = userRegistrationService,
+            authenticationTicketUseCase = authenticationTicketUseCase,
+        )
+
+        val exceptionController = ExceptionController()
+
+        mockMvc = MockMvcBuilders
+            .standaloneSetup(userRegistrationController)
+            .setControllerAdvice(exceptionController)
+            .build()
+    }
+
     init {
-        this.context("유저를 등록하기 위한 요청 정보가 주어져요") {
+        context("유저를 등록하기 위한 요청 정보가 주어져요") {
 
             val user = User(
                 email = "shein@com",
@@ -64,7 +74,10 @@ class UserRegistrationControllerTest : FunSpec() {
                 val registrationId = "1234567"
 
                 val mockMvcRequestBuilder =
-                    MockMvcRequestBuilders.get("http://localhost:8080/user/registration/social/{registrationId}", registrationId)
+                    MockMvcRequestBuilders.get(
+                        "http://localhost:8080/user/registration/social/{registrationId}",
+                        registrationId
+                    )
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("code", code)
 
@@ -78,7 +91,10 @@ class UserRegistrationControllerTest : FunSpec() {
                 val registrationId = SocialType.GOOGLE.registrationId
 
                 val mockMvcRequestBuilder =
-                    MockMvcRequestBuilders.get("http://localhost:8080/user/registration/social/{registrationId}", registrationId)
+                    MockMvcRequestBuilders.get(
+                        "http://localhost:8080/user/registration/social/{registrationId}",
+                        registrationId
+                    )
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("code", code)
 

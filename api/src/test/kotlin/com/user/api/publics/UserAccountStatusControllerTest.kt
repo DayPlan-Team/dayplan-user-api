@@ -1,7 +1,7 @@
 package com.user.api.publics
 
 import com.ninjasquad.springmockk.MockkBean
-import com.user.api.ApiTestConfiguration
+import com.user.api.exception.ExceptionController
 import com.user.application.service.UserVerifyService
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
@@ -10,31 +10,25 @@ import com.user.util.exception.UserException
 import com.user.util.exceptioncode.UserExceptionCode
 import io.kotest.core.extensions.Extension
 import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.spring.SpringExtension
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
-@SpringBootTest(classes = [ApiTestConfiguration::class])
 class UserAccountStatusControllerTest : FunSpec() {
 
     override fun extensions(): List<Extension> = listOf(SpringExtension)
 
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerLeaf
-
-    @Autowired
-    private lateinit var mockMvc: MockMvc
 
     @MockkBean
     private lateinit var userVerifyService: UserVerifyService
@@ -42,8 +36,24 @@ class UserAccountStatusControllerTest : FunSpec() {
     @MockkBean
     private lateinit var userAccountStatusUseCase: UserAccountStatusUseCase
 
+    private lateinit var mockMvc: MockMvc
+
+    override suspend fun beforeSpec(spec: Spec) {
+        val userAccountStatusController = UserAccountStatusController(
+            userVerifyService = userVerifyService,
+            userAccountStatusUseCase = userAccountStatusUseCase,
+        )
+
+        val exceptionController = ExceptionController()
+
+        mockMvc = MockMvcBuilders
+            .standaloneSetup(userAccountStatusController)
+            .setControllerAdvice(exceptionController)
+            .build()
+    }
+
     init {
-        this.context("유저 상태 변경에 대한 mock이 주어져요") {
+        context("유저 상태 변경에 대한 mock이 주어져요") {
 
             every { userAccountStatusUseCase.upsertUserStatus(any(), any()) } just Runs
 
