@@ -12,27 +12,22 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "terms")
 data class TermsEntity(
-
-    @Column
-    val sequence: Long,
-
-    @Column
+    @Column(name = "sequence", columnDefinition = "int", nullable = false)
+    val sequence: Int,
+    @Column(name = "content", columnDefinition = "varchar(255)", nullable = false)
     val content: String,
-
-    @Column
-    val mandatory: Boolean,
-
+    @Column(name = "is_mandatory", columnDefinition = "bit", nullable = false)
+    val isMandatory: Boolean,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     val id: Long,
 ) : BaseEntity() {
-
     fun toDomainModel(): Terms {
         return Terms(
             sequence = sequence,
             content = content,
-            mandatory = mandatory,
+            mandatory = isMandatory,
             termsId = id,
         )
     }

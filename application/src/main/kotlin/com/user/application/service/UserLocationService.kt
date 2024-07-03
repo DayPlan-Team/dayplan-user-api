@@ -15,18 +15,21 @@ class UserLocationService(
     private val coroutineScope: CoroutineScope,
     private val userLocationPort: UserLocationPort,
 ) {
-    fun upsertUserLocation(user: User, coordinates: Coordinates) {
-        val userLocation = UserLocation(
-            user = user,
-            latitude = coordinates.latitude,
-            longitude = coordinates.longitude,
-        )
+    fun upsertUserLocation(
+        user: User,
+        coordinates: Coordinates,
+    ) {
+        val userLocation =
+            UserLocation(
+                user = user,
+                latitude = coordinates.latitude,
+                longitude = coordinates.longitude,
+            )
 
         userLocationPort.upsertUserLocation(userLocation)
 
         coroutineScope.launch {
             userLocationPort.sendUserLocation(userLocation)
         }
-
     }
 }

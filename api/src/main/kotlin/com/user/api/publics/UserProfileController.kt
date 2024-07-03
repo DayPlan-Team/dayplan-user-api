@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController
 class UserProfileController(
     private val userProfileUpdateService: UserProfileUpdateService,
 ) {
-
     @PostMapping
     fun upsertUserProfile(
         @RequestHeader("UserId") userId: Long,

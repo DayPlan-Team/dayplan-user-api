@@ -13,7 +13,6 @@ import java.security.Key
 class AuthenticationTicketUseCaseImpl(
     private val jwtTokenBuilder: JwtTokenBuilder,
 ) : InitializingBean, AuthenticationTicketUseCase {
-
     @Value("\${jwt.secret-key}")
     private lateinit var secretKey: String
 
@@ -24,6 +23,7 @@ class AuthenticationTicketUseCaseImpl(
     private var refreshExpirationTime = 0L
 
     private lateinit var key: Key
+
     override fun afterPropertiesSet() {
         val keyBytes = Decoders.BASE64.decode(secretKey)
         key = Keys.hmacShaKeyFor(keyBytes)

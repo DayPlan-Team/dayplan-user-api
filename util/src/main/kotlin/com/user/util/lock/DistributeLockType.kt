@@ -1,5 +1,5 @@
 package com.user.util.lock
 
 enum class DistributeLockType {
-    PLACE_REGISTRATION
+    PLACE_REGISTRATION,
 }

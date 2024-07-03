@@ -16,22 +16,28 @@ class TermsAgreementUpsertService(
     private val termsQueryPort: TermsQueryPort,
     private val termsAgreementPort: TermsAgreementPort,
 ) {
-
     @Transactional
-    fun upsertTermsAgreement(user: User, termsAgreementRequests: List<TermsAgreementRequest>) {
+    fun upsertTermsAgreement(
+        user: User,
+        termsAgreementRequests: List<TermsAgreementRequest>,
+    ) {
         val termsMap = termsAgreementRequests.associateBy { it.termsId }
         val terms = termsQueryPort.findAll()
 
-        val termsAgreements = terms.map {
-            val termsAgreementRequest =
-                termsMap[it.termsId]
-                    ?: if (it.mandatory) throw UserException(UserExceptionCode.MANDATORY_TERMS_IS_NOT_AGREED) else
-                        TermsAgreementRequest(it.termsId, false)
-            if (it.mandatory) {
-                require(termsAgreementRequest.agreement) { throw UserException(UserExceptionCode.MANDATORY_TERMS_IS_NOT_AGREED) }
+        val termsAgreements =
+            terms.map {
+                val termsAgreementRequest =
+                    termsMap[it.termsId]
+                        ?: if (it.mandatory) {
+                            throw UserException(UserExceptionCode.MANDATORY_TERMS_IS_NOT_AGREED)
+                        } else {
+                            TermsAgreementRequest(it.termsId, false)
+                        }
+                if (it.mandatory) {
+                    require(termsAgreementRequest.agreement) { throw UserException(UserExceptionCode.MANDATORY_TERMS_IS_NOT_AGREED) }
+                }
+                termsAgreementRequest
             }
-            termsAgreementRequest
-        }
 
         termsAgreementPort.upsertTermsAgreement(user, termsAgreements)
         userCommandPort.save(user.updateMandatoryTermsAgreed(true))

@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component
 
 @Component
 object UserAccountSocialCreationMapper {
-
-    fun mapper(code: String, registrationId: String): UserAccountSocialCreationRequest {
+    fun mapper(
+        code: String,
+        registrationId: String,
+    ): UserAccountSocialCreationRequest {
         return UserAccountSocialCreationRequest(code, SocialType.matchSocialType(registrationId))
     }
 }

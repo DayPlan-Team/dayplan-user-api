@@ -4,7 +4,8 @@ import org.springframework.stereotype.Component
 
 @Component
 interface PlaceSearchPort {
-
-    fun searchLocation(place: String, start: Int): PlacePortItemResponse
-
+    fun searchLocation(
+        place: String,
+        start: Int,
+    ): PlacePortItemResponse
 }

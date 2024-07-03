@@ -21,80 +21,97 @@ import java.io.IOException
 class NaverGeocodeMapAdapter(
     private val naverGeocodeClient: NaverGeocodeClient,
 ) : GeocodeMapPort {
-
-    val defaultResponse = GeocodeResponse(
-        status = GeocodingStatus(
-            code = GEOCODING_RESPONSE_CODE,
-            name = GEOCODING_RESPONSE_NAME,
-            message = GEOCODING_RESPONSE_MESSAGE,
-        ),
-        results = listOf(
-            GeocodingResults(
-                name = "legalcode",
-                code = GeocodingCode(
-                    id = "1165010800",
-                    type = "L",
-                    mappingId = "09650108",
+    val defaultResponse =
+        GeocodeResponse(
+            status =
+                GeocodingStatus(
+                    code = GEOCODING_RESPONSE_CODE,
+                    name = GEOCODING_RESPONSE_NAME,
+                    message = GEOCODING_RESPONSE_MESSAGE,
                 ),
-                region = GeocodingRegion(
-                    area0 = GeocodingArea(
-                        name = "kr",
-                        coords = GeocodingCoords(
-                            center = GeocodingCoordsCenter(
-                                crs = "",
-                                longitude = 0.0,
-                                latitude = 0.0,
-                            )
-                        )
+            results =
+                listOf(
+                    GeocodingResults(
+                        name = "legalcode",
+                        code =
+                            GeocodingCode(
+                                id = "1165010800",
+                                type = "L",
+                                mappingId = "09650108",
+                            ),
+                        region =
+                            GeocodingRegion(
+                                area0 =
+                                    GeocodingArea(
+                                        name = "kr",
+                                        coords =
+                                            GeocodingCoords(
+                                                center =
+                                                    GeocodingCoordsCenter(
+                                                        crs = "",
+                                                        longitude = 0.0,
+                                                        latitude = 0.0,
+                                                    ),
+                                            ),
+                                    ),
+                                area1 =
+                                    GeocodingArea(
+                                        name = "서울특별시",
+                                        coords =
+                                            GeocodingCoords(
+                                                center =
+                                                    GeocodingCoordsCenter(
+                                                        crs = "EPSG:4326",
+                                                        longitude = 126.978386,
+                                                        latitude = 37.56661,
+                                                    ),
+                                            ),
+                                    ),
+                                area2 =
+                                    GeocodingArea(
+                                        name = "서초구",
+                                        coords =
+                                            GeocodingCoords(
+                                                center =
+                                                    GeocodingCoordsCenter(
+                                                        crs = "EPSG:4326",
+                                                        longitude = 127.032,
+                                                        latitude = 37.48357,
+                                                    ),
+                                            ),
+                                    ),
+                                area3 =
+                                    GeocodingArea(
+                                        name = "서초동",
+                                        coords =
+                                            GeocodingCoords(
+                                                center =
+                                                    GeocodingCoordsCenter(
+                                                        crs = "EPSG:4326",
+                                                        longitude = 127.01951,
+                                                        latitude = 37.49012,
+                                                    ),
+                                            ),
+                                    ),
+                                area4 =
+                                    GeocodingArea(
+                                        name = "서초동",
+                                        coords =
+                                            GeocodingCoords(
+                                                center =
+                                                    GeocodingCoordsCenter(
+                                                        crs = "EPSG:4326",
+                                                        longitude = 127.01951,
+                                                        latitude = 37.49012,
+                                                    ),
+                                            ),
+                                    ),
+                            ),
                     ),
-                    area1 = GeocodingArea(
-                        name = "서울특별시",
-                        coords = GeocodingCoords(
-                            center = GeocodingCoordsCenter(
-                                crs = "EPSG:4326",
-                                longitude = 126.978386,
-                                latitude = 37.56661,
-                            )
-                        ),
-                    ),
-                    area2 = GeocodingArea(
-                        name = "서초구",
-                        coords = GeocodingCoords(
-                            center = GeocodingCoordsCenter(
-                                crs = "EPSG:4326",
-                                longitude = 127.032,
-                                latitude = 37.48357,
-                            )
-                        ),
-                    ),
-                    area3 = GeocodingArea(
-                        name = "서초동",
-                        coords = GeocodingCoords(
-                            center = GeocodingCoordsCenter(
-                                crs = "EPSG:4326",
-                                longitude = 127.01951,
-                                latitude = 37.49012,
-                            )
-                        ),
-                    ),
-                    area4 = GeocodingArea(
-                        name = "서초동",
-                        coords = GeocodingCoords(
-                            center = GeocodingCoordsCenter(
-                                crs = "EPSG:4326",
-                                longitude = 127.01951,
-                                latitude = 37.49012,
-                            )
-                        ),
-                    ),
-                )
-            ),
+                ),
         )
-    )
-
 
     override fun getGeoCodingResponse(geocodeRequest: GeocodeRequest): GeocodeResponse {
-
         try {
             val response = naverGeocodeClient.getGeocodeResponse("${geocodeRequest.longitude},${geocodeRequest.latitude}").execute()
             if (response.isSuccessful) {

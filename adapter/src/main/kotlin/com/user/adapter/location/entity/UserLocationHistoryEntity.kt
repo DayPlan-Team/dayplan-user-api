@@ -11,26 +11,22 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(
-    name = "user_location_history",
+    name = "user_location_histories",
     indexes = [
-        Index(name = "idx_location_history_userId", columnList = "userId"),
+        Index(name = "idx__user_location_histories_user_id", columnList = "user_id"),
     ],
 )
 data class UserLocationHistoryEntity(
-    @Column
+    @Column(name = "user_id", columnDefinition = "bigint", nullable = false)
     val userId: Long,
-
-    @Column
+    @Column(name = "latitude", columnDefinition = "double", nullable = false)
     val latitude: Double,
-
-    @Column
+    @Column(name = "longitude", columnDefinition = "double", nullable = false)
     val longitude: Double,
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
 ) : BaseEntity() {
-
     companion object {
         fun fromEntity(userCurrentLocationEntity: UserCurrentLocationEntity): UserLocationHistoryEntity {
             return UserLocationHistoryEntity(
@@ -40,5 +36,4 @@ data class UserLocationHistoryEntity(
             )
         }
     }
-
 }

@@ -12,48 +12,47 @@ import place.PlaceServiceGrpc
 
 @GrpcService
 class PlaceServiceGrpcHandler(
-    private val placePort: PlacePort
+    private val placePort: PlacePort,
 ) : PlaceServiceGrpc.PlaceServiceImplBase() {
-
     override fun getPlace(
         request: Place.GetPlaceRequest,
-        responseObserver: StreamObserver<Place.PlaceResponse>
+        responseObserver: StreamObserver<Place.PlaceResponse>,
     ) {
-
         try {
-            val placeItems = placePort.getPlaceByIds(request.placeIdsList)
-                .map {
-                    Place.PlaceItem.newBuilder()
-                        .setPlaceName(it.placeName)
-                        .setPlaceCategory(Place.PlaceCategory.valueOf(it.placeCategory.name))
-                        .setLatitude(it.latitude)
-                        .setLongitude(it.longitude)
-                        .setAddress(it.address)
-                        .setRoadAddress(it.roadAddress)
-                        .setPlaceId(it.id)
-                        .build()
-                }
+            val placeItems =
+                placePort.getPlaceByIds(request.placeIdsList)
+                    .map {
+                        Place.PlaceItem.newBuilder()
+                            .setPlaceName(it.placeName)
+                            .setPlaceCategory(Place.PlaceCategory.valueOf(it.placeCategory.name))
+                            .setLatitude(it.latitude)
+                            .setLongitude(it.longitude)
+                            .setAddress(it.address)
+                            .setRoadAddress(it.roadAddress)
+                            .setPlaceId(it.id)
+                            .build()
+                    }
 
-            val response = Place.PlaceResponse.newBuilder()
-                .addAllPlaces(placeItems)
-                .build()
+            val response =
+                Place.PlaceResponse.newBuilder()
+                    .addAllPlaces(placeItems)
+                    .build()
 
             responseObserver.onNext(response)
             responseObserver.onCompleted()
-
         } catch (e: UserException) {
             log.error("[PlaceService Grpc Handler UserException]", e)
             responseObserver.onError(
                 Status.INVALID_ARGUMENT
                     .withDescription(e.message)
-                    .asRuntimeException()
+                    .asRuntimeException(),
             )
         } catch (e: Exception) {
             log.error("[PlaceService Grpc Handler Exception]", e)
             responseObserver.onError(
                 Status.INTERNAL
                     .withDescription(SystemExceptionCode.NETWORK_SERVER_ERROR.message)
-                    .asRuntimeException()
+                    .asRuntimeException(),
             )
         }
     }

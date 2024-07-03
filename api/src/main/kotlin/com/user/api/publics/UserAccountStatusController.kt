@@ -19,7 +19,6 @@ class UserAccountStatusController(
     fun withdrawUserStatus(
         @RequestHeader("UserId") userId: Long,
     ): ResponseEntity<Unit> {
-
         val user = userVerifyService.verifyAndGetUser(userId)
         userAccountStatusUseCase.upsertUserStatus(
             user = user,

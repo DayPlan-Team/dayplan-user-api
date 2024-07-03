@@ -1,5 +1,6 @@
+import com.google.protobuf.gradle.GenerateProtoTask
+import com.google.protobuf.gradle.id
 import org.springframework.boot.gradle.tasks.bundling.BootJar
-import com.google.protobuf.gradle.*
 
 val jar: Jar by tasks
 val bootJar: BootJar by tasks
@@ -14,18 +15,17 @@ plugins {
 
 dependencies {
 
-    /* API */
+    // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:adapter-java8:2.9.0")
 
-    /* GRPC */
+    // GRPC
     implementation("io.grpc:grpc-kotlin-stub:1.3.0")
     implementation("com.google.protobuf:protobuf-java:3.24.3")
     implementation("io.grpc:grpc-netty-shaded:1.58.0")
     implementation("io.grpc:grpc-protobuf:1.58.0")
     implementation("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
-
 
     testImplementation("com.ninja-squad:springmockk:4.0.2")
 
@@ -76,6 +76,14 @@ sourceSets {
         java {
             srcDirs("user/api/build/generated/source/proto/main/grpc")
             srcDirs("user/api/build/generated/source/proto/main/java")
+        }
+    }
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.path.contains("generated")
         }
     }
 }

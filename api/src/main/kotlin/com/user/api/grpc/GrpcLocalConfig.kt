@@ -10,14 +10,12 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import java.util.concurrent.TimeUnit
 
-
 @Profile("default | local")
 @Configuration
 class GrpcLocalConfig {
-
     private var grpcServer: Server? = null
 
-    /* 운영 배포시 address 설정 필요함 */
+    // 운영 배포시 address 설정 필요함
     @Bean
     fun userManagedChannel(): ManagedChannel {
         return ManagedChannelBuilder.forAddress("localhost", 50051)

@@ -7,6 +7,7 @@ plugins {
     id("com.google.protobuf") version "0.9.4"
     id("org.springframework.boot") version "3.1.3"
     id("io.spring.dependency-management") version "1.1.3"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
 }
@@ -18,7 +19,7 @@ java {
 
 dependencies {
 
-    /* GRPC */
+    // GRPC
     implementation("io.grpc:grpc-kotlin-stub:1.3.0")
     implementation("com.google.protobuf:protobuf-java:3.24.3")
     implementation("io.grpc:grpc-netty-shaded:1.58.0")
@@ -28,7 +29,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
 }
 
 tasks.bootJar {
@@ -56,7 +56,6 @@ allprojects {
     }
 }
 
-
 subprojects {
     apply {
         apply(plugin = "org.springframework.boot")
@@ -64,6 +63,7 @@ subprojects {
         apply(plugin = "org.jetbrains.kotlin.plugin.spring")
         apply(plugin = "kotlin")
         apply(plugin = "kotlin-kapt")
+        apply(plugin = "org.jlleitschuh.gradle.ktlint")
         apply(plugin = "org.jetbrains.kotlin.plugin.allopen")
     }
 
@@ -72,10 +72,9 @@ subprojects {
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 
-
         implementation("com.h2database:h2")
 
-        implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         testImplementation("io.kotest:kotest-runner-junit5:5.4.2")
         testImplementation("io.kotest:kotest-assertions-core:5.4.2")
         testImplementation("io.kotest:kotest-property:5.4.2")
@@ -90,7 +89,7 @@ subprojects {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.5.2")
     }
 
-    tasks.register("prepareKotlinBuildScriptModel"){}
+    tasks.register("prepareKotlinBuildScriptModel") {}
 }
 
 dependencies {
@@ -131,6 +130,14 @@ sourceSets {
         java {
             srcDirs("user/api/build/generated/source/proto/main/grpc")
             srcDirs("user/api/build/generated/source/proto/main/java")
+        }
+    }
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.path.contains("generated")
         }
     }
 }

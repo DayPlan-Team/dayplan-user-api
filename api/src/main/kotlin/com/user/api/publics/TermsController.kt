@@ -22,28 +22,30 @@ class TermsController(
     private val termsQueryPort: TermsQueryPort,
     private val termsAgreementUpsertService: TermsAgreementUpsertService,
 ) {
-
     @GetMapping("/check")
-    fun checkTermsAgreementToUser(@RequestHeader("UserId") userId: Long): ResponseEntity<UserTermsAgreementStatus> {
+    fun checkTermsAgreementToUser(
+        @RequestHeader("UserId") userId: Long,
+    ): ResponseEntity<UserTermsAgreementStatus> {
         val user = userQueryPort.findUserByUserId(userId)
 
         return ResponseEntity.ok(
             UserTermsAgreementStatus(
                 mandatoryAllAgreement = user.mandatoryTermsAgreed,
-            )
+            ),
         )
     }
 
     @GetMapping
-    fun getTerms(@RequestHeader("UserId") userId: Long): ResponseEntity<TermsApiResponse> {
-
+    fun getTerms(
+        @RequestHeader("UserId") userId: Long,
+    ): ResponseEntity<TermsApiResponse> {
         userQueryPort.findUserByUserId(userId)
         val terms = termsQueryPort.findAll().sortedBy { it.sequence }
 
         return ResponseEntity.ok(
             TermsApiResponse(
                 terms,
-            )
+            ),
         )
     }
 
@@ -66,13 +68,12 @@ class TermsController(
         @JsonProperty("mandatoryAllAgreement") val mandatoryAllAgreement: Boolean,
     )
 
-
     data class TermsApiResponse(
-        val terms: List<Terms>
+        val terms: List<Terms>,
     )
 
     data class TermsAgreementApiBoxingRequest(
-        @JsonProperty("termsAgreements") val termsAgreements: List<TermsAgreementApiRequest>
+        @JsonProperty("termsAgreements") val termsAgreements: List<TermsAgreementApiRequest>,
     )
 
     data class TermsAgreementApiRequest(

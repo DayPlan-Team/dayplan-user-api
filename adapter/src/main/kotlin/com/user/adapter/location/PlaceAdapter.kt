@@ -2,8 +2,8 @@ package com.user.adapter.location
 
 import com.user.adapter.location.entity.PlaceEntity
 import com.user.adapter.location.persistence.PlaceEntityRepository
-import com.user.domain.location.port.PlacePort
 import com.user.domain.location.Place
+import com.user.domain.location.port.PlacePort
 import com.user.util.exception.SystemException
 import com.user.util.exceptioncode.SystemExceptionCode
 import org.springframework.stereotype.Component
@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional
 class PlaceAdapter(
     private val placeEntityRepository: PlaceEntityRepository,
 ) : PlacePort {
-
     @Transactional
     override fun upsertPlace(place: Place): Place {
-        val savedPlace = placeEntityRepository.save(
-            PlaceEntity.fromDomainModel(place)
-        )
+        val savedPlace =
+            placeEntityRepository.save(
+                PlaceEntity.fromDomainModel(place),
+            )
         return savedPlace.toDomainModel()
     }
 

@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TermsEntityRepository : JpaRepository<TermsEntity, Long> {
-
     fun findTermsEntitiesByIdIn(termsId: List<Long>): List<TermsEntity>
 }

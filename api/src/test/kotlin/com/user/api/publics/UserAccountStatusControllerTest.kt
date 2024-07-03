@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ActiveProfiles("test")
 class UserAccountStatusControllerTest : FunSpec() {
-
     override fun extensions(): List<Extension> = listOf(SpringExtension)
 
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerLeaf
@@ -39,17 +38,19 @@ class UserAccountStatusControllerTest : FunSpec() {
     private lateinit var mockMvc: MockMvc
 
     override suspend fun beforeSpec(spec: Spec) {
-        val userAccountStatusController = UserAccountStatusController(
-            userVerifyService = userVerifyService,
-            userAccountStatusUseCase = userAccountStatusUseCase,
-        )
+        val userAccountStatusController =
+            UserAccountStatusController(
+                userVerifyService = userVerifyService,
+                userAccountStatusUseCase = userAccountStatusUseCase,
+            )
 
         val exceptionController = ExceptionController()
 
-        mockMvc = MockMvcBuilders
-            .standaloneSetup(userAccountStatusController)
-            .setControllerAdvice(exceptionController)
-            .build()
+        mockMvc =
+            MockMvcBuilders
+                .standaloneSetup(userAccountStatusController)
+                .setControllerAdvice(exceptionController)
+                .build()
     }
 
     init {
@@ -59,13 +60,14 @@ class UserAccountStatusControllerTest : FunSpec() {
 
             test("유저가 정상 상태이고, 검증을 통과하면 정상적으로 유저 상태를 변경할 수 있어요.") {
 
-                every { userVerifyService.verifyAndGetUser(any()) } returns User(
-                    email = "A@com",
-                    userAccountStatus = UserAccountStatus.NORMAL,
-                    mandatoryTermsAgreed = false,
-                    nickName = "shein",
-                    userId = 1L,
-                )
+                every { userVerifyService.verifyAndGetUser(any()) } returns
+                    User(
+                        email = "A@com",
+                        userAccountStatus = UserAccountStatus.NORMAL,
+                        mandatoryTermsAgreed = false,
+                        nickName = "shein",
+                        userId = 1L,
+                    )
 
                 val mockHttpServletRequestBuilder =
                     MockMvcRequestBuilders.post("http://localhost:8080/user/status/withdraw")
@@ -90,5 +92,4 @@ class UserAccountStatusControllerTest : FunSpec() {
             }
         }
     }
-
 }

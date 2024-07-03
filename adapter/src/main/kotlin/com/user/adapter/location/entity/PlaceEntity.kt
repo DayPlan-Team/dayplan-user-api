@@ -17,50 +17,38 @@ import org.hibernate.annotations.DynamicUpdate
 @Entity
 @DynamicUpdate
 @Table(
-    name = "place",
+    name = "places",
     indexes = [
-        Index(name = "idx_placeName", columnList = "placeName"),
-        Index(name = "idx_address", columnList = "address"),
-        Index(name = "idx_administrativeCategoryId", columnList = "administrativeCategoryId")
-    ]
+        Index(name = "idx__places_place_name", columnList = "place_name"),
+        Index(name = "idx__places_address", columnList = "address"),
+        Index(name = "idx__places_administrative_category_id", columnList = "administrative_category_id"),
+    ],
 )
 data class
 PlaceEntity(
-
-    @Column
+    @Column(name = "administrative_category_id", columnDefinition = "varchar(64)", nullable = false)
     val administrativeCategoryId: String,
-
-    @Column
+    @Column(name = "place_name", columnDefinition = "varchar(255)", nullable = false)
     val placeName: String,
-
-    @Column
+    @Column(name = "place_category", columnDefinition = "varchar(64)", nullable = false)
     @Enumerated(EnumType.STRING)
     val placeCategory: PlaceCategory,
-
-    @Column
+    @Column(name = "latitude", columnDefinition = "double", nullable = false)
     val latitude: Double,
-
-    @Column
+    @Column(name = "longitude", columnDefinition = "double", nullable = false)
     val longitude: Double,
-
-    @Column
+    @Column(name = "address", columnDefinition = "varchar(255)", nullable = false)
     val address: String,
-
-    @Column
+    @Column(name = "road_address", columnDefinition = "varchar(255)", nullable = false)
     val roadAddress: String,
-
-    @Column
+    @Column(name = "user_registration_count", columnDefinition = "bigint", nullable = false)
     val userRegistrationCount: Long = 0L,
-
-    @Column
-    val link: String = "",
-
-    @Column
-    val telephone: String = "",
-
-    @Column
-    val description: String = "",
-
+    @Column(name = "link", columnDefinition = "text", nullable = true)
+    val link: String?,
+    @Column(name = "telephone", columnDefinition = "varchar(100)", nullable = true)
+    val telephone: String?,
+    @Column(name = "description", columnDefinition = "varchar(255)", nullable = true)
+    val description: String?,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,

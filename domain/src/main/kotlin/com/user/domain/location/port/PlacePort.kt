@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component
 
 @Component
 interface PlacePort {
-
     fun upsertPlace(place: Place): Place
 
     fun getPlaceOrNullByAddress(address: String): Place?
@@ -15,5 +14,4 @@ interface PlacePort {
     fun getPlaceByIds(ids: List<Long>): List<Place>
 
     fun getPlacesByAdministrativeCategoryId(administrativeCategoryId: String): List<Place>
-
 }

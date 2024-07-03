@@ -14,54 +14,52 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(
-    name = "terms_agreement",
+    name = "terms_agreements",
     indexes = [
-        Index(name = "idx_terms_userId", columnList = "userId"),
-    ]
+        Index(name = "idx__terms_agreements_user_id", columnList = "user_id"),
+    ],
 )
 data class TermsAgreementEntity(
-
-    @Column
+    @Column(name = "user_id", columnDefinition = "bigint", nullable = false)
     val userId: Long,
-
-    @Column
+    @Column(name = "terms_id", columnDefinition = "bigint", nullable = false)
     val termsId: Long,
-
-    @Column
-    val agreement: Boolean,
-
+    @Column(name = "is_agreed", columnDefinition = "bit", nullable = false)
+    val isAgreed: Boolean,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     val id: Long = 0L,
 ) : BaseEntity() {
-
     fun toDomainModel(): TermsAgreement {
         return TermsAgreement(
             userId = userId,
             termsId = termsId,
-            agreement = agreement,
+            agreement = isAgreed,
         )
     }
 
     companion object {
         fun from(
             termsAgreementEntity: TermsAgreementEntity,
-            termsAgreementRequest: TermsAgreementRequest
+            termsAgreementRequest: TermsAgreementRequest,
         ): TermsAgreementEntity {
             return TermsAgreementEntity(
                 id = termsAgreementEntity.id,
                 termsId = termsAgreementEntity.termsId,
                 userId = termsAgreementEntity.userId,
-                agreement = termsAgreementRequest.agreement,
+                isAgreed = termsAgreementRequest.agreement,
             )
         }
 
-        fun from(user: User, termsAgreementRequest: TermsAgreementRequest): TermsAgreementEntity {
+        fun from(
+            user: User,
+            termsAgreementRequest: TermsAgreementRequest,
+        ): TermsAgreementEntity {
             return TermsAgreementEntity(
                 termsId = termsAgreementRequest.termsId,
                 userId = user.userId,
-                agreement = termsAgreementRequest.agreement,
+                isAgreed = termsAgreementRequest.agreement,
             )
         }
     }

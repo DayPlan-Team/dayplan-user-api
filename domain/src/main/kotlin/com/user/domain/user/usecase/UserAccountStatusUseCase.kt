@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component
 
 @Component
 interface UserAccountStatusUseCase {
-
-    fun upsertUserStatus(user: User, userAccountStatus: UserAccountStatus)
+    fun upsertUserStatus(
+        user: User,
+        userAccountStatus: UserAccountStatus,
+    )
 }

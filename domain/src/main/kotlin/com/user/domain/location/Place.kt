@@ -11,8 +11,8 @@ data class Place(
     val address: String,
     val roadAddress: String,
     val userRegistrationCount: Long = 0L,
-    val link: String = "",
-    val telephone: String = "",
-    val description: String = "",
+    val link: String?,
+    val telephone: String?,
+    val description: String?,
     val id: Long = 0L,
 )

@@ -18,6 +18,7 @@ data class GeocodingResults(
     @JsonProperty("code") val code: GeocodingCode,
     @JsonProperty("region") val region: GeocodingRegion,
 )
+
 data class GeocodingCode(
     @JsonProperty("id") val id: String = "",
     @JsonProperty("type") val type: String = "",

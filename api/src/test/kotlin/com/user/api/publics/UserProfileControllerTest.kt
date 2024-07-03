@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ActiveProfiles("test")
 class UserProfileControllerTest : FunSpec() {
-
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerTest
+
     override fun extensions(): List<Extension> = listOf(SpringExtension)
 
     @MockkBean
@@ -30,16 +30,18 @@ class UserProfileControllerTest : FunSpec() {
     private lateinit var mockMvc: MockMvc
 
     override suspend fun beforeSpec(spec: Spec) {
-        val userProfileController = UserProfileController(
-            userProfileUpdateService = userProfileUpdateService,
-        )
+        val userProfileController =
+            UserProfileController(
+                userProfileUpdateService = userProfileUpdateService,
+            )
 
         val exceptionController = ExceptionController()
 
-        mockMvc = MockMvcBuilders
-            .standaloneSetup(userProfileController)
-            .setControllerAdvice(exceptionController)
-            .build()
+        mockMvc =
+            MockMvcBuilders
+                .standaloneSetup(userProfileController)
+                .setControllerAdvice(exceptionController)
+                .build()
     }
 
     init {
@@ -51,10 +53,11 @@ class UserProfileControllerTest : FunSpec() {
 
             test("유저 프로필 변경에 성공해요") {
 
-                val mockMvcRequestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/user/profile")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .header("UserId", 1L)
-                    .content(userProfileApiRequest)
+                val mockMvcRequestBuilder =
+                    MockMvcRequestBuilders.post("http://localhost:8080/user/profile")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("UserId", 1L)
+                        .content(userProfileApiRequest)
 
                 mockMvc.perform(mockMvcRequestBuilder)
                     .andExpect { it.response.status shouldBe 200 }
@@ -68,15 +71,15 @@ class UserProfileControllerTest : FunSpec() {
 
             test("유저 프로필 변경에 실패해요") {
 
-                val mockMvcRequestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/user/profile")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .header("UserId", 1L)
-                    .content(userProfileApiRequest)
+                val mockMvcRequestBuilder =
+                    MockMvcRequestBuilders.post("http://localhost:8080/user/profile")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("UserId", 1L)
+                        .content(userProfileApiRequest)
 
                 mockMvc.perform(mockMvcRequestBuilder)
                     .andExpect { it.response.status shouldBe 400 }
             }
         }
     }
-
 }

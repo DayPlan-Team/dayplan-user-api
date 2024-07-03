@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component
 
 @Component
 interface UserProfileCommandPort {
-
-    fun upsertUserProfile(user: User, userProfileRequest: UserProfileRequest)
+    fun upsertUserProfile(
+        user: User,
+        userProfileRequest: UserProfileRequest,
+    )
 }

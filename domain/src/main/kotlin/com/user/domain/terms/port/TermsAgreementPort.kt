@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component
 
 @Component
 interface TermsAgreementPort {
-
     fun findTermsAgreementsByUserId(user: User): List<TermsAgreement>
 
-    fun upsertTermsAgreement(user: User, termsAgreementRequests: List<TermsAgreementRequest>)
+    fun upsertTermsAgreement(
+        user: User,
+        termsAgreementRequests: List<TermsAgreementRequest>,
+    )
 }

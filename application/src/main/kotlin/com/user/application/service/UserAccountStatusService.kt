@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional
 class UserAccountStatusService(
     private val userCommandPort: UserCommandPort,
 ) : UserAccountStatusUseCase {
-    override fun upsertUserStatus(user: User, userAccountStatus: UserAccountStatus) {
+    override fun upsertUserStatus(
+        user: User,
+        userAccountStatus: UserAccountStatus,
+    ) {
         userCommandPort.save(
             user = user.updateUserStatus(userAccountStatus),
         )

@@ -16,62 +16,65 @@ class UserVerifyServiceTest(
     private val userQueryPort: UserQueryPort = mockk(),
 ) : FunSpec({
 
-    val sut = UserVerifyService(
-        userQueryPort = userQueryPort,
-    )
+        val sut =
+            UserVerifyService(
+                userQueryPort = userQueryPort,
+            )
 
-    context("유저가 정상 유저이고 모든 약관을 동의했으면") {
-        val user = User(
-            email = "shein@com",
-            userAccountStatus = UserAccountStatus.NORMAL,
-            mandatoryTermsAgreed = true,
-            nickName = "shein",
-            userId = 10L,
-        )
+        context("유저가 정상 유저이고 모든 약관을 동의했으면") {
+            val user =
+                User(
+                    email = "shein@com",
+                    userAccountStatus = UserAccountStatus.NORMAL,
+                    mandatoryTermsAgreed = true,
+                    nickName = "shein",
+                    userId = 10L,
+                )
 
-        every { userQueryPort.findUserByUserId(any()) } returns user
+            every { userQueryPort.findUserByUserId(any()) } returns user
 
-        test("검증을 정상 통과해요") {
-            shouldNotThrow<UserException> {
-                sut.verifyAndGetUser(1L)
+            test("검증을 정상 통과해요") {
+                shouldNotThrow<UserException> {
+                    sut.verifyAndGetUser(1L)
+                }
             }
         }
-    }
 
-    context("유저가 정상 유저이지만, 모든 약관을 동의하지 않았으면") {
-        val user = User(
-            email = "shein@com",
-            userAccountStatus = UserAccountStatus.NORMAL,
-            mandatoryTermsAgreed = false,
-            nickName = "shein",
-            userId = 10L,
-        )
+        context("유저가 정상 유저이지만, 모든 약관을 동의하지 않았으면") {
+            val user =
+                User(
+                    email = "shein@com",
+                    userAccountStatus = UserAccountStatus.NORMAL,
+                    mandatoryTermsAgreed = false,
+                    nickName = "shein",
+                    userId = 10L,
+                )
 
-        every { userQueryPort.findUserByUserId(any()) } returns user
+            every { userQueryPort.findUserByUserId(any()) } returns user
 
-        test("검증 예외가 발생해요") {
-            shouldThrow<UserException> {
-                sut.verifyAndGetUser(1L)
-            }.message shouldBe UserExceptionCode.MANDATORY_TERMS_IS_NOT_AGREED.message
+            test("검증 예외가 발생해요") {
+                shouldThrow<UserException> {
+                    sut.verifyAndGetUser(1L)
+                }.message shouldBe UserExceptionCode.MANDATORY_TERMS_IS_NOT_AGREED.message
+            }
         }
-    }
 
-    context("유저가 탈퇴한 유저라면") {
-        val user = User(
-            email = "shein@com",
-            userAccountStatus = UserAccountStatus.WITHDRAWAL,
-            mandatoryTermsAgreed = true,
-            nickName = "shein",
-            userId = 10L,
-        )
+        context("유저가 탈퇴한 유저라면") {
+            val user =
+                User(
+                    email = "shein@com",
+                    userAccountStatus = UserAccountStatus.WITHDRAWAL,
+                    mandatoryTermsAgreed = true,
+                    nickName = "shein",
+                    userId = 10L,
+                )
 
-        every { userQueryPort.findUserByUserId(any()) } returns user
+            every { userQueryPort.findUserByUserId(any()) } returns user
 
-        test("검증을 정상 통과해요") {
-            shouldThrow<UserException> {
-                sut.verifyAndGetUser(1L)
-            }.message shouldBe UserExceptionCode.USER_STATUS_NOT_NORMAL.message
+            test("검증을 정상 통과해요") {
+                shouldThrow<UserException> {
+                    sut.verifyAndGetUser(1L)
+                }.message shouldBe UserExceptionCode.USER_STATUS_NOT_NORMAL.message
+            }
         }
-    }
-
-})
+    })

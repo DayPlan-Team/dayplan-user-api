@@ -11,13 +11,11 @@ import java.util.concurrent.TimeUnit
 
 @Configuration
 class ApiClientConfig {
-
     @Value("\${naver.map-client-id}")
     private lateinit var naverOpenApiClientId: String
 
     @Value("\${naver.map-client-secret}")
     private lateinit var naverOpenApiClientSecret: String
-
 
     @Value("\${naver.develop-client-id}")
     private lateinit var naverDevelopClientId: String
@@ -36,7 +34,7 @@ class ApiClientConfig {
                 OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
-                    .build()
+                    .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -47,18 +45,21 @@ class ApiClientConfig {
     fun applyNaverGeocodeClient(): NaverGeocodeClient {
         return Retrofit.Builder()
             .baseUrl(NAVER_GEOCODE_URL)
-            .client(OkHttpClient.Builder()
-                .addInterceptor { chain ->
-                    val originRequest = chain.request()
-                    val newRequest = originRequest.newBuilder()
-                        .header(NAVER_OPEN_API_KEY_ID, naverOpenApiClientId)
-                        .header(NAVER_OPEN_API_KEY_SECRET, naverOpenApiClientSecret)
-                        .build()
-                    chain.proceed(newRequest)
-                }
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build())
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor { chain ->
+                        val originRequest = chain.request()
+                        val newRequest =
+                            originRequest.newBuilder()
+                                .header(NAVER_OPEN_API_KEY_ID, naverOpenApiClientId)
+                                .header(NAVER_OPEN_API_KEY_SECRET, naverOpenApiClientSecret)
+                                .build()
+                        chain.proceed(newRequest)
+                    }
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build(),
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(NaverGeocodeClient::class.java)
@@ -68,18 +69,21 @@ class ApiClientConfig {
     fun applyNaverSearch(): NaverSearchClient {
         return Retrofit.Builder()
             .baseUrl(NAVER_OPEN_URL)
-            .client(OkHttpClient.Builder()
-                .addInterceptor { chain ->
-                    val originRequest = chain.request()
-                    val newRequest = originRequest.newBuilder()
-                        .header(NAVER_CLIENT_ID, naverDevelopClientId)
-                        .header(NAVER_CLIENT_SECRET, naverDevelopClientSecret)
-                        .build()
-                    chain.proceed(newRequest)
-                }
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build())
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor { chain ->
+                        val originRequest = chain.request()
+                        val newRequest =
+                            originRequest.newBuilder()
+                                .header(NAVER_CLIENT_ID, naverDevelopClientId)
+                                .header(NAVER_CLIENT_SECRET, naverDevelopClientSecret)
+                                .build()
+                        chain.proceed(newRequest)
+                    }
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build(),
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(NaverSearchClient::class.java)
@@ -94,7 +98,7 @@ class ApiClientConfig {
                 OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
-                    .build()
+                    .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -110,13 +114,12 @@ class ApiClientConfig {
                 OkHttpClient.Builder()
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
-                    .build()
+                    .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(DateCourseClient::class.java)
     }
-
 
     companion object {
         const val NAVER_OPEN_API_KEY_ID = "X-NCP-APIGW-API-KEY-ID"

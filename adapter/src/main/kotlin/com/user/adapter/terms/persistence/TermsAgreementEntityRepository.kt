@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface TermsAgreementEntityRepository: JpaRepository<TermsAgreementEntity, Long> {
+interface TermsAgreementEntityRepository : JpaRepository<TermsAgreementEntity, Long> {
     fun findAllByUserId(userId: Long): List<TermsAgreementEntity>
 }

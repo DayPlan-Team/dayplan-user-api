@@ -5,9 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(classes = [DomainTestConfiguration::class])
 class DomainApplicationTests {
-
     @Test
     fun contextLoads() {
     }
-
 }

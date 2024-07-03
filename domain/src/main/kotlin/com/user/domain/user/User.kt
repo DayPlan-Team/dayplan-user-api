@@ -10,14 +10,13 @@ data class User(
     val nickName: String = DEFAULT_NICKNAME,
     val userId: Long = 0L,
 ) {
-
     fun from(userProfileRequest: UserProfileRequest): User {
         return User(
             email = email,
             userAccountStatus = userAccountStatus,
             mandatoryTermsAgreed = mandatoryTermsAgreed,
             nickName = userProfileRequest.nickName,
-            userId = userId
+            userId = userId,
         )
     }
 
@@ -27,7 +26,7 @@ data class User(
             userAccountStatus = userAccountStatus,
             mandatoryTermsAgreed = mandatoryTermsAgreed,
             nickName = nickName,
-            userId = userId
+            userId = userId,
         )
     }
 
@@ -42,5 +41,4 @@ data class User(
     companion object {
         const val DEFAULT_NICKNAME = "익명"
     }
-
 }

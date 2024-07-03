@@ -9,11 +9,9 @@ import retrofit2.http.Query
 
 @Component
 interface NaverGeocodeClient {
-
     @Headers(ApiClientUtil.CONTENT_TYPE_APPLICATION_JSON)
     @GET("/map-reversegeocode/v2/gc?output=json")
     fun getGeocodeResponse(
         @Query("coords") coords: String,
     ): Call<GeocodeResponse>
-
 }

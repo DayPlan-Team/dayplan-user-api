@@ -5,8 +5,8 @@ import com.user.adapter.location.entity.UserCurrentLocationEntity
 import com.user.adapter.location.entity.UserLocationHistoryEntity
 import com.user.adapter.location.persistence.UserCurrentLocationEntityRepository
 import com.user.adapter.location.persistence.UserLocationHistoryEntityRepository
-import com.user.domain.userlocation.port.UserLocationPort
 import com.user.domain.location.UserLocation
+import com.user.domain.userlocation.port.UserLocationPort
 import com.user.util.Logger
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -18,13 +18,13 @@ class UserLocationAdapter(
     private val userLocationHistoryEntityRepository: UserLocationHistoryEntityRepository,
     private val dateCourseClient: DateCourseClient,
 ) : UserLocationPort {
-
     override fun upsertUserLocation(userLocation: UserLocation) {
         val userLocationEntity = userCurrentLocationEntityRepository.findByUserId(userLocation.user.userId)
 
-        val userLocationToUpsertEntity = userLocationEntity?.let {
-            UserCurrentLocationEntity.from(userLocationEntity, userLocation)
-        } ?: UserCurrentLocationEntity.from(userLocation)
+        val userLocationToUpsertEntity =
+            userLocationEntity?.let {
+                UserCurrentLocationEntity.from(userLocationEntity, userLocation)
+            } ?: UserCurrentLocationEntity.from(userLocation)
 
         userCurrentLocationEntityRepository.save(userLocationToUpsertEntity)
         userLocationHistoryEntityRepository.save(UserLocationHistoryEntity.fromEntity(userLocationToUpsertEntity))

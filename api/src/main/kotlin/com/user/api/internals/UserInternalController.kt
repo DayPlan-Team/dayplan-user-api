@@ -1,9 +1,9 @@
 package com.user.api.internals
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.user.domain.user.port.UserQueryPort
 import com.user.application.service.UserVerifyService
 import com.user.domain.share.UserAccountStatus
+import com.user.domain.user.port.UserQueryPort
 import com.user.util.Logger
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,12 +17,10 @@ class UserInternalController(
     private val userVerifyService: UserVerifyService,
     private val userQueryPort: UserQueryPort,
 ) {
-
     @GetMapping("/verify")
     fun verifyAndGetUser(
         @RequestParam("userId") userId: Long,
     ): ResponseEntity<UserResponse> {
-
         log.info("request = $userId")
         val user = userVerifyService.verifyAndGetUser(userId = userId)
 
@@ -31,7 +29,7 @@ class UserInternalController(
                 userId = user.userId,
                 userAccountStatus = user.userAccountStatus,
                 nickName = user.nickName,
-            )
+            ),
         )
     }
 
@@ -39,19 +37,20 @@ class UserInternalController(
     fun getUsers(
         @RequestParam("userId") userId: List<Long>,
     ): ResponseEntity<UserResponses> {
-        val userResponses = userQueryPort.findUsesByUserIds(userId)
-            .map {
-                UserResponse(
-                    userId = it.userId,
-                    userAccountStatus = it.userAccountStatus,
-                    nickName = it.nickName,
-                )
-            }
+        val userResponses =
+            userQueryPort.findUsesByUserIds(userId)
+                .map {
+                    UserResponse(
+                        userId = it.userId,
+                        userAccountStatus = it.userAccountStatus,
+                        nickName = it.nickName,
+                    )
+                }
         log.info("response = $userResponses")
         return ResponseEntity.ok(
             UserResponses(
-                users = userResponses
-            )
+                users = userResponses,
+            ),
         )
     }
 
@@ -64,7 +63,6 @@ class UserInternalController(
     data class UserResponses(
         @JsonProperty("users") val users: List<UserResponse>,
     )
-
 
     companion object : Logger()
 }

@@ -20,9 +20,9 @@ class UserRegistrationController(
 ) {
     @GetMapping("/social/{registrationId}")
     fun createUserIfNotAndCreateAuthenticationTicketBySocial(
-        @RequestParam("code") code: String, @PathVariable("registrationId") registrationId: String
+        @RequestParam("code") code: String,
+        @PathVariable("registrationId") registrationId: String,
     ): ResponseEntity<AuthenticationTicketResponse> {
-
         val request = UserAccountSocialCreationMapper.mapper(code, registrationId)
         val user = userRegistrationService.createUserIfSocialRegistrationNotExists(request)
         val authenticationTicket = authenticationTicketUseCase.createAuthenticationTicket(user.userId)
@@ -34,6 +34,7 @@ class UserRegistrationController(
             ),
         )
     }
+
     companion object : Logger()
 
     data class AuthenticationTicketResponse(

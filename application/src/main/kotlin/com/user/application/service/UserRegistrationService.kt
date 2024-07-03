@@ -1,12 +1,12 @@
 package com.user.application.service
 
 import com.user.application.port.out.UserAccountSocialSourcePort
-import com.user.domain.user.port.UserCommandPort
-import com.user.domain.user.port.UserQueryPort
-import com.user.domain.user.request.UserAccountSocialCreationRequest
 import com.user.application.response.UserSourceResponse
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
+import com.user.domain.user.port.UserCommandPort
+import com.user.domain.user.port.UserQueryPort
+import com.user.domain.user.request.UserAccountSocialCreationRequest
 import com.user.domain.user.request.UserCreationRequest
 import com.user.domain.user.usecase.UserRegistrationUseCase
 import com.user.util.Logger
@@ -19,7 +19,6 @@ class UserRegistrationService(
     private val userAccountSocialSourcePort: UserAccountSocialSourcePort,
     private val userQueryPort: UserQueryPort,
 ) : UserRegistrationUseCase {
-
     @Transactional
     override fun createUserIfSocialRegistrationNotExists(request: UserAccountSocialCreationRequest): User {
         val userSourceResponse = getSocialUserSourceBySocialRequest(request)
@@ -31,7 +30,7 @@ class UserRegistrationService(
             UserCreationRequest(
                 email = userSourceResponse.email,
                 accountStatus = UserAccountStatus.NORMAL,
-            ).toDomainModel()
+            ).toDomainModel(),
         )
     }
 

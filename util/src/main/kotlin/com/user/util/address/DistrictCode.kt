@@ -1,13 +1,28 @@
 package com.user.util.address
 
-import com.user.util.address.CityCode.*
+import com.user.util.address.CityCode.BUSAN
+import com.user.util.address.CityCode.CHEONGBUK
+import com.user.util.address.CityCode.CHEONGNAM
+import com.user.util.address.CityCode.DAEGU
+import com.user.util.address.CityCode.DAEJEON
+import com.user.util.address.CityCode.GANGWON
+import com.user.util.address.CityCode.GWANGJU
+import com.user.util.address.CityCode.GYEONGBUK
+import com.user.util.address.CityCode.GYEONGGI
+import com.user.util.address.CityCode.GYEONGNAM
+import com.user.util.address.CityCode.INCHEON
+import com.user.util.address.CityCode.JEJU
+import com.user.util.address.CityCode.JEONBUK
+import com.user.util.address.CityCode.JEONNAM
+import com.user.util.address.CityCode.SEJONG
+import com.user.util.address.CityCode.SEOUL
+import com.user.util.address.CityCode.ULSAN
 
 enum class DistrictCode(
     val code: Long,
     val city: CityCode,
     val koreanName: String,
 ) {
-
     // 서울
     DEFAULT(10, CityCode.DEFAULT, "미상"),
     SEOUL_JONGNO(11010, SEOUL, "종로구"),
@@ -279,7 +294,7 @@ enum class DistrictCode(
     GYEONGNAM_UIRYEONG(38510, GYEONGNAM, "의령군"),
     GYEONGNAM_HAMAN(38520, GYEONGNAM, "함안군"),
     GYEONGNAM_CHANGNYEONG(38530, GYEONGNAM, "창녕군"),
-    GYEONGNAM_GOSEONG_GN(38540, GYEONGNAM, "고성군"),  // 경남의 고성군
+    GYEONGNAM_GOSEONG_GN(38540, GYEONGNAM, "고성군"), // 경남의 고성군
     GYEONGNAM_NAMHAE(38550, GYEONGNAM, "남해군"),
     GYEONGNAM_HADONG(38560, GYEONGNAM, "하동군"),
     GYEONGNAM_SANCHEONG(38570, GYEONGNAM, "산청군"),
@@ -289,6 +304,5 @@ enum class DistrictCode(
 
     // 제주특별자치도
     JEJU_JEJU(39010, JEJU, "제주시"),
-    JEJU_SEOGWIPO(39020, JEJU, "서귀포시");
-
+    JEJU_SEOGWIPO(39020, JEJU, "서귀포시"),
 }

@@ -6,5 +6,8 @@ import org.springframework.stereotype.Component
 
 @Component
 interface UserProfileUpsertionUseCase {
-    fun upsertUserProfile(user: User, userProfileRequest: UserProfileRequest): User
+    fun upsertUserProfile(
+        user: User,
+        userProfileRequest: UserProfileRequest,
+    ): User
 }

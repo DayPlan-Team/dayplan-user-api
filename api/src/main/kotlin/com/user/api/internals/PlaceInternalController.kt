@@ -14,35 +14,35 @@ import org.springframework.web.bind.annotation.RestController
 class PlaceInternalController(
     private val placePort: PlacePort,
 ) {
-
     @GetMapping
     fun getPlaceResponse(
         @RequestParam("placeId") placeIds: List<Long>,
     ): ResponseEntity<PlaceResponse> {
-        val placeItems = placePort.getPlaceByIds(placeIds)
-            .map {
-                PlaceItem(
-                    placeName = it.placeName,
-                    placeCategory = it.placeCategory,
-                    latitude = it.latitude,
-                    longitude = it.longitude,
-                    address = it.address,
-                    roadAddress = it.roadAddress,
-                    placeId = it.id,
-                )
-            }
+        val placeItems =
+            placePort.getPlaceByIds(placeIds)
+                .map {
+                    PlaceItem(
+                        placeName = it.placeName,
+                        placeCategory = it.placeCategory,
+                        latitude = it.latitude,
+                        longitude = it.longitude,
+                        address = it.address,
+                        roadAddress = it.roadAddress,
+                        placeId = it.id,
+                    )
+                }
 
         log.info("placeResponseSize = ${placeItems.size}")
 
         return ResponseEntity.ok(
             PlaceResponse(
                 places = placeItems,
-            )
+            ),
         )
     }
 
     data class PlaceResponse(
-        val places: List<PlaceItem>
+        val places: List<PlaceItem>,
     )
 
     data class PlaceItem(

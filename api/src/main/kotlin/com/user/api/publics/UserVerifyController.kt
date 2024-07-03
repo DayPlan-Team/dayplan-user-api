@@ -1,7 +1,7 @@
 package com.user.api.publics
 
-import com.user.domain.user.port.UserQueryPort
 import com.user.domain.share.UserAccountStatus
+import com.user.domain.user.port.UserQueryPort
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestHeader
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController
 class UserVerifyController(
     private val userQueryPort: UserQueryPort,
 ) {
-
     @GetMapping
     fun verifyUser(
         @RequestHeader("UserId") userId: Long,
@@ -32,5 +31,4 @@ class UserVerifyController(
         val userStatus: UserAccountStatus,
         val mandatoryTermsAgreed: Boolean,
     )
-
 }

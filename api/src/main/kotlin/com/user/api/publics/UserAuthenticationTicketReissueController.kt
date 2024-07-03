@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RestController
 class UserAuthenticationTicketReissueController(
     private val authenticationTicketUseCase: AuthenticationTicketUseCase,
 ) {
-
     @GetMapping("/accesstoken")
-    fun reissueAccessToken(@RequestHeader("UserId") userId: Long): ResponseEntity<AccessTokenReissueResponse>{
+    fun reissueAccessToken(
+        @RequestHeader("UserId") userId: Long,
+    ): ResponseEntity<AccessTokenReissueResponse> {
         val accessToken = authenticationTicketUseCase.reissueAuthenticationTicket(userId)
 
         return ResponseEntity.ok(

@@ -12,7 +12,10 @@ class UserProfileUpdateService(
     private val userQueryPort: UserQueryPort,
     private val userProfileCommandPort: UserProfileCommandPort,
 ) {
-    fun upsertUserProfile(userId: Long, userProfileRequest: UserProfileRequest) {
+    fun upsertUserProfile(
+        userId: Long,
+        userProfileRequest: UserProfileRequest,
+    ) {
         val user = userQueryPort.findUserByUserId(userId)
         userProfileCommandPort.upsertUserProfile(user, userProfileRequest)
     }

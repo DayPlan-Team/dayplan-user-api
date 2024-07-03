@@ -1,8 +1,8 @@
 package com.user.adapter.terms
 
 import com.user.adapter.terms.persistence.TermsEntityRepository
-import com.user.domain.terms.port.TermsQueryPort
 import com.user.domain.terms.Terms
+import com.user.domain.terms.port.TermsQueryPort
 import com.user.util.exception.SystemException
 import com.user.util.exceptioncode.SystemExceptionCode
 import org.springframework.stereotype.Component
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component
 class TermsQueryAdapter(
     private val termsEntityRepository: TermsEntityRepository,
 ) : TermsQueryPort {
-
     override fun findTermsByIdIn(termsIds: List<Long>): List<Terms> {
         return termsEntityRepository
             .findTermsEntitiesByIdIn(termsIds)

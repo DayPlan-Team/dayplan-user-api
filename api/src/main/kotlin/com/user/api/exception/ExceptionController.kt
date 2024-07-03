@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class ExceptionController {
-
     @ResponseStatus
     @ExceptionHandler(UserException::class)
     fun handleUserException(exception: UserException): ResponseEntity<ExceptionResponse> {
@@ -23,7 +22,8 @@ class ExceptionController {
                 status = exception.status,
                 code = exception.errorCode,
                 message = exception.message,
-            ), httpStatus
+            ),
+            httpStatus,
         )
     }
 
@@ -39,7 +39,8 @@ class ExceptionController {
                 status = exception.status,
                 code = exception.errorCode,
                 message = exception.message,
-            ), httpStatus
+            ),
+            httpStatus,
         )
     }
 

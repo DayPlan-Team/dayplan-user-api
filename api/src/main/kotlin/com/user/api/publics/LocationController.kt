@@ -18,13 +18,11 @@ class LocationController(
     private val userVerifyService: UserVerifyService,
     private val userLocationService: UserLocationService,
 ) {
-
     @PostMapping
     fun upsertUserLocation(
         @RequestHeader("UserId") userId: Long,
         @RequestBody coordinates: Coordinates,
     ): ResponseEntity<Empty> {
-
         val user = userVerifyService.verifyAndGetUser(userId)
         CoordinatesVerifier.verifyCoordinates(coordinates.latitude to coordinates.longitude)
 

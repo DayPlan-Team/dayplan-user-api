@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component
 
 @Component
 fun interface UserAccountSocialSourcePort {
-
-    fun getSocialUserSource(code:String, socialType: SocialType): UserSourceResponse
-
+    fun getSocialUserSource(
+        code: String,
+        socialType: SocialType,
+    ): UserSourceResponse
 }

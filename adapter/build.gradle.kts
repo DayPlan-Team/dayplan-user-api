@@ -23,19 +23,19 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-noarg:1.8.21")
 
-    /* JWT */
+    // JWT
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
-    /* RedissonClient */
+    // RedissonClient
     implementation("org.redisson:redisson-spring-boot-starter:3.17.7")
 
-    /* MySQL */
+    // MySQL
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("mysql:mysql-connector-java:8.0.32")
 
-    /* API */
+    // API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:adapter-java8:2.9.0")
@@ -43,4 +43,12 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":domain"))
     implementation(project(":application"))
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.path.contains("generated")
+        }
+    }
 }

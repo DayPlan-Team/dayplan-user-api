@@ -1,10 +1,8 @@
 package com.user.util
 
-import com.user.util.exception.SystemException
-import com.user.util.exceptioncode.SystemExceptionCode
 import org.springframework.beans.factory.annotation.Value
 import java.security.SecureRandom
-import java.util.*
+import java.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.GCMParameterSpec
@@ -12,7 +10,6 @@ import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
 object EncryptionUtil {
-
     private const val PBKDF2 = "PBKDF2WithHmacSHA256"
     private const val AES_GCM_NO_PADDING = "AES/GCM/NoPadding"
     private const val ITERATION_CREATION = 65536
@@ -23,7 +20,7 @@ object EncryptionUtil {
     private val secretKeySpec: SecretKeySpec
 
     @Value("\${encryption.secret-key}")
-    private lateinit var encryptionSecretKey : String
+    private lateinit var encryptionSecretKey: String
 
     @Value("\${encryption.salt}")
     private lateinit var salt: String

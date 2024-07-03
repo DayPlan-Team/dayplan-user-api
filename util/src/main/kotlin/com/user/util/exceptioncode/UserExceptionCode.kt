@@ -5,8 +5,6 @@ enum class UserExceptionCode(
     val errorCode: String,
     val message: String,
 ) {
-
-
     USER_NOT_VERIFIED(400, "USR0001", "이메일 인증이 되지 않았습니다."),
     USER_STATUS_NOT_NORMAL(403, "USR0002", "이용이 제한된 계정입니다."),
     USER_SOCIAL_INVALID_TYPE(400, "USR0003", "로그인 방식이 잘못되었어요."),
@@ -18,5 +16,5 @@ enum class UserExceptionCode(
 
     MANDATORY_TERMS_IS_NOT_AGREED(400, "USR1006", "필수 약관은 모두 동의해야해요"),
 
-    PLACE_ALREADY_ROCK(500, "USR1007", "다른 요청이 처리 중입니다. 잠시 후에 요청해주세요")
+    PLACE_ALREADY_ROCK(500, "USR1007", "다른 요청이 처리 중입니다. 잠시 후에 요청해주세요"),
 }

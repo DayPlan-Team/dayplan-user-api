@@ -10,25 +10,26 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Index
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "users")
+@Table(
+    name = "users",
+    indexes = [
+        Index(name = "idx__users_email", columnList = "email"),
+    ],
+)
 data class UserEntity(
-
-    @Column
+    @Column(name = "nick_name", columnDefinition = "varchar(100)", nullable = false)
     val nickName: String,
-
-    @Column
+    @Column(name = "email", columnDefinition = "varchar(255)", nullable = false)
     val email: String,
-
-    @Column
+    @Column(name = "user_account_status", columnDefinition = "varchar(64)", nullable = false)
     @Enumerated(EnumType.STRING)
     val userAccountStatus: UserAccountStatus,
-
-    @Column
-    val mandatoryTermsAgreed: Boolean = false,
-
+    @Column(name = "is_mandatory_terms_agreed", columnDefinition = "bit", nullable = false)
+    val isMandatoryTermsAgreed: Boolean = false,
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -38,7 +39,7 @@ data class UserEntity(
         return User(
             email = email,
             userAccountStatus = userAccountStatus,
-            mandatoryTermsAgreed = mandatoryTermsAgreed,
+            mandatoryTermsAgreed = isMandatoryTermsAgreed,
             nickName = nickName,
             userId = id,
         )
@@ -46,11 +47,10 @@ data class UserEntity(
 
     companion object {
         fun from(user: User): UserEntity {
-
             return UserEntity(
                 email = user.email,
                 userAccountStatus = user.userAccountStatus,
-                mandatoryTermsAgreed = user.mandatoryTermsAgreed,
+                isMandatoryTermsAgreed = user.mandatoryTermsAgreed,
                 nickName = user.nickName,
                 id = user.userId,
             )

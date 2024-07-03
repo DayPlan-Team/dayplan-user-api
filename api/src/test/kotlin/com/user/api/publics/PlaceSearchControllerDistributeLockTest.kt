@@ -3,15 +3,15 @@ package com.user.api.publics
 import com.ninjasquad.springmockk.MockkBean
 import com.user.adapter.location.persistence.PlaceEntityRepository
 import com.user.api.ApiTestConfiguration
-import com.user.domain.location.port.PlaceSearchPort
+import com.user.application.service.UserVerifyService
 import com.user.domain.location.port.PlaceItem
 import com.user.domain.location.port.PlacePortItemResponse
-import com.user.application.service.UserVerifyService
-import com.user.util.address.PlaceCategory
+import com.user.domain.location.port.PlaceSearchPort
 import com.user.domain.share.UserAccountStatus
 import com.user.domain.user.User
 import com.user.util.address.CityCode
 import com.user.util.address.DistrictCode
+import com.user.util.address.PlaceCategory
 import io.kotest.core.extensions.Extension
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.extensions.spring.SpringExtension
@@ -31,7 +31,6 @@ import java.util.concurrent.Executors
 @AutoConfigureMockMvc
 @SpringBootTest(classes = [ApiTestConfiguration::class])
 class PlaceSearchControllerDistributeLockTest : FunSpec() {
-
     override fun extensions(): List<Extension> = listOf(SpringExtension)
 
     @MockkBean
@@ -46,65 +45,69 @@ class PlaceSearchControllerDistributeLockTest : FunSpec() {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-
     init {
 
         this.context("유저가 place를 검색할 기본 조건이 주어져요") {
 
-            every { userVerifyService.verifyAndGetUser(1) } returns User(
-                email = "shein1@naver.com",
-                userAccountStatus = UserAccountStatus.NORMAL,
-                mandatoryTermsAgreed = true,
-                nickName = "GoseKose",
-                userId = 1,
-            )
+            every { userVerifyService.verifyAndGetUser(1) } returns
+                User(
+                    email = "shein1@naver.com",
+                    userAccountStatus = UserAccountStatus.NORMAL,
+                    mandatoryTermsAgreed = true,
+                    nickName = "GoseKose",
+                    userId = 1,
+                )
 
-            every { userVerifyService.verifyAndGetUser(2) } returns User(
-                email = "shein2@naver.com",
-                userAccountStatus = UserAccountStatus.NORMAL,
-                mandatoryTermsAgreed = true,
-                nickName = "GoseKose",
-                userId = 2,
-            )
+            every { userVerifyService.verifyAndGetUser(2) } returns
+                User(
+                    email = "shein2@naver.com",
+                    userAccountStatus = UserAccountStatus.NORMAL,
+                    mandatoryTermsAgreed = true,
+                    nickName = "GoseKose",
+                    userId = 2,
+                )
 
-            every { userVerifyService.verifyAndGetUser(3) } returns User(
-                email = "shein3@naver.com",
-                userAccountStatus = UserAccountStatus.NORMAL,
-                mandatoryTermsAgreed = true,
-                nickName = "GoseKose",
-                userId = 3,
-            )
+            every { userVerifyService.verifyAndGetUser(3) } returns
+                User(
+                    email = "shein3@naver.com",
+                    userAccountStatus = UserAccountStatus.NORMAL,
+                    mandatoryTermsAgreed = true,
+                    nickName = "GoseKose",
+                    userId = 3,
+                )
 
-            every { placeSearchPort.searchLocation(any(), any()) } returns PlacePortItemResponse(
-                lastBuildDate = "",
-                total = 3,
-                start = 1,
-                display = 3,
-                items = listOf(
-                    PlaceItem(
-                        title = "A",
-                        link = "www.A.com",
-                        category = "카페",
-                        description = "카페",
-                        telephone = "010-0000-1111",
-                        address = "강남역A",
-                        roadAddress = "강남역A",
-                        mapx = "123001002",
-                        mapy = "3701002",
-                    ),
-                    PlaceItem(
-                        title = "B",
-                        link = "www.B.com",
-                        category = "카페",
-                        description = "카페",
-                        telephone = "010-0000-1112",
-                        address = "강남역B",
-                        roadAddress = "강남역B",
-                        mapx = "123001003",
-                        mapy = "3701003",
-                    ),
-                ),
-            )
+            every { placeSearchPort.searchLocation(any(), any()) } returns
+                PlacePortItemResponse(
+                    lastBuildDate = "",
+                    total = 3,
+                    start = 1,
+                    display = 3,
+                    items =
+                        listOf(
+                            PlaceItem(
+                                title = "A",
+                                link = "www.A.com",
+                                category = "카페",
+                                description = "카페",
+                                telephone = "010-0000-1111",
+                                address = "강남역A",
+                                roadAddress = "강남역A",
+                                mapx = "123001002",
+                                mapy = "3701002",
+                            ),
+                            PlaceItem(
+                                title = "B",
+                                link = "www.B.com",
+                                category = "카페",
+                                description = "카페",
+                                telephone = "010-0000-1112",
+                                address = "강남역B",
+                                roadAddress = "강남역B",
+                                mapx = "123001003",
+                                mapy = "3701003",
+                            ),
+                        ),
+                )
 
             val citycode = CityCode.SEOUL.code
             val districtcode = DistrictCode.SEOUL_DOBONG.code
@@ -118,16 +121,16 @@ class PlaceSearchControllerDistributeLockTest : FunSpec() {
                 for (i in 1..threadCount) {
                     executorService.submit {
                         try {
-                            val resultBuilder = MockMvcRequestBuilders.get(BASE_URL)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .header(USER_ID_HEADER, i)
-                                .param("citycode", citycode.toString())
-                                .param("districtcode", districtcode.toString())
-                                .param("place", place.toString())
+                            val resultBuilder =
+                                MockMvcRequestBuilders.get(BASE_URL)
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header(USER_ID_HEADER, i)
+                                    .param("citycode", citycode.toString())
+                                    .param("districtcode", districtcode.toString())
+                                    .param("place", place.toString())
 
                             mockMvc.perform(resultBuilder)
                                 .andExpect { it.response.status shouldBe 200 }
-
                         } finally {
                             latch.countDown()
                         }

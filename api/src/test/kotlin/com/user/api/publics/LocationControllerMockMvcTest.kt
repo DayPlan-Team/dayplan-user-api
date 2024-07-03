@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ActiveProfiles("test")
 class LocationControllerMockMvcTest : FunSpec() {
-
     override fun extensions(): List<Extension> = listOf(SpringExtension)
 
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerLeaf
@@ -36,60 +35,63 @@ class LocationControllerMockMvcTest : FunSpec() {
 
     private lateinit var mockMvc: MockMvc
 
-
     override suspend fun beforeSpec(spec: Spec) {
-        val locationController = LocationController(
-            userVerifyService = userVerifyService,
-            userLocationService = userLocationService,
-        )
+        val locationController =
+            LocationController(
+                userVerifyService = userVerifyService,
+                userLocationService = userLocationService,
+            )
 
         val exceptionController = ExceptionController()
 
-        mockMvc = MockMvcBuilders
-            .standaloneSetup(locationController)
-            .setControllerAdvice(exceptionController)
-            .build()
+        mockMvc =
+            MockMvcBuilders
+                .standaloneSetup(locationController)
+                .setControllerAdvice(exceptionController)
+                .build()
     }
 
     init {
 
         context("유저 정보 및 유저 검증 및 저장에 대한 mock이 주어져요") {
-            val user = User(
-                email = "shein1@naver.com",
-                userAccountStatus = UserAccountStatus.NORMAL,
-                mandatoryTermsAgreed = true,
-                nickName = "GoseKose",
-                userId = 1,
-            )
+            val user =
+                User(
+                    email = "shein1@naver.com",
+                    userAccountStatus = UserAccountStatus.NORMAL,
+                    mandatoryTermsAgreed = true,
+                    nickName = "GoseKose",
+                    userId = 1,
+                )
 
             every { userVerifyService.verifyAndGetUser(any()) } returns user
 
             every { userLocationService.upsertUserLocation(any(), any()) } just Runs
 
             test("유효한 범위에 대한 위치 정보가 주어지면 요청을 정상 처리해요") {
-                val mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/user/location")
-                    .header("UserId", 1L)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(
-                        "{\"latitude\": 39.10, \"longitude\": 129.30}"
-                    )
+                val mockHttpServletRequestBuilder =
+                    MockMvcRequestBuilders.post("http://localhost:8080/user/location")
+                        .header("UserId", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                            "{\"latitude\": 39.10, \"longitude\": 129.30}",
+                        )
 
                 mockMvc.perform(mockHttpServletRequestBuilder)
                     .andExpect(MockMvcResultMatchers.status().isOk)
             }
 
             test("잘못된 범위에 대한 위치 정보가 주어지면 요청은 400 처리해요") {
-                val mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/user/location")
-                    .header("UserId", 1L)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(
-                        "{\"latitude\": 40.00, \"longitude\": 129.30}"
-                    )
+                val mockHttpServletRequestBuilder =
+                    MockMvcRequestBuilders.post("http://localhost:8080/user/location")
+                        .header("UserId", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                            "{\"latitude\": 40.00, \"longitude\": 129.30}",
+                        )
 
                 mockMvc.perform(mockHttpServletRequestBuilder)
                     .andExpect(MockMvcResultMatchers.status().is4xxClientError)
             }
         }
     }
-
 }

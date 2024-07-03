@@ -6,7 +6,8 @@ import com.user.util.exceptioncode.UserExceptionCode
 enum class SocialType(
     val registrationId: String,
 ) {
-    GOOGLE("google");
+    GOOGLE("google"),
+    ;
 
     companion object {
         fun matchSocialType(registrationId: String): SocialType {

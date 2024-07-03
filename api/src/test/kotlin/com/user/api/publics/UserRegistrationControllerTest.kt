@@ -23,8 +23,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ActiveProfiles("test")
 class UserRegistrationControllerTest : FunSpec() {
-
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerTest
+
     override fun extensions(): List<Extension> = listOf(SpringExtension)
 
     @MockkBean
@@ -36,34 +36,38 @@ class UserRegistrationControllerTest : FunSpec() {
     private lateinit var mockMvc: MockMvc
 
     override suspend fun beforeSpec(spec: Spec) {
-        val userRegistrationController = UserRegistrationController(
-            userRegistrationService = userRegistrationService,
-            authenticationTicketUseCase = authenticationTicketUseCase,
-        )
+        val userRegistrationController =
+            UserRegistrationController(
+                userRegistrationService = userRegistrationService,
+                authenticationTicketUseCase = authenticationTicketUseCase,
+            )
 
         val exceptionController = ExceptionController()
 
-        mockMvc = MockMvcBuilders
-            .standaloneSetup(userRegistrationController)
-            .setControllerAdvice(exceptionController)
-            .build()
+        mockMvc =
+            MockMvcBuilders
+                .standaloneSetup(userRegistrationController)
+                .setControllerAdvice(exceptionController)
+                .build()
     }
 
     init {
         context("유저를 등록하기 위한 요청 정보가 주어져요") {
 
-            val user = User(
-                email = "shein@com",
-                userAccountStatus = UserAccountStatus.NORMAL,
-                mandatoryTermsAgreed = false,
-                nickName = "shein",
-                userId = 100L,
-            )
+            val user =
+                User(
+                    email = "shein@com",
+                    userAccountStatus = UserAccountStatus.NORMAL,
+                    mandatoryTermsAgreed = false,
+                    nickName = "shein",
+                    userId = 100L,
+                )
 
-            val authenticationTicket = AuthenticationTicket(
-                accessToken = "12345678901234567890",
-                refreshToken = "12345678901234567890",
-            )
+            val authenticationTicket =
+                AuthenticationTicket(
+                    accessToken = "12345678901234567890",
+                    refreshToken = "12345678901234567890",
+                )
 
             every { userRegistrationService.createUserIfSocialRegistrationNotExists(any()) } returns user
             every { authenticationTicketUseCase.createAuthenticationTicket(any()) } returns authenticationTicket
@@ -76,7 +80,7 @@ class UserRegistrationControllerTest : FunSpec() {
                 val mockMvcRequestBuilder =
                     MockMvcRequestBuilders.get(
                         "http://localhost:8080/user/registration/social/{registrationId}",
-                        registrationId
+                        registrationId,
                     )
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("code", code)
@@ -93,7 +97,7 @@ class UserRegistrationControllerTest : FunSpec() {
                 val mockMvcRequestBuilder =
                     MockMvcRequestBuilders.get(
                         "http://localhost:8080/user/registration/social/{registrationId}",
-                        registrationId
+                        registrationId,
                     )
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("code", code)

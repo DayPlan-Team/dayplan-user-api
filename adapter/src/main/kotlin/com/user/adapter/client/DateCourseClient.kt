@@ -9,11 +9,9 @@ import retrofit2.http.POST
 
 @Component
 interface DateCourseClient {
-
     @Headers(ApiClientUtil.CONTENT_TYPE_APPLICATION_JSON)
     @POST("/content/internal/datecourse/visitedstatus")
     suspend fun sendUserLocation(
         @Body userLocation: UserLocation,
     ): Response<Unit>
-
 }
